@@ -1,0 +1,51 @@
+CREATE DATABASE ta_em_casa;
+
+CREATE TABLE usuario (
+	username VARCHAR(20) NOT NULL PRIMARY KEY, 
+	email VARCHAR(64) NOT NULL, 
+	salt VARCHAR(64) NOT NULL, 
+	hash VARCHAR(128) NOT NULL, 
+	nome VARCHAR(20), 
+	sobrenome VARCHAR(40)
+);
+
+CREATE TABLE republica (
+	id_rep INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	username VARCHAR(20) NOT NULL, 
+	nome VARCHAR(20), 
+	descricao VARCHAR(512), 
+	rua VARCHAR(64), 
+	numero VARCHAR(8), 
+	complemento VARCHAR(64), 
+	bairro VARCHAR(20), 
+	cidade VARCHAR(20), 
+	estado VARCHAR(20), 
+	latitude FLOAT, 
+	longitude FLOAT, 
+	telefone VARCHAR(12), 
+	link VARCHAR(64), 
+	tipo INT, 
+	perfil INT, 
+	qtd_moradores INT, 
+	aceita_animais BOOLEAN
+);
+
+CREATE TABLE vaga (
+	id_vaga INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	id_rep INT, 
+	preco FLOAT, 
+	tipo INT, 
+	individual BOOLEAN,
+	CONSTRAINT 'fk_id_rep'
+		FOREIGN KEY (id_rep) REFERENCES republica (id_rep)
+);
+
+CREATE TABLE candidato_vaga (
+	username VARCHAR(20) NOT NULL, 
+	id_vaga INT, 
+	aprovado INT,
+	CONSTRAINT 'fk_id_rep'
+		FOREIGN KEY (username) REFERENCES usuario (username)
+	CONSTRAINT 'fk_id_vaga'
+		FOREIGN KEY (id_vaga) REFERENCES vaga (id_vaga)
+);
