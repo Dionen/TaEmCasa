@@ -23,5 +23,20 @@
     <string name="title_activity_menu">Tá em Casa</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
+    
+    <string name="app_name">Tá Em Casa</string>
+    <string name="vagas">Vagas disponíveis</string>
+    <string name="qtdvagas">%1$d vagas</string>
+    <string name="valor">Valor mensal</string>
+    <string name="precovaga">R$ %1$d</string>
+    <string name="qtdmoradores">Moradores: %1$d</string>
+    <string name="desc">Descrição</string>
+    
+    <string name="endereco">Endereço</string>
+    <string name="enderecotext">%1$s, %2$d - %3$s</string>
+    <string name="bairro">Bairro</string>
+    <string name="cidade">Cidade</string>
+    <string name="coord">Coordenadas</string>
+    <string name="coordtext">%1$s; %2$s</string>
 
 </resources>
