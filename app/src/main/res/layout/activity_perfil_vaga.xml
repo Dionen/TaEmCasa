@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.usp.icmc.taemcasa.PerfilVaga">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivFotoVaga"
+            android:layout_width="wrap_content"
+            android:layout_height="260dp"
+            android:src="@drawable/imagemvaga"
+            android:scaleType="centerCrop"
+            android:maxHeight="600dp"
+            android:maxWidth="800dp" />
+
+            <RelativeLayout
+                android:id="@+id/dadosVaga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivFotoVaga"
+                android:background="@drawable/background_nomevaga"
+                android:paddingBottom="10dp">
+                
+                <TextView
+                    android:id="@+id/nomeVaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:textSize="32sp"
+                    android:textColor="@android:color/white"
+                    android:text="Exemplo de vaga"/>
+
+                <TextView
+                    android:id="@+id/tipoVaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_below="@+id/nomeVaga"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:text="Tipo da vaga"/>
+
+                <TextView
+                    android:id="@+id/telefone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_below="@+id/nomeVaga"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="21dp"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:text="(16) 4444-4444"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dadosVaga"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/etiqs">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="start"
+                        android:text="@string/vagas"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/black"
+                        android:gravity="end"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/valor"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:id="@+id/nums">
+                    <TextView
+                        android:id="@+id/qtdVagas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:textColor="#17af00"
+                        android:layout_gravity="start"
+                        android:text="@string/qtdvagas"/>
+
+                    <TextView
+                        android:id="@+id/precoVaga"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:textColor="#17af00"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="end"
+                        android:text="@string/precovaga"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/numMoradores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/qtdmoradores"/>
+
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/desc"/>
+
+                <TextView
+                    android:id="@+id/descText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:maxLength="500"
+                    android:text="Sed nec imperdiet arcu. Aliquam erat volutpat. Praesent elementum quam non purus posuere, interdum euismod tellus eleifend. Vivamus nisi massa, finibus in enim vel, bibendum ornare elit. Fusce at ultricies ex. Sed finibus nisl id risus convallis, pellentesque venenatis est auctor. Phasellus egestas aliquet mauris in aliquam. Duis nibh ipsum, porta sit amet leo fringilla, lobortis egestas eros. Quisque efficitur eros a lacus tempus, semper volutpat justo lobortis. Nulla facilisi. Sed congue amet."/>
+
+                <TextView
+                    android:id="@+id/endereco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/endereco"/>
+
+                <TextView
+                    android:id="@+id/enderecoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:maxLength="120"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id interdum justo. Sed vehicula nulla et purus volutpat."/>
+
+                 <TextView
+                   android:id="@+id/bairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="14dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/bairro"/>
+
+                <TextView
+                    android:id="@+id/bairroText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:maxLength="30"
+                    android:text="Nunc blandit vehicula posuere."/>
+
+                <TextView
+                    android:id="@+id/cidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="14dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/cidade"/>
+
+                <TextView
+                    android:id="@+id/cidadeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:maxLength="30"
+                    android:text="Nunc blandit vehicula posuere."/>
+
+                <TextView
+                    android:id="@+id/coordenadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="14dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/coord"/>
+
+                <TextView
+                    android:id="@+id/coordenadasText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:maxLength="30"
+                    android:text="Nunc blandit vehicula posuere."/>
+
+            </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
