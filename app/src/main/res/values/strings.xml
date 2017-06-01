@@ -24,7 +24,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
     
-    <string name="app_name">Tá Em Casa</string>
     <string name="vagas">Vagas disponíveis</string>
     <string name="qtdvagas">%1$d vagas</string>
     <string name="valor">Valor mensal</string>

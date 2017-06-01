@@ -1,10 +1,12 @@
-package br.usp.icmc.taemcasa;
+package com.example.joao.taemcasa.Perfil;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.TextureView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.joao.taemcasa.R;
 
 public class PerfilVaga extends AppCompatActivity {
     private int autoriaVaga; // 1 = do usuário, 2 = do sistema
