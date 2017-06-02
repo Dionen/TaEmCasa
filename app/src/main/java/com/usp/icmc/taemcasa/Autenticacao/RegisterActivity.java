@@ -67,11 +67,13 @@ public class RegisterActivity extends MainActivity {
                                 finish();
 
                             } else {
-                                Toast toast = Toast.makeText(context, "Cadastro sem sucesso", Toast.LENGTH_SHORT);
+                                /* E-MAIL JÁ CADASTRADO */
+                                Toast toast = Toast.makeText(context, "E-mail já cadastrado", Toast.LENGTH_SHORT);
                                 toast.show();
                                 showProgress(false);
                             }
                         } catch (JSONException e) {
+                            /* OUTROS PROBLEMAS */
                             e.printStackTrace();
                             Toast toast = Toast.makeText(context, "Erro ao acessar database", Toast.LENGTH_SHORT);
                             toast.show();
@@ -84,6 +86,7 @@ public class RegisterActivity extends MainActivity {
                 queue.add(registerRequest);
 
             } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                /* Caso o processo de Hash e Salt dê erro */
                 e.printStackTrace();
                 Toast toast = Toast.makeText(context, "Erro no cadastro", Toast.LENGTH_SHORT);
                 toast.show();
@@ -104,8 +107,6 @@ public class RegisterActivity extends MainActivity {
         String email_s = email.getText().toString();
         String password_s = senha.getText().toString();
         String cpassword_s = csenha.getText().toString();
-
-        /* CHECAR EMAIL SE JÁ ESTA CADASTRADO */
 
         if (name_s.isEmpty()){
             Toast toast = Toast.makeText(context, "Nome inválido", duration);
