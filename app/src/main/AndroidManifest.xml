@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.joao.taemcasa">
+    package="com.usp.icmc.taemcasa">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -34,12 +34,12 @@
         -->
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.usp.icmc.taemcasa.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".Autenticacao.LoginActivity"
+            android:name="com.usp.icmc.taemcasa.Autenticacao.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -50,17 +50,17 @@
         </activity>
 
         <activity
-            android:name=".Autenticacao.RegisterActivity"
+            android:name="com.usp.icmc.taemcasa.Autenticacao.RegisterActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".Busca.SearchListActivity"
+            android:name="com.usp.icmc.taemcasa.Busca.SearchListActivity"
             android:label="Resultados da busca"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".Menu.MenuActivity"
+            android:name="com.usp.icmc.taemcasa.Menu.MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>

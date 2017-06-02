@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -18,14 +19,16 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
                 android:cropToPadding="false"
                 android:scaleType="fitEnd"
-                android:src="@mipmap/logo" />
+                android:src="@mipmap/logo"
+                android:layout_marginRight="48dip"
+                android:layout_marginLeft="48dip"/>
 
         </RelativeLayout>
 
@@ -35,35 +38,35 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:height="0dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginRight="24dip"
+            android:layout_marginLeft="24dip">
 
             <EditText
                 android:id="@+id/username"
-                android:layout_width="320dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:hint="@string/login"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:padding="4dp"
                 android:visibility="visible" />
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="320dp"
-                android:layout_height="40dp"
-                android:layout_alignLeft="@+id/username"
-                android:layout_alignStart="@+id/username"
-                android:layout_centerVertical="true"
-                android:hint="@string/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/senha"
                 android:inputType="textPassword"
-                android:padding="4dp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <Button
                 android:id="@+id/button4"
-                android:layout_width="320dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:onClick="login"
@@ -80,12 +83,14 @@
 
             <CheckBox
                 android:id="@+id/checkBox"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/login_progress"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="@string/permanecerconectado" />
+                android:text="@string/permanecerconectado"
+                android:layout_marginLeft="24dip"
+                android:layout_marginTop="16dip"/>
 
             <ProgressBar
                 android:id="@+id/login_progress"
@@ -109,12 +114,12 @@
             <Button
                 android:id="@+id/naoCadastrado"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:onClick="RegisterAccount"
-                android:text="@string/naocadastro"
+                android:text="@string/naopossuicadastro"
                 android:textAllCaps="false" />
 
         </RelativeLayout>

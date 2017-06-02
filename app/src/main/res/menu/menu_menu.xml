@@ -1,20 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.joao.testapplication.Menu.MenuActivity">
+    tools:context="com.usp.icmc.testapplication.Menu.MenuActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Configurações"
+        android:title="@string/configura_es"
         app:showAsAction="never" />
     <item
         android:id="@+id/sobre_settings"
         android:orderInCategory="110"
-        android:title="Sobre"
+        android:title="@string/sobre"
         app:showAsAction="never" />
     <item
         android:id="@+id/sair_settings"
         android:orderInCategory="120"
-        android:title="Sair"
+        android:title="@string/sair"
         app:showAsAction="never" />
 </menu>

@@ -79,7 +79,7 @@
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:hint="@string/login"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="4dp"
             android:visibility="visible" />
@@ -99,7 +99,7 @@
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:hint="@string/password"
+            android:hint="@string/senha"
             android:inputType="textPassword"
             android:padding="4dp"
             android:visibility="visible" />
@@ -139,7 +139,7 @@
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:hint="@string/confirm_password"
+            android:hint="@string/confirmarsenha"
             android:inputType="textPassword"
             android:padding="4dp"
             android:visibility="visible" />

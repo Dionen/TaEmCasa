@@ -38,6 +38,7 @@
         android:maxLines="1"
         android:text="Endereco"
         android:textAlignment="viewStart"
+        android:gravity="start"
         android:textSize="14sp"
         android:textStyle="italic"
         android:visibility="visible" />
@@ -47,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-
         android:layout_toEndOf="@+id/icon"
         android:layout_toLeftOf="@+id/imageView3"
         android:layout_toRightOf="@+id/icon"
