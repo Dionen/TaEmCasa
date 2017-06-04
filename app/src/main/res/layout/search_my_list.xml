@@ -12,11 +12,11 @@
         android:visibility="visible">
 
         <Button
-            android:id="@+id/buttonAddVaga"
+            android:id="@+id/adicionarVaga"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Adicionar Vaga" />
+            android:text="Adicionar Moradia" />
 
         <include
             layout="@layout/list_content"

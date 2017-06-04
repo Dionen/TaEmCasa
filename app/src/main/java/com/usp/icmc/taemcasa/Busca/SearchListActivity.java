@@ -1,15 +1,21 @@
 package com.usp.icmc.taemcasa.Busca;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.usp.icmc.taemcasa.Autenticacao.LoginActivity;
+import com.usp.icmc.taemcasa.Autenticacao.RegisterActivity;
+import com.usp.icmc.taemcasa.Perfil.PerfilVaga;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
@@ -18,25 +24,32 @@ import java.util.List;
 
 public class SearchListActivity extends AppCompatActivity {
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_list);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_list);
 
-        List<Vaga> cursos = todasAsVagas();
+        List<Vaga> cursos = todasAsVagas();     // GERA VAGAS TESTE
+                                                // DEVE-SE OBTER TODAS AS VAGAS
         ListView listaDeCursos = (ListView) findViewById(R.id.search_result_list);
 
+        listaDeCursos.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "POSIÇÃO: " + position, Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.activity_perfil_vaga);
+            }
+
+        });
+
+        /* Liga os valores ao layout */
         AdapterCursosPersonalizado adapter = new AdapterCursosPersonalizado(cursos, this);
         listaDeCursos.setAdapter(adapter);
-
     }
 
+    // GERA VAGAS TESTE
     public List<Vaga> todasAsVagas(){
         final List<Vaga> list = new ArrayList<Vaga>();
 

@@ -4,6 +4,10 @@ package com.usp.icmc.taemcasa.Structures;
  * Created by Joao on 24/05/2017.
  */
 
+/**
+ * Classe dummy que representa algumas informações de uma vaga/moradia.
+ * Deve no futuro conter todas as informações necessárias.
+ */
 public class Vaga {
     private String title;
     private String description;

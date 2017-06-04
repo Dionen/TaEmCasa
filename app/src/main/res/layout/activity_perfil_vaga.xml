@@ -11,12 +11,12 @@
 
         <ImageView
             android:id="@+id/ivFotoVaga"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="260dp"
-            android:src="@drawable/ic_menu_gallery"
-            android:scaleType="centerCrop"
             android:maxHeight="600dp"
-            android:maxWidth="800dp" />
+            android:maxWidth="800dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_menu_gallery" />
 
             <RelativeLayout
                 android:id="@+id/dadosVaga"

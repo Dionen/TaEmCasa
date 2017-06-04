@@ -8,7 +8,7 @@ import com.usp.icmc.taemcasa.R;
 
 public class PerfilVaga extends AppCompatActivity {
     private int autoriaVaga; // 1 = do usuário, 2 = do sistema
-
+/*
     // vaga
     private int idVaga;
     private String nomeVaga;
@@ -39,7 +39,7 @@ public class PerfilVaga extends AppCompatActivity {
     public TextView bairroTV;
     public TextView cidadeTV;
     public TextView coordenadasTV;
-    public TextView qtdMoradoresTV;
+    public TextView qtdMoradoresTV;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

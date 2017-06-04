@@ -39,7 +39,7 @@ public class LoginActivity extends FragmentActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        showProgress(false);
+        mostraCarregamento(false);
     }
 
     /**
@@ -66,16 +66,16 @@ public class LoginActivity extends FragmentActivity {
      * @param view Botão "Entrar"
      */
     public void login(View view){
-        final EditText username_camp =  (EditText)  findViewById(R.id.username);
-        final EditText password_camp =  (EditText)  findViewById(R.id.password);
-        final CheckBox keep_connected = (CheckBox)  findViewById(R.id.checkBox);
+        final EditText email =  (EditText)  findViewById(R.id.username);
+        final EditText senha =  (EditText)  findViewById(R.id.password);
+        final CheckBox permanecerConectado = (CheckBox)  findViewById(R.id.checkBox);
 
-        if (username_camp.getText().toString().equals("") || password_camp.getText().toString().equals("")){
+        if (email.getText().toString().equals("") || senha.getText().toString().equals("")){
             ToastMessage("E-mail/Senha incorretos");
-            password_camp.setText(null);    // Apaga o campo "Senha"
+            senha.setText(null);    // Apaga o campo "Senha"
 
         } else {
-            showProgress(true); // Começa o Loading
+            mostraCarregamento(true); // Começa o Loading
             Response.Listener<String> responseListener = new Response.Listener<String>() {
 
                 @Override
@@ -91,7 +91,7 @@ public class LoginActivity extends FragmentActivity {
                             String salt = jsonResponse.getString("salt");
                             String hash = jsonResponse.getString("hash");
 
-                            if(PasswordAuthentication.check_password_hash(password_camp.getText().toString(), salt, hash)){
+                            if(PasswordAuthentication.check_password_hash(senha.getText().toString(), salt, hash)){
                                 /*==================*/
                                 /* LOGIN SUCCESSFUL */
                                 /*==================*/
@@ -104,34 +104,34 @@ public class LoginActivity extends FragmentActivity {
                                 intent.putExtra("user_id", id);
                                 intent.putExtra("nome", nome);
                                 intent.putExtra("sobrenome", sobrenome);
-                                intent.putExtra("email", username_camp.getText().toString());
+                                intent.putExtra("email", email.getText().toString());
 
                                 /* Guarda os dados do usuario para entrar automaticamente */
-                                if (keep_connected.isChecked()){
+                                if (permanecerConectado.isChecked()){
                                     SharedPreferences sharedPref = getSharedPreferences("logged_user", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPref.edit();
                                     editor.putString("nome", nome);
                                     editor.putString("sobrenome", sobrenome);
-                                    editor.putString("email", username_camp.getText().toString());
+                                    editor.putString("email", email.getText().toString());
                                     editor.putString("user_id", id);
                                     editor.putBoolean("keep_connected", true);
                                     editor.commit();
                                 }
 
-                                password_camp.setText(null);
+                                senha.setText(null);
                                 LoginActivity.this.startActivity(intent);
 
                             } else {
                                 /* EMAIL CADASTRADO, SENHA INCORRETA */
-                                showProgress(false);
+                                mostraCarregamento(false);
                                 ToastMessage("E-mail/Senha incorretos");
-                                password_camp.setText(null);
+                                senha.setText(null);
                             }
                         } else {
                             /* EMAIL NAO CADASTRADO */
-                            showProgress(false);
+                            mostraCarregamento(false);
                             ToastMessage("E-mail/Senha incorretos");
-                            password_camp.setText(null);
+                            senha.setText(null);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -139,7 +139,7 @@ public class LoginActivity extends FragmentActivity {
                 }
             };
             /* ENTRA NA DATABASE ONLINE */
-            LoginRequest loginRequest = new LoginRequest(username_camp.getText().toString(), responseListener);
+            LoginRequest loginRequest = new LoginRequest(email.getText().toString(), responseListener);
             RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
             queue.add(loginRequest); // Executa as tarefas requisitadas
         }
@@ -149,7 +149,7 @@ public class LoginActivity extends FragmentActivity {
      * Muda o layout activity_login para uma tela de carregamento
      * @param show On/Off
      */
-    private void showProgress(boolean show) {
+    private void mostraCarregamento(boolean show) {
         final View ProgressView = findViewById(R.id.login_progress);
         final View LoginFormView = findViewById(R.id.my_login_form);
         final View BottomButton = findViewById(R.id.naoCadastrado);

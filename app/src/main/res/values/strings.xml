@@ -32,7 +32,7 @@
     <string name="precovaga">R$ %1$d</string>
     <string name="qtdmoradores">Moradores: %1$d</string>
     <string name="desc">Descrição</string>
-    
+
     <string name="endereco">Endereço</string>
     <string name="enderecotext">%1$s, %2$d - %3$s</string>
     <string name="bairro">Bairro</string>
@@ -44,5 +44,29 @@
     <string name="sobre">Sobre</string>
     <string name="sair">Sair</string>
     <string name="configura_es">Configurações</string>
+
+    <!-- Cadastro de moradia -->
+    <string name="localiza_o">LOCALIZAÇÃO</string>
+    <string name="dica">Pode ser o nome da república, ou o nome do prédio. Pode usar a imaginação também, se quiser :P</string>
+    <string name="nome_da_moradia">Nome da moradia</string>
+    <string name="apto_ou_rep">apartamento ou república?</string>
+    <string name="estado">Estado</string>
+    <string name="complemento">Complemento</string>
+    <string name="n_mero">Número</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="endere_o">Endereço</string>
+    <string name="_25_completo">25% Completo</string>
+    <string name="apartamento">Apartamento</string>
+    <string name="rep_blica">República</string>
+    <string name="a_moradia">a moradia é...</string>
+    <string name="masculina">Masculina</string>
+    <string name="feminina">Feminina</string>
+    <string name="unissex">Unissex</string>
+    <string name="qual_a_quantidade_de_moradores">qual a quantidade de moradores?</string>
+    <string name="aceitam_animais">Aceitam animais?</string>
+    <string name="telefone_para_contato">telefone para contato</string>
+    <string name="descreva_a_moradia">Descreva a moradia</string>
+    <string name="descri_o">Descrição</string>
+    <string name="adicionar_moradia">Adicionar Moradia</string>
 
 </resources>

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    tools:context="com.usp.icmc.taemcasa.MinhasVagas.AdicionarMoradia">
+
+    <LinearLayout
+        android:id="@+id/progresso"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="vertical"
+        android:background="#fff"
+        android:elevation="4dp"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:height="0dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:max="100"
+                android:progress="25"
+                android:progressTint="@color/colorPrimary" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:height="0dp">
+
+            <TextView
+                android:id="@+id/statusCompleto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/_25_completo"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="?attr/colorControlNormal"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/progresso">
+
+        <LinearLayout
+            android:id="@+id/dados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp"
+            android:layout_margin="8dp"
+            android:background="#fff"
+            android:elevation="10dp"
+
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/cabecalho"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:visibility="visible">
+
+                <ImageButton
+                    android:id="@+id/adicionarFoto"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@android:drawable/ic_menu_camera"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                    android:id="@+id/nomeMoradia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/nome_da_moradia"
+                    android:inputType="text"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@+id/adicionarFoto"
+                    android:layout_toEndOf="@+id/adicionarFoto"
+                    android:nextFocusDown="@+id/logradouro"/>
+
+                <TextView
+                    android:id="@+id/dica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/nomeMoradia"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/adicionarFoto"
+                    android:layout_toRightOf="@+id/adicionarFoto"
+                    android:text="@string/dica"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/enderecoTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/endere_o"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/endereco"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/end1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/logradouro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:ems="10"
+                        android:hint="@string/logradouro"
+                        android:inputType="text"
+                        android:nextFocusDown="@+id/numero"/>
+
+                    <EditText
+                        android:id="@+id/numero"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:ems="10"
+                        android:hint="@string/n_mero"
+                        android:inputType="textPersonName"
+                        android:nextFocusDown="@+id/bairro"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/end2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/bairro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:ems="10"
+                        android:hint="@string/bairro"
+                        android:inputType="text"
+                        android:nextFocusDown="@+id/complemento"/>
+
+                    <EditText
+                        android:id="@+id/complemento"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:ems="10"
+                        android:hint="@string/complemento"
+                        android:inputType="textPersonName"
+                        android:nextFocusDown="@+id/cidade"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/end3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/cidade"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:ems="10"
+                        android:hint="@string/cidade"
+                        android:inputType="text"
+                        android:nextFocusDown="@+id/estado"/>
+
+                    <EditText
+                        android:id="@+id/estado"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:ems="10"
+                        android:hint="@string/estado"
+                        android:inputType="textPersonName"
+                        android:nextFocusDown="@+id/perfil"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/perfilTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apto_ou_rep"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:visibility="visible" />
+
+            <RadioGroup
+                android:id="@+id/perfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:nextFocusDown="@+id/tipo">
+
+                <RadioButton
+                    android:id="@+id/apartamento"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/apartamento" />
+
+                <RadioButton
+                    android:id="@+id/republica"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:checked="false"
+                    android:text="@string/rep_blica" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tipoTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/a_moradia"
+                android:visibility="visible" />
+
+            <RadioGroup
+                android:id="@+id/tipo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:nextFocusDown="@+id/nMoradores">
+
+                <RadioButton
+                    android:id="@+id/masculina"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/masculina" />
+
+                <RadioButton
+                    android:id="@+id/feminina"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/feminina" />
+
+                <RadioButton
+                    android:id="@+id/mista"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:checked="false"
+                    android:text="@string/unissex" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/dadosMoradoresTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/qual_a_quantidade_de_moradores"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/dadosMoradores"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/nMoradores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:nextFocusDown="@+id/aceitamAnimais"/>
+
+                <CheckBox
+                    android:id="@+id/aceitamAnimais"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aceitam_animais"
+                    android:nextFocusDown="@+id/telefone"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView13"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/telefone_para_contato"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/telefoneLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/telefone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:nextFocusDown="@+id/descricao"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/descricaoTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/descreva_a_moradia"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/descricaoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/descricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/descri_o"
+                    android:inputType="textMultiLine"
+                    android:maxLength="500"
+                    android:nextFocusDown="@+id/adicionarMoradia"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/adicionarMoradia"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adicionar_moradia"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

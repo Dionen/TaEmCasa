@@ -210,7 +210,7 @@ public class MenuActivity extends AppCompatActivity {
                 case 1:
                     return "WISHLIST";
                 case 2:
-                    return "MINHAS VAGAS";
+                    return "MINHAS \nMORADIAS";
             }
             return null;
         }

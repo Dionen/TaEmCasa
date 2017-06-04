@@ -40,7 +40,7 @@
                 android:layout_marginEnd="8dp" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Max"
@@ -48,14 +48,14 @@
                 app:layout_constraintLeft_toRightOf="@+id/seekBar" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="Min"
                 app:layout_constraintBottom_toBottomOf="@+id/seekBar"
-                app:layout_constraintRight_toLeftOf="@+id/seekBar"
-                android:layout_marginEnd="8dp" />
+                app:layout_constraintRight_toLeftOf="@+id/seekBar" />
 
             <TextView
                 android:id="@+id/textView10"

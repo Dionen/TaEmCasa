@@ -2,12 +2,14 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,20 +32,39 @@ public class MinhasVagasActivity extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
 
-        List<Vaga> cursos = todasAsVagas();
+        List<Vaga> cursos = todasAsVagas();     // GERA MORADIAS TESTE
+                                                // DEVE-SE OBTER AS MORADIAS DO USUARIO
         ListView listaDeCursos = (ListView) rootView.findViewById(R.id.search_result_list);
+        Button adicionarVaga = (Button) rootView.findViewById(R.id.adicionarVaga);
 
-        
+        /* Liga os valores ao layout */
         AdapterCursosPersonalizado adapter = new AdapterCursosPersonalizado(cursos, (Activity) getActivity());
         listaDeCursos.setAdapter(adapter);
+
+        /* Botão de iniciar cadastro de moradia */
+        adicionarVaga.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),  AdicionarMoradia.class);
+
+                intent.putExtra("user_id",   getActivity().getIntent().getExtras().getString("user_id"));
+                intent.putExtra("nome",      getActivity().getIntent().getExtras().getString("nome"));
+                intent.putExtra("sobrenome", getActivity().getIntent().getExtras().getString("sobrenome"));
+                intent.putExtra("email",     getActivity().getIntent().getExtras().getString("email"));
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 
+    // CRIA VALORES PARA TESTE
     public List<Vaga> todasAsVagas(){
         final List<Vaga> list = new ArrayList<Vaga>();
 
-        for (int i = 0; i < 10; ++i) {
-            list.add(new Vaga("Republica do Bozó",
+        for (int i = 0; i < 3; ++i) {
+            list.add(new Vaga("Republica do Bozó nº" + (i+1),
                     "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
                     "Cidade Jardim, São Carlos - SP",
                     "$$$",
@@ -53,6 +74,10 @@ public class MinhasVagasActivity extends Fragment {
         return list;
     }
 
+    /**
+     * Classe responsável por associar as moradias do usuário com elementos
+     * da lista no layout.
+     */
     private class AdapterCursosPersonalizado extends BaseAdapter {
 
         private final List<Vaga> search_data;

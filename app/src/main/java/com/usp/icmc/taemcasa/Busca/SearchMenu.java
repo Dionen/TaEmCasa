@@ -13,26 +13,11 @@ import com.usp.icmc.taemcasa.R;
 
 public class SearchMenu extends Fragment {
 
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_menu);
-
-        Button buscar = (Button) findViewById(R.id.buscar_button);
-        buscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), SearchListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /* Esse layout ta cagado, ta hard-coded e as ids não foram definidas (vou refazer isso aqui -joao).
+        Mas o buscar funciona :P */
         final View rootView = inflater.inflate(R.layout.search_menu, container, false);
         final CheckBox actualLocation = (CheckBox) rootView.findViewById(R.id.actualLocation);
         final Button searchLocation = (Button) rootView.findViewById(R.id.searchLocation);
