@@ -34,7 +34,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:max="100"
-                android:progress="25"
+                android:progress="0"
                 android:progressTint="@color/colorPrimary" />
         </RelativeLayout>
 
@@ -45,18 +45,18 @@
             android:height="0dp">
 
             <TextView
-                android:id="@+id/statusCompleto"
+                android:id="@+id/statusProgresso"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:text="@string/_25_completo"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="?attr/colorControlNormal"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:textStyle="bold" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -66,16 +66,19 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/progresso">
 
         <LinearLayout
             android:id="@+id/dados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="32dp"
-            android:layout_margin="8dp"
             android:background="#fff"
             android:elevation="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
 
             android:orientation="vertical">
 
@@ -86,31 +89,53 @@
                 android:padding="8dp"
                 android:visibility="visible">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FOTO DA RESIDÊNCIA"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="?attr/colorControlNormal"
+                    android:visibility="visible" />
+
                 <ImageButton
                     android:id="@+id/adicionarFoto"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="fitXY"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="false"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@android:drawable/ic_menu_camera"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@+id/textView"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
+
+                <ImageButton
+                    android:id="@+id/removerFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/nomeMoradia"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:adjustViewBounds="false"
+                    android:background="@android:color/transparent"
+                    android:cropToPadding="false"
+                    android:elevation="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@android:drawable/ic_delete" />
 
                 <EditText
                     android:id="@+id/nomeMoradia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
                     android:hint="@string/nome_da_moradia"
                     android:inputType="text"
-                    android:layout_alignParentTop="true"
+                    android:nextFocusDown="@+id/logradouro"
+                    android:layout_below="@+id/adicionarFoto"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/adicionarFoto"
-                    android:layout_toEndOf="@+id/adicionarFoto"
-                    android:nextFocusDown="@+id/logradouro"/>
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/dica"
@@ -118,12 +143,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_below="@+id/nomeMoradia"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
                     android:layout_toEndOf="@+id/adicionarFoto"
-                    android:layout_toRightOf="@+id/adicionarFoto"
                     android:text="@string/dica"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
             </RelativeLayout>
 
@@ -133,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/endere_o"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/endereco"
@@ -141,7 +165,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="8dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/end1"
@@ -157,7 +181,7 @@
                         android:ems="10"
                         android:hint="@string/logradouro"
                         android:inputType="text"
-                        android:nextFocusDown="@+id/numero"/>
+                        android:nextFocusDown="@+id/numero" />
 
                     <EditText
                         android:id="@+id/numero"
@@ -167,7 +191,7 @@
                         android:ems="10"
                         android:hint="@string/n_mero"
                         android:inputType="textPersonName"
-                        android:nextFocusDown="@+id/bairro"/>
+                        android:nextFocusDown="@+id/bairro" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -184,7 +208,7 @@
                         android:ems="10"
                         android:hint="@string/bairro"
                         android:inputType="text"
-                        android:nextFocusDown="@+id/complemento"/>
+                        android:nextFocusDown="@+id/complemento" />
 
                     <EditText
                         android:id="@+id/complemento"
@@ -194,7 +218,7 @@
                         android:ems="10"
                         android:hint="@string/complemento"
                         android:inputType="textPersonName"
-                        android:nextFocusDown="@+id/cidade"/>
+                        android:nextFocusDown="@+id/cidade" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -211,7 +235,7 @@
                         android:ems="10"
                         android:hint="@string/cidade"
                         android:inputType="text"
-                        android:nextFocusDown="@+id/estado"/>
+                        android:nextFocusDown="@+id/estado" />
 
                     <EditText
                         android:id="@+id/estado"
@@ -221,7 +245,7 @@
                         android:ems="10"
                         android:hint="@string/estado"
                         android:inputType="textPersonName"
-                        android:nextFocusDown="@+id/perfil"/>
+                        android:nextFocusDown="@+id/perfil" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -231,18 +255,19 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="@string/apto_ou_rep"
                 android:textAlignment="viewStart"
-                android:layout_gravity="start"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <RadioGroup
                 android:id="@+id/perfil"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:nextFocusDown="@+id/tipo"
                 android:orientation="horizontal"
                 android:padding="8dp"
-                android:nextFocusDown="@+id/tipo">
+                android:visibility="gone">
 
                 <RadioButton
                     android:id="@+id/apartamento"
@@ -266,15 +291,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/a_moradia"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <RadioGroup
                 android:id="@+id/tipo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:nextFocusDown="@+id/nMoradores"
                 android:orientation="horizontal"
                 android:padding="8dp"
-                android:nextFocusDown="@+id/nMoradores">
+                android:visibility="gone">
 
                 <RadioButton
                     android:id="@+id/masculina"
@@ -305,14 +331,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/qual_a_quantidade_de_moradores"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/dadosMoradores"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/nMoradores"
@@ -320,30 +347,31 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:nextFocusDown="@+id/aceitamAnimais"/>
+                    android:nextFocusDown="@+id/aceitamAnimais" />
 
                 <CheckBox
                     android:id="@+id/aceitamAnimais"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/aceitam_animais"
-                    android:nextFocusDown="@+id/telefone"/>
+                    android:nextFocusDown="@+id/telefone"
+                    android:text="@string/aceitam_animais" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/telefoneTitulo"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/telefone_para_contato"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/telefoneLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/telefone"
@@ -351,7 +379,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="phone"
-                    android:nextFocusDown="@+id/descricao"/>
+                    android:nextFocusDown="@+id/descricao" />
             </LinearLayout>
 
             <TextView
@@ -360,14 +388,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/descreva_a_moradia"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/descricaoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/descricao"
@@ -377,7 +406,7 @@
                     android:hint="@string/descri_o"
                     android:inputType="textMultiLine"
                     android:maxLength="500"
-                    android:nextFocusDown="@+id/adicionarMoradia"/>
+                    android:nextFocusDown="@+id/adicionarMoradia" />
 
             </LinearLayout>
 
@@ -386,7 +415,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/adicionar_moradia"
+                android:text="CONTINUAR"
                 android:visibility="visible" />
 
         </LinearLayout>

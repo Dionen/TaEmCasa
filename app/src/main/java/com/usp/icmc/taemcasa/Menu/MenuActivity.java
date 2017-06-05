@@ -8,7 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -34,10 +36,12 @@ import android.widget.Toast;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.MinhasVagas.MinhasVagasActivity;
 import com.usp.icmc.taemcasa.Busca.SearchMenu;
+import com.usp.icmc.taemcasa.Utils.ImagePicker;
 import com.usp.icmc.taemcasa.Wishlist.WishlistActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_ID = 200;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -126,6 +130,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -163,9 +168,11 @@ public class MenuActivity extends AppCompatActivity {
             alerta = builder.create();
             alerta.show();
             return true;
+        } else if (id == R.id.sobre_settings){
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

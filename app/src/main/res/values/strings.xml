@@ -55,7 +55,7 @@
     <string name="n_mero">Número</string>
     <string name="logradouro">Logradouro</string>
     <string name="endere_o">Endereço</string>
-    <string name="_25_completo">25% Completo</string>
+    <string name="_25_completo">0% Completo</string>
     <string name="apartamento">Apartamento</string>
     <string name="rep_blica">República</string>
     <string name="a_moradia">a moradia é...</string>
@@ -68,5 +68,6 @@
     <string name="descreva_a_moradia">Descreva a moradia</string>
     <string name="descri_o">Descrição</string>
     <string name="adicionar_moradia">Adicionar Moradia</string>
+    <string name="pick_image_intent_text">Pick Image Text</string>
 
 </resources>
