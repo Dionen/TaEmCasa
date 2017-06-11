@@ -173,14 +173,11 @@ public class LoginActivity extends FragmentActivity {
     }
 
 
-    private void ToastMessage(CharSequence text){
+    private void ToastMessage(CharSequence text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
-
-
-
 }
