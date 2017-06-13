@@ -25,4 +25,36 @@ public class Republica {
     int qtd_moradores;
     boolean aceita_animais;
 
+    public Republica(int id, String username, String nome, String descricao, String rua, String numero, String complemento, String bairro, String cidade, String estado, double latitude, double longitude, String telefone, String link, int tipo, int perfil, int qtd_moradores, boolean aceita_animais) {
+        this.id_rep = id_rep;
+        this.username = username;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.latitude = (float) latitude;
+        this.longitude = (float) longitude;
+        this.telefone = telefone;
+        this.link = link;
+        this.tipo = tipo;
+        this.perfil = perfil;
+        this.qtd_moradores = qtd_moradores;
+        this.aceita_animais = aceita_animais;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getQtd_moradores() {
+        return qtd_moradores;
+    }
 }

@@ -3,6 +3,7 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +14,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.usp.icmc.taemcasa.Autenticacao.LoginActivity;
+import com.usp.icmc.taemcasa.Autenticacao.PasswordAuthentication;
+import com.usp.icmc.taemcasa.Autenticacao.loginRequest.LoginRequest;
+import com.usp.icmc.taemcasa.Menu.MenuActivity;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MinhasMoradias;
 import com.usp.icmc.taemcasa.R;
+import com.usp.icmc.taemcasa.Structures.Republica;
 import com.usp.icmc.taemcasa.Structures.Vaga;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +49,8 @@ public class MinhasVagasActivity extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
 
-        List<Vaga> cursos = todasAsVagas();     // GERA MORADIAS TESTE
-                                                // DEVE-SE OBTER AS MORADIAS DO USUARIO
+        List<Republica> cursos = todasAsMoradias(); // GERA MORADIAS TESTE
+        // DEVE-SE OBTER AS MORADIAS DO USUARIO
         ListView listaDeCursos = (ListView) rootView.findViewById(R.id.search_result_list);
         Button adicionarVaga = (Button) rootView.findViewById(R.id.adicionarVaga);
 
@@ -59,19 +76,60 @@ public class MinhasVagasActivity extends Fragment {
         return rootView;
     }
 
-    // CRIA VALORES PARA TESTE
-    public List<Vaga> todasAsVagas(){
-        final List<Vaga> list = new ArrayList<Vaga>();
+    private List<Republica> todasAsMoradias() {
+        final List<Republica> lista = new ArrayList<Republica>();
 
-        for (int i = 0; i < 3; ++i) {
-            list.add(new Vaga("Republica do Bozó nº" + (i+1),
-                    "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
-                    "Cidade Jardim, São Carlos - SP",
-                    "$$$",
-                    "Vaga unissex"));
-        }
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonResponse = null;
 
-        return list;
+                try {
+                    jsonResponse = new JSONObject(response);
+
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success) {
+                        String size = jsonResponse.getString("size");
+                        Toast.makeText(getContext(), size, Toast.LENGTH_LONG).show();
+//                        for (int i = 0; i < size; i++) {
+//                            JSONObject atual = jsonResponse.getJSONObject(Integer.toString(i));
+
+//                            int id = atual.getInt("id");
+//                            String username = atual.getString("username");
+//                            String nome = atual.getString("nome");
+//                            String descricao = atual.getString("descricao");
+//                            String rua = atual.getString("rua");
+//                            String numero = atual.getString("numero");
+//                            String complemento = atual.getString("complemento");
+//                            String bairro = atual.getString("bairro");
+//                            String cidade = atual.getString("cidade");
+//                            String estado = atual.getString("estado");
+//                            double latitude = atual.getDouble("latitude");
+//                            double longitude = atual.getDouble("longitude");
+//                            String telefone = atual.getString("telefone");
+//                            String link = atual.getString("link");
+//                            int tipo = atual.getInt("tipo");
+//                            int perfil = atual.getInt("perfil");
+//                            int qtd_moradores = atual.getInt("qtd_moradores");
+//                            boolean aceita_animais = atual.getBoolean("aceita_animais");
+//
+//                            Republica dados = new Republica(id, username, nome, descricao, rua, numero, complemento,
+//                                    bairro, cidade, estado, latitude, longitude, telefone, link, tipo, perfil, qtd_moradores, aceita_animais);
+//                            lista.add(dados);
+//                        }
+                    }
+
+                } catch(JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+            /* ENTRA NA DATABASE ONLINE */
+        MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas
+
+        return lista;
     }
 
     /**
@@ -80,10 +138,10 @@ public class MinhasVagasActivity extends Fragment {
      */
     private class AdapterCursosPersonalizado extends BaseAdapter {
 
-        private final List<Vaga> search_data;
+        private final List<Republica> search_data;
         private Activity activity;
 
-        public AdapterCursosPersonalizado(List<Vaga> search_data, Activity activity) {
+        public AdapterCursosPersonalizado(List<Republica> search_data, Activity activity) {
             this.search_data = search_data;
             this.activity = activity;
         }
@@ -108,7 +166,7 @@ public class MinhasVagasActivity extends Fragment {
             View view = activity.getLayoutInflater()
                     .inflate(R.layout.search_template_2, parent, false);
 
-            Vaga search = search_data.get(position);
+            Republica search = search_data.get(position);
 
             //pegando as referências das Views
             TextView title = (TextView)
@@ -123,9 +181,9 @@ public class MinhasVagasActivity extends Fragment {
                     view.findViewById(R.id.icon);
 
             //Inserindo as informacoes
-            title.setText(search.getTitle());
-            description.setText(search.getDescription());
-            price.setText(search.getPrice());
+            title.setText(search.getNome());
+            description.setText(search.getDescricao());
+            price.setText(search.getQtd_moradores());
 
             if (position > 1){
                 people_interested.setText(position + " pessoas interessadas!");
