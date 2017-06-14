@@ -1,6 +1,7 @@
 package com.usp.icmc.taemcasa.MinhasVagas;
 
 import android.app.Activity;
+import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MinhasVagasActivity extends Fragment {
@@ -32,14 +36,15 @@ public class MinhasVagasActivity extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
 
-        List<Vaga> cursos = todasAsVagas();     // GERA MORADIAS TESTE
-                                                // DEVE-SE OBTER AS MORADIAS DO USUARIO
-        ListView listaDeCursos = (ListView) rootView.findViewById(R.id.search_result_list);
+        List<Vaga> pais = todasAsVagas();                           // GERA MORADIAS TESTE
+        HashMap<Vaga, List<Vaga>> filhos = todosOsFilhos(pais);     // DEVE-SE OBTER AS MORADIAS E VAGAS DO USUARIO
+
+        ExpandableListView minhasMoradias = (ExpandableListView) rootView.findViewById(R.id.expandable_list);
         Button adicionarVaga = (Button) rootView.findViewById(R.id.adicionarVaga);
 
         /* Liga os valores ao layout */
-        AdapterCursosPersonalizado adapter = new AdapterCursosPersonalizado(cursos, (Activity) getActivity());
-        listaDeCursos.setAdapter(adapter);
+        ExpandableListAdapter adapter = new ExpandableListAdapter(getActivity(), pais, filhos);
+        minhasMoradias.setAdapter(adapter);
 
         /* Botão de iniciar cadastro de moradia */
         adicionarVaga.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +64,7 @@ public class MinhasVagasActivity extends Fragment {
         return rootView;
     }
 
-    // CRIA VALORES PARA TESTE
+     /* Gera valores teste de moradias */
     public List<Vaga> todasAsVagas(){
         final List<Vaga> list = new ArrayList<Vaga>();
 
@@ -74,72 +79,168 @@ public class MinhasVagasActivity extends Fragment {
         return list;
     }
 
+    /* Gera valores teste de vagas */
+    public HashMap<Vaga, List<Vaga>> todosOsFilhos(List<Vaga> lista){
+        HashMap<Vaga, List<Vaga>> _listDataChild = new HashMap<Vaga, List<Vaga>>();
+
+        List<Vaga> header1 = new ArrayList<Vaga>();
+        header1.add(new Vaga("-1"));    // Inicializar uma vaga com -1 coloca o botão de "adicionar vaga" no fim da lista filha.
+                                        // Não tem jeito muito bonito de fazer isso.
+
+        List<Vaga> header2 = new ArrayList<Vaga>();
+        header2.add(new Vaga("$$", true, "Vaga Masculina"));
+        header2.add(new Vaga("$$$$", false, "Vaga Feminina"));
+        header2.add(new Vaga("-1"));
+
+        List<Vaga> header3 = new ArrayList<Vaga>();
+        header3.add(new Vaga("$$$", true, "Vaga Feminina"));
+        header3.add(new Vaga("$$", false, "Vaga Feminina"));
+        header3.add(new Vaga("$$", false, "Vaga Feminina"));
+        header3.add(new Vaga("-1"));
+
+        _listDataChild.put(lista.get(0), header1);
+        _listDataChild.put(lista.get(1), header2);
+        _listDataChild.put(lista.get(2), header3);
+
+        return _listDataChild;
+    }
+
     /**
      * Classe responsável por associar as moradias do usuário com elementos
      * da lista no layout.
+     *
+     * É necessária uma lista de Moradias e um Hashmap<Moradia, List<Vaga>>
+     * No momento só utiliza "Vaga".
      */
-    private class AdapterCursosPersonalizado extends BaseAdapter {
+    public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-        private final List<Vaga> search_data;
-        private Activity activity;
+        private Context _context;
+        private List<Vaga> _listDataHeader;
+        private HashMap<Vaga, List<Vaga>> _listDataChild;
 
-        public AdapterCursosPersonalizado(List<Vaga> search_data, Activity activity) {
-            this.search_data = search_data;
-            this.activity = activity;
+        public ExpandableListAdapter(Context context, List<Vaga> listDataHeader,
+                                     HashMap<Vaga, List<Vaga>> listChildData) {
+            this._context = context;
+            this._listDataHeader = listDataHeader;
+            this._listDataChild = listChildData;
         }
 
         @Override
-        public int getCount() {
-            return search_data.size();
+        public Object getChild(int groupPosition, int childPosititon) {
+            return this._listDataChild.get(this._listDataHeader.get(groupPosition))
+                    .get(childPosititon);
         }
 
         @Override
-        public Object getItem(int position) {
-            return search_data.get(position);
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        /* Sub-classe necessária para podermos adicionar o botão "ADICIONAR VAGA" no final das sub-listas */
+        class ViewHolder {
+            TextView tipoMorador;
+            TextView preco;
+            TextView individualTexto;
+            ImageView removerVaga;
+            Button adicionarVaga;
         }
 
         @Override
-        public long getItemId(int position) {
-            return position;
-        }
+        public View getChildView(int groupPosition, final int childPosition,
+                                 boolean isLastChild, View convertView, ViewGroup parent) {
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = activity.getLayoutInflater()
-                    .inflate(R.layout.search_template_2, parent, false);
+            View view = convertView;
+            final Vaga conteudoVaga = (Vaga) getChild(groupPosition, childPosition);
 
-            Vaga search = search_data.get(position);
+            LayoutInflater infalInflater = (LayoutInflater) this._context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = infalInflater.inflate(R.layout.search_template_2_item, null);
 
-            //pegando as referências das Views
-            TextView title = (TextView)
-                    view.findViewById(R.id.title);
-            TextView description = (TextView)
-                    view.findViewById(R.id.description);
-            TextView people_interested = (TextView)
-                    view.findViewById(R.id.people_interested);
-            TextView price = (TextView)
-                    view.findViewById(R.id.price);
-            ImageView imagem = (ImageView)
-                    view.findViewById(R.id.icon);
+            ViewHolder holder = new ViewHolder();
+            holder.tipoMorador = (TextView) view.findViewById(R.id.tipoMorador);
+            holder.preco = (TextView) view.findViewById(R.id.preco);
+            holder.individualTexto = (TextView) view.findViewById(R.id.individualTexto);
+            holder.removerVaga = (ImageView) view.findViewById(R.id.removerVaga);
+            holder.adicionarVaga = (Button) view.findViewById(R.id.adicionarVaga);
 
-            //Inserindo as informacoes
-            title.setText(search.getTitle());
-            description.setText(search.getDescription());
-            price.setText(search.getPrice());
+            if (conteudoVaga.getPrice().equals("-1")){
+                /* Caso seja o botão de adicionar vaga */
+                holder.tipoMorador.setVisibility(View.GONE);
+                holder.preco.setVisibility(View.GONE);
+                holder.individualTexto.setVisibility(View.GONE);
+                holder.removerVaga.setVisibility(View.GONE);
+                holder.adicionarVaga.setVisibility(View.VISIBLE);
+            } else {
+                /*Inserindo as informacoes das vagas */
+                holder.tipoMorador.setText(conteudoVaga.gettipoMorador());
+                holder.preco.setText(conteudoVaga.getPrice());
 
-            if (position > 1){
-                people_interested.setText(position + " pessoas interessadas!");
-            } else if (position == 0) {
-                people_interested.setVisibility(View.GONE);
-                description.setMaxLines(3);
-            } else if (position == 1){
-                people_interested.setText(position + " pessoa interessada!");
+                if (conteudoVaga.getIndividual()) {
+                    holder.individualTexto.setText("Quarto Individual");
+                } else {
+                    holder.individualTexto.setText("Quarto Compartilhado");
+                }
+
+                /* REMOVER VAGA VEM AQUI */
             }
 
-            imagem.setImageResource(R.drawable.ic_menu_gallery);
+            view.setTag(holder);
             return view;
         }
 
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return this._listDataChild.get(this._listDataHeader.get(groupPosition))
+                    .size();
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return this._listDataHeader.get(groupPosition);
+        }
+
+        @Override
+        public int getGroupCount() {
+            return this._listDataHeader.size();
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                                 View convertView, ViewGroup parent) {
+
+            Vaga header = (Vaga) getGroup(groupPosition);
+            if (convertView == null) {
+                LayoutInflater infalInflater = (LayoutInflater) this._context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = infalInflater.inflate(R.layout.search_template_2, null);
+            }
+
+            TextView title = (TextView) convertView.findViewById(R.id.title);
+            TextView description = (TextView) convertView.findViewById(R.id.description);
+            TextView address = (TextView) convertView.findViewById(R.id.address);
+
+            //Inserindo as informacoes
+            title.setText(header.getTitle());
+            description.setText(header.getDescription());
+            address.setText(header.getAddress());
+
+            return convertView;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
     }
 
 }

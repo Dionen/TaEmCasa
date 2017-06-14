@@ -13,14 +13,26 @@ public class Vaga {
     private String description;
     private String address;
     private String price;
-    private String type;
+    private String tipoMoradia;
+    private boolean individual;
+    private String tipoMorador;
 
     public Vaga(String title, String description, String address, String price, String type){
         this.title = title;
         this.description = description;
         this.address = address;
         this.price = price;
-        this.type = type;
+        this.tipoMoradia = type;
+    }
+
+    public Vaga(String price, boolean individual, String tipoMorador){
+        this.price = price;
+        this.individual = individual;
+        this.tipoMorador = tipoMorador;
+    }
+
+    public Vaga(String price){
+        this.price = price;
     }
 
     public String getTitle(){
@@ -39,7 +51,15 @@ public class Vaga {
         return price;
     }
 
-    public String getType(){
-        return type;
+    public String getTipoMoradia(){
+        return tipoMoradia;
+    }
+
+    public boolean getIndividual(){
+        return individual;
+    }
+
+    public String gettipoMorador(){
+        return tipoMorador;
     }
 }

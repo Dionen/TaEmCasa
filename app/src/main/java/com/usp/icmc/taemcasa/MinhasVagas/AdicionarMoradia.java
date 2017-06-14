@@ -27,7 +27,6 @@ import com.usp.icmc.taemcasa.Autenticacao.RegisterActivity;
 import com.usp.icmc.taemcasa.Autenticacao.loginRequest.RegisterRequest;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest;
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Utils.ImagePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -25,6 +25,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <CheckBox
+                android:id="@+id/quartoIndividual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Quarto individual?"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -121,7 +134,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
             <ToggleButton
-                android:id="@+id/toggleButton2"
+                android:id="@+id/toggleButtonRep"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="40dp"
@@ -133,7 +146,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <ToggleButton
-                android:id="@+id/toggleButton"
+                android:id="@+id/toggleButtonApt"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -154,10 +167,10 @@
                 app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toggleButton2" />
+                app:layout_constraintTop_toBottomOf="@+id/toggleButtonRep" />
 
             <RadioGroup
-                android:id="@+id/radioGroup"
+                android:id="@+id/radioGroupVaga"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -165,14 +178,14 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:checkedButton="@+id/radioButton"
+                android:checkedButton="@+id/unissex"
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView7">
 
                 <RadioButton
-                    android:id="@+id/radioButton3"
+                    android:id="@+id/masculina"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -180,7 +193,7 @@
                     android:textAlignment="textStart" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/feminina"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -188,7 +201,7 @@
                     android:textAlignment="textStart" />
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/unissex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.82"
@@ -204,8 +217,8 @@
                 android:layout_marginTop="8dp"
                 android:text="R$"
                 app:layout_constraintBottom_toTopOf="@+id/textView3"
-                app:layout_constraintRight_toLeftOf="@+id/editText3"
-                app:layout_constraintTop_toTopOf="@+id/editText3" />
+                app:layout_constraintRight_toLeftOf="@+id/edtMaxPreco"
+                app:layout_constraintTop_toTopOf="@+id/edtMaxPreco" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -215,8 +228,8 @@
                 android:layout_marginTop="8dp"
                 android:text="R$"
                 app:layout_constraintBottom_toTopOf="@+id/textView2"
-                app:layout_constraintRight_toLeftOf="@+id/editText2"
-                app:layout_constraintTop_toTopOf="@+id/editText2" />
+                app:layout_constraintRight_toLeftOf="@+id/edtMinPreco"
+                app:layout_constraintTop_toTopOf="@+id/edtMinPreco" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -227,9 +240,9 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:text="Valor máximo"
-                app:layout_constraintLeft_toLeftOf="@+id/editText3"
-                app:layout_constraintRight_toRightOf="@+id/editText3"
-                app:layout_constraintTop_toBottomOf="@+id/editText3" />
+                app:layout_constraintLeft_toLeftOf="@+id/edtMaxPreco"
+                app:layout_constraintRight_toRightOf="@+id/edtMaxPreco"
+                app:layout_constraintTop_toBottomOf="@+id/edtMaxPreco" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -240,12 +253,12 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:text="Valor mínimo"
-                app:layout_constraintLeft_toLeftOf="@+id/editText2"
-                app:layout_constraintRight_toRightOf="@+id/editText2"
-                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+                app:layout_constraintLeft_toLeftOf="@+id/edtMinPreco"
+                app:layout_constraintRight_toRightOf="@+id/edtMinPreco"
+                app:layout_constraintTop_toBottomOf="@+id/edtMinPreco" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/edtMaxPreco"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="40dp"
@@ -255,10 +268,10 @@
                 android:textAlignment="center"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupVaga" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/edtMinPreco"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -268,10 +281,10 @@
                 android:textAlignment="center"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupVaga" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/checkboxAnimais"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -282,7 +295,7 @@
                 android:text="Permite animais de estimação?"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/quartoIndividual" />
 
             <Button
                 android:id="@+id/buscar_button"
@@ -296,7 +309,7 @@
                 android:text="BUSCAR"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+                app:layout_constraintTop_toBottomOf="@+id/checkboxAnimais" />
 
             <SeekBar
                 android:id="@+id/seekBar"

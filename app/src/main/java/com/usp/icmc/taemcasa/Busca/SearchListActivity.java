@@ -1,7 +1,6 @@
 package com.usp.icmc.taemcasa.Busca;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,9 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.usp.icmc.taemcasa.Autenticacao.LoginActivity;
-import com.usp.icmc.taemcasa.Autenticacao.RegisterActivity;
-import com.usp.icmc.taemcasa.Perfil.PerfilVaga;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
@@ -111,7 +107,7 @@ public class SearchListActivity extends AppCompatActivity {
             description.setText(search.getDescription());
             address.setText(search.getAddress());
             price.setText(search.getPrice());
-            type.setText(search.getType());
+            type.setText(search.getTipoMoradia());
             imagem.setImageResource(R.drawable.ic_menu_gallery);
             return view;
         }
