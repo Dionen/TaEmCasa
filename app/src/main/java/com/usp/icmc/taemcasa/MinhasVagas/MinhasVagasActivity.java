@@ -39,6 +39,9 @@ import java.util.List;
 
 public class MinhasVagasActivity extends Fragment {
 
+    List<Republica> listaMoradias;
+    AdapterCursosPersonalizado adapter;
+
     @Override
     public void onAttach (Context context){
         super.onAttach(context);
@@ -49,13 +52,13 @@ public class MinhasVagasActivity extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
 
-        List<Republica> cursos = todasAsMoradias(); // GERA MORADIAS TESTE
-        // DEVE-SE OBTER AS MORADIAS DO USUARIO
+        listaMoradias = new ArrayList<Republica>();
+
         ListView listaDeCursos = (ListView) rootView.findViewById(R.id.search_result_list);
         Button adicionarVaga = (Button) rootView.findViewById(R.id.adicionarVaga);
 
         /* Liga os valores ao layout */
-        AdapterCursosPersonalizado adapter = new AdapterCursosPersonalizado(cursos, (Activity) getActivity());
+        adapter = new AdapterCursosPersonalizado(listaMoradias, (Activity) getActivity());
         listaDeCursos.setAdapter(adapter);
 
         /* Botão de iniciar cadastro de moradia */
@@ -76,9 +79,11 @@ public class MinhasVagasActivity extends Fragment {
         return rootView;
     }
 
-    private List<Republica> todasAsMoradias() {
-        final List<Republica> lista = new ArrayList<Republica>();
+    @Override
+    public void onResume() {
+        super.onResume();
 
+//      Atualiza a lista de moradias do usuário.
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -89,47 +94,59 @@ public class MinhasVagasActivity extends Fragment {
 
                     boolean success = jsonResponse.getBoolean("success");
                     if(success) {
-                        String size = jsonResponse.getString("size");
-                        Toast.makeText(getContext(), size, Toast.LENGTH_LONG).show();
-//                        for (int i = 0; i < size; i++) {
-//                            JSONObject atual = jsonResponse.getJSONObject(Integer.toString(i));
+                        JSONArray moradiasResponse = jsonResponse.getJSONArray("data");
 
-//                            int id = atual.getInt("id");
-//                            String username = atual.getString("username");
-//                            String nome = atual.getString("nome");
-//                            String descricao = atual.getString("descricao");
-//                            String rua = atual.getString("rua");
-//                            String numero = atual.getString("numero");
-//                            String complemento = atual.getString("complemento");
-//                            String bairro = atual.getString("bairro");
-//                            String cidade = atual.getString("cidade");
-//                            String estado = atual.getString("estado");
-//                            double latitude = atual.getDouble("latitude");
-//                            double longitude = atual.getDouble("longitude");
-//                            String telefone = atual.getString("telefone");
-//                            String link = atual.getString("link");
-//                            int tipo = atual.getInt("tipo");
-//                            int perfil = atual.getInt("perfil");
-//                            int qtd_moradores = atual.getInt("qtd_moradores");
-//                            boolean aceita_animais = atual.getBoolean("aceita_animais");
-//
-//                            Republica dados = new Republica(id, username, nome, descricao, rua, numero, complemento,
-//                                    bairro, cidade, estado, latitude, longitude, telefone, link, tipo, perfil, qtd_moradores, aceita_animais);
-//                            lista.add(dados);
-//                        }
+                        for(int i = 0; i < moradiasResponse.length(); i++) {
+                            JSONObject atual = moradiasResponse.getJSONObject(i);
+
+                            int id = atual.getInt("id");
+                            String username = atual.getString("username");
+                            String nome = atual.getString("nome");
+                            String descricao = atual.getString("descricao");
+                            String rua = atual.getString("rua");
+                            String numero = atual.getString("numero");
+                            String complemento = atual.getString("complemento");
+                            String bairro = atual.getString("bairro");
+                            String cidade = atual.getString("cidade");
+                            String estado = atual.getString("estado");
+
+                            double latitude = 0;
+                            String s = atual.getString("latitude");
+                            if (s != "null")
+                                latitude = Double.parseDouble(s);
+
+                            double longitude = 0;
+                            s = atual.getString("longitude");
+                            if (s != "null")
+                                longitude = Double.parseDouble(s);
+
+                            String telefone = atual.getString("telefone");
+                            String link = atual.getString("link");
+                            int tipo = atual.getInt("tipo");
+                            int perfil = atual.getInt("perfil");
+                            int qtd_moradores = atual.getInt("qtd_moradores");
+
+                            boolean aceita_animais = false;
+                            int bool = atual.getInt("aceita_animais");
+                            if (bool == 1) aceita_animais = true;
+
+                            Republica dados = new Republica(id, username, nome, descricao, rua, numero, complemento,
+                                    bairro, cidade, estado, latitude, longitude, telefone, link, tipo, perfil, qtd_moradores, aceita_animais);
+                            listaMoradias.add(dados);
+                        }
                     }
 
                 } catch(JSONException e) {
                     e.printStackTrace();
                 }
+
+                adapter.notifyDataSetChanged();
             }
         };
             /* ENTRA NA DATABASE ONLINE */
         MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas
-
-        return lista;
     }
 
     /**
@@ -183,7 +200,7 @@ public class MinhasVagasActivity extends Fragment {
             //Inserindo as informacoes
             title.setText(search.getNome());
             description.setText(search.getDescricao());
-            price.setText(search.getQtd_moradores());
+            price.setText(search.getQtd_moradores() + "");
 
             if (position > 1){
                 people_interested.setText(position + " pessoas interessadas!");

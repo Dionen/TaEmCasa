@@ -11,35 +11,37 @@
 		mysqli_stmt_bind_param($statement, "s", $username);
 		mysqli_stmt_execute($statement);
 
-	    mysqli_stmt_bind_result($statement, $id_rep, $username, $nome, $descricao, $rua, $numero, $complemento, $bairro, $cidade, $estado, $latitude, $longitude, $telefone, $link, $tipo, $perfil, $qtd_moradores, $aceita_animais);
+		mysqli_stmt_bind_result($statement, $id_rep, $username, $nome, $descricao, $rua, $numero, $complemento, $bairro, $cidade, $estado, $latitude, $longitude, $telefone, $link, $tipo, $perfil, $qtd_moradores, $aceita_animais);
 
-       	$i = 0;
-        while (mysqli_stmt_fetch($statement)) {
-            $response[$i]["id"] = $id_rep;
-            $response[$i]["username"] = $username;
-            $response[$i]["nome"] = $nome;
-            $response[$i]["descricao"] = $descricao;
-            $response[$i]["rua"] = $rua;
-            $response[$i]["numero"] = $numero;
-            $response[$i]["complemento"] = $complemento;
-            $response[$i]["bairro"] = $bairro;
-            $response[$i]["cidade"] = $cidade;
-            $response[$i]["estado"] = $estado;
-            $response[$i]["latitude"] = $latitude;
-            $response[$i]["longitude"] = $longitude;
-            $response[$i]["telefone"] = $telefone;
-            $response[$i]["link"] = $link;
-            $response[$i]["tipo"] = $tipo;
-            $response[$i]["perfil"] = $perfil;
-            $response[$i]["qtd_moradores"] = $qtd_moradores;
-            $response[$i]["aceita_animais"] = $aceita_animais;
-        	$i++;
-        }
+		$response["data"] = array();
+		$i = 0;
+		while (mysqli_stmt_fetch($statement)) {
+			$response["data"][$i]["id"] = $id_rep;
+			$response["data"][$i]["username"] = $username;
+			$response["data"][$i]["nome"] = $nome;
+			$response["data"][$i]["descricao"] = $descricao;
+			$response["data"][$i]["rua"] = $rua;
+			$response["data"][$i]["numero"] = $numero;
+			$response["data"][$i]["complemento"] = $complemento;
+			$response["data"][$i]["bairro"] = $bairro;
+			$response["data"][$i]["cidade"] = $cidade;
+			$response["data"][$i]["estado"] = $estado;
+			$response["data"][$i]["latitude"] = $latitude;
+			$response["data"][$i]["longitude"] = $longitude;
+			$response["data"][$i]["telefone"] = $telefone;
+			$response["data"][$i]["link"] = $link;
+			$response["data"][$i]["tipo"] = $tipo;
+			$response["data"][$i]["perfil"] = $perfil;
+			$response["data"][$i]["qtd_moradores"] = $qtd_moradores;
+			$response["data"][$i]["aceita_animais"] = $aceita_animais;
+			$i++;
+		}
 
-        $response['success'] = true;
+		$response['size'] = (string) $i;
+		$response['success'] = true;
 
 	} else {
-	    $response['success'] = false;
+		$response['success'] = false;
 	}
 
 	echo json_encode($response);
