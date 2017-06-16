@@ -1,7 +1,5 @@
 package com.usp.icmc.taemcasa.MinhasVagas;
 
-import android.app.Activity;
-import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,20 +7,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Estruturas.Moradia;
+import com.usp.icmc.taemcasa.Estruturas.Vaga;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class MinhasVagasActivity extends Fragment {
 
@@ -31,28 +30,36 @@ public class MinhasVagasActivity extends Fragment {
         super.onAttach(context);
     }
 
+    // Dados obtidos pela database
+    List<Moradia> moradias = new ArrayList<Moradia>();
+    HashMap<Moradia, List<Vaga>> vagas = new HashMap<Moradia, List<Vaga>>();
+
+    private ExpandableListView expandableListView;
+    private ExpandableListAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
+        expandableListView = (ExpandableListView) rootView.findViewById(R.id.expandable_list);
 
-        List<Vaga> pais = todasAsVagas();                           // GERA MORADIAS TESTE
-        HashMap<Vaga, List<Vaga>> filhos = todosOsFilhos(pais);     // DEVE-SE OBTER AS MORADIAS E VAGAS DO USUARIO
+        // Funcões quer obtem os dados da database
+        // Acho que dá pra fazer uma só, visto que "moradias" e "vagas" sao
+        // variaveis globais da propria classe.
+        moradias = getMoradias();
+        vagas = getVagas(moradias);
 
-        ExpandableListView minhasMoradias = (ExpandableListView) rootView.findViewById(R.id.expandable_list);
+        // Adapta uma expandableListView para exibir os valores baixados
+        adapter = new ExpandableListAdapter(getActivity(), moradias, vagas);
+        expandableListView.setAdapter(adapter);
+
+        // Botão de adicionar vaga
         Button adicionarVaga = (Button) rootView.findViewById(R.id.adicionarVaga);
-
-        /* Liga os valores ao layout */
-        ExpandableListAdapter adapter = new ExpandableListAdapter(getActivity(), pais, filhos);
-        minhasMoradias.setAdapter(adapter);
-
-        /* Botão de iniciar cadastro de moradia */
         adicionarVaga.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),  AdicionarMoradia.class);
-
                 intent.putExtra("user_id",   getActivity().getIntent().getExtras().getString("user_id"));
                 intent.putExtra("nome",      getActivity().getIntent().getExtras().getString("nome"));
                 intent.putExtra("sobrenome", getActivity().getIntent().getExtras().getString("sobrenome"));
@@ -60,32 +67,37 @@ public class MinhasVagasActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
         return rootView;
     }
 
-     /* Gera valores teste de moradias */
-    public List<Vaga> todasAsVagas(){
-        final List<Vaga> list = new ArrayList<Vaga>();
+    public List<Moradia> getMoradias(){
+        // Retorna List<> com os valores de moradias
+        // Deve obter os dados online
+        // Se for colocar os dados diretamente nas variaveis globais
 
-        for (int i = 0; i < 3; ++i) {
-            list.add(new Vaga("Republica do Bozó nº" + (i+1),
+        final List<Moradia> list = new ArrayList<Moradia>();
+
+        for (int i = 0; i < 4; ++i) {
+            list.add(new Moradia("Republica do Bozó nº",
                     "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
-                    "Cidade Jardim, São Carlos - SP",
-                    "$$$",
-                    "Vaga unissex"));
+                    "Alameda da Rosas", "45", null, "Cidade Jardim", "São Carlos" ,"SP"));
         }
 
         return list;
     }
 
     /* Gera valores teste de vagas */
-    public HashMap<Vaga, List<Vaga>> todosOsFilhos(List<Vaga> lista){
-        HashMap<Vaga, List<Vaga>> _listDataChild = new HashMap<Vaga, List<Vaga>>();
+    public HashMap<Moradia, List<Vaga>> getVagas(List<Moradia> lista){
+        HashMap<Moradia, List<Vaga>> _listDataChild = new HashMap<Moradia, List<Vaga>>();
 
+        // Falta obter as vagas de cada moradia baixada
+        // Da pra fazer isso chamando outra request dentro do mysqli_stmt_fetch($statement)
+        // Aí da pra retornar um JSONArray de vagas dentro de um JSONArray de moradias
+
+        // Valores teste
         List<Vaga> header1 = new ArrayList<Vaga>();
         header1.add(new Vaga("-1"));    // Inicializar uma vaga com -1 coloca o botão de "adicionar vaga" no fim da lista filha.
-                                        // Não tem jeito muito bonito de fazer isso.
+        // Não tem jeito muito bonito de fazer isso.
 
         List<Vaga> header2 = new ArrayList<Vaga>();
         header2.add(new Vaga("$$", true, "Vaga Masculina"));
@@ -98,9 +110,13 @@ public class MinhasVagasActivity extends Fragment {
         header3.add(new Vaga("$$", false, "Vaga Feminina"));
         header3.add(new Vaga("-1"));
 
+        List<Vaga> header4 = new ArrayList<Vaga>();
+        header4.add(new Vaga("-1"));
+
         _listDataChild.put(lista.get(0), header1);
         _listDataChild.put(lista.get(1), header2);
         _listDataChild.put(lista.get(2), header3);
+        _listDataChild.put(lista.get(3), header4);
 
         return _listDataChild;
     }
@@ -115,14 +131,20 @@ public class MinhasVagasActivity extends Fragment {
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Context _context;
-        private List<Vaga> _listDataHeader;
-        private HashMap<Vaga, List<Vaga>> _listDataChild;
+        private List<Moradia> _listDataHeader;
+        private HashMap<Moradia, List<Vaga>> _listDataChild;
 
-        public ExpandableListAdapter(Context context, List<Vaga> listDataHeader,
-                                     HashMap<Vaga, List<Vaga>> listChildData) {
+        public ExpandableListAdapter(Context context, List<Moradia> listDataHeader,
+                                     HashMap<Moradia, List<Vaga>> listChildData) {
             this._context = context;
             this._listDataHeader = listDataHeader;
             this._listDataChild = listChildData;
+        }
+
+        public void setNewItems(List<Moradia> listDataHeader,HashMap<Moradia, List<Vaga>> listChildData) {
+            this._listDataHeader = listDataHeader;
+            this._listDataChild = listChildData;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -213,7 +235,7 @@ public class MinhasVagasActivity extends Fragment {
         public View getGroupView(int groupPosition, boolean isExpanded,
                                  View convertView, ViewGroup parent) {
 
-            Vaga header = (Vaga) getGroup(groupPosition);
+            Moradia header = (Moradia) getGroup(groupPosition);
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) this._context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -225,9 +247,9 @@ public class MinhasVagasActivity extends Fragment {
             TextView address = (TextView) convertView.findViewById(R.id.address);
 
             //Inserindo as informacoes
-            title.setText(header.getTitle());
-            description.setText(header.getDescription());
-            address.setText(header.getAddress());
+            title.setText(header.getNome());
+            description.setText(header.getDescricao());
+            address.setText((header.getEndereco()).enderecoCurto());
 
             return convertView;
         }

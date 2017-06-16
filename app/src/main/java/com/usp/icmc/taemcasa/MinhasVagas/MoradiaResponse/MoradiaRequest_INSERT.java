@@ -11,38 +11,15 @@ import java.util.Map;
  *
  */
 
-/*
-CREATE TABLE republica (
-	id_rep INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	username VARCHAR(20) NOT NULL, ----- Passa o e-mail
-	nome VARCHAR(20),
-	descricao VARCHAR(512),
-	rua VARCHAR(64),
-	numero VARCHAR(8),
-	complemento VARCHAR(64),
-	bairro VARCHAR(20),
-	cidade VARCHAR(20),
-	estado VARCHAR(20),
-	latitude FLOAT,  -------- Da pra conseguir esses valores quando linkarmos com a API do maps
-	longitude FLOAT,
-	telefone VARCHAR(12),
-	link VARCHAR(64), ------- Não adicionei ainda. Deve ter um jeito mais prático de linkar
-	                          uma moradia com um link que não seja através de EditText
-	tipo INT,
-	perfil INT,
-	qtd_moradores INT,
-	aceita_animais BOOLEAN
-);
- */
 
-public class MoradiaRequest extends StringRequest {
+public class MoradiaRequest_INSERT extends StringRequest {
 
     private static final String REGISTER_REQUEST_URL = "https://dionen.000webhostapp.com/RegisterMoradia.php";
     private Map<String, String> params;
 
-    public MoradiaRequest(String username, String nome, String descricao, String rua, String numero, String complemento,
-                          String bairro, String cidade, String estado, String telefone, String tipo, String perfil,
-                          String qtd_moradores, String aceita_animais, Response.Listener<String> listener){
+    public MoradiaRequest_INSERT(String username, String nome, String descricao, String rua, String numero, String complemento,
+                                 String bairro, String cidade, String estado, String telefone, String tipo, String perfil,
+                                 String qtd_moradores, String aceita_animais, Response.Listener<String> listener){
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
 

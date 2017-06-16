@@ -13,7 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Estruturas.Endereco;
+import com.usp.icmc.taemcasa.Estruturas.Vaga;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class WishlistActivity extends Fragment {
         for (int i = 0; i < 10; ++i) {
             list.add(new Vaga("Republica do Poker",
                     "Casa pequena com 1 quarto, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
-                    "Jardim Lutfala, São Carlos - SP",
+                    new Endereco("Alameda da Jaracoacá",  "478", "Perto do barzinho", "Jardim Lutfala", "São Carlos", "SP"),
                     "$$$",
                     "Vaga masculina"));
         }
@@ -99,7 +100,7 @@ public class WishlistActivity extends Fragment {
             //Inserindo as informacoes
             title.setText(search.getTitle());
             description.setText(search.getDescription());
-            address.setText(search.getAddress());
+            address.setText(search.getAddress().enderecoCurto());
             imagem.setImageResource(R.drawable.ic_menu_gallery);
 
             if (position == 2 || position == 4){

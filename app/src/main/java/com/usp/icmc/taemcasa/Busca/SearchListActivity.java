@@ -13,7 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Estruturas.Endereco;
+import com.usp.icmc.taemcasa.Estruturas.Vaga;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class SearchListActivity extends AppCompatActivity {
         final List<Vaga> list = new ArrayList<Vaga>();
 
         for (int i = 0; i < 20; ++i) {
-            list.add(new Vaga("Republica do Bozó", "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).", "Cidade Jardim, São Carlos - SP", "$$$", "Vaga unissex"));
+            list.add(new Vaga("Republica do Bozó", "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).", new Endereco("Alameda dos Trombadinhas", "50",  null, "Cidade Jardim", "São Carlos", "SP"), "$$$", "Vaga unissex"));
         }
 
         return list;
@@ -105,7 +106,7 @@ public class SearchListActivity extends AppCompatActivity {
             //Inserindo as informacoes
             title.setText(search.getTitle());
             description.setText(search.getDescription());
-            address.setText(search.getAddress());
+            address.setText(search.getAddress().enderecoCurto());
             price.setText(search.getPrice());
             type.setText(search.getTipoMoradia());
             imagem.setImageResource(R.drawable.ic_menu_gallery);

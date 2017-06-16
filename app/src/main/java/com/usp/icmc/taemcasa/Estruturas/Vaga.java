@@ -1,4 +1,4 @@
-package com.usp.icmc.taemcasa.Structures;
+package com.usp.icmc.taemcasa.Estruturas;
 
 /**
  * Created by Joao on 24/05/2017.
@@ -11,13 +11,14 @@ package com.usp.icmc.taemcasa.Structures;
 public class Vaga {
     private String title;
     private String description;
-    private String address;
+    private Endereco address;
     private String price;
     private String tipoMoradia;
     private boolean individual;
     private String tipoMorador;
+    private int id_rep;
 
-    public Vaga(String title, String description, String address, String price, String type){
+    public Vaga(String title, String description, Endereco address, String price, String type){
         this.title = title;
         this.description = description;
         this.address = address;
@@ -43,7 +44,7 @@ public class Vaga {
         return description;
     }
 
-    public String getAddress(){
+    public Endereco getAddress(){
         return address;
     }
 

@@ -3,7 +3,6 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -16,21 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.Autenticacao.RegisterActivity;
-import com.usp.icmc.taemcasa.Autenticacao.loginRequest.RegisterRequest;
-import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_INSERT;
 import com.usp.icmc.taemcasa.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class AdicionarMoradia extends AppCompatActivity {
 
@@ -352,7 +347,7 @@ public class AdicionarMoradia extends AppCompatActivity {
                 }
             }
         };
-        MoradiaRequest moradiaRequest = new MoradiaRequest(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
+        MoradiaRequest_INSERT moradiaRequest = new MoradiaRequest_INSERT(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
                 tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
         RequestQueue queue = Volley.newRequestQueue(AdicionarMoradia.this);
