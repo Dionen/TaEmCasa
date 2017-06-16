@@ -3,7 +3,6 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,21 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.Autenticacao.LoginActivity;
-import com.usp.icmc.taemcasa.Autenticacao.PasswordAuthentication;
-import com.usp.icmc.taemcasa.Autenticacao.loginRequest.LoginRequest;
-import com.usp.icmc.taemcasa.Menu.MenuActivity;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MinhasMoradias;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Republica;
-import com.usp.icmc.taemcasa.Structures.Vaga;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +42,7 @@ public class MinhasVagasActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
-
+//      Incializa lista de moradias do usuário
         listaMoradias = new ArrayList<Republica>();
 
         ListView listaDeCursos = (ListView) rootView.findViewById(R.id.search_result_list);
@@ -82,8 +73,13 @@ public class MinhasVagasActivity extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        listaMoradiasRefresh();
+        adapter.notifyDataSetChanged();
+    }
 
-//      Atualiza a lista de moradias do usuário.
+    private void listaMoradiasRefresh() {
+        listaMoradias.clear();
+
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -110,15 +106,17 @@ public class MinhasVagasActivity extends Fragment {
                             String cidade = atual.getString("cidade");
                             String estado = atual.getString("estado");
 
-                            double latitude = 0;
+//                          O JSON vem com floats em formato de string, então é preciso
+//                          fazer essa validação antes do parse para float
                             String s = atual.getString("latitude");
+                            float latitude = 0;
                             if (s != "null")
-                                latitude = Double.parseDouble(s);
+                                latitude = Float.parseFloat(s);
 
-                            double longitude = 0;
+                            float longitude = 0;
                             s = atual.getString("longitude");
                             if (s != "null")
-                                longitude = Double.parseDouble(s);
+                                longitude = Float.parseFloat(s);
 
                             String telefone = atual.getString("telefone");
                             String link = atual.getString("link");
@@ -126,6 +124,8 @@ public class MinhasVagasActivity extends Fragment {
                             int perfil = atual.getInt("perfil");
                             int qtd_moradores = atual.getInt("qtd_moradores");
 
+//                          O bd armazena true como 1, então é preciso fazer essa
+//                          validação para conseguir utilizar o boolean do java
                             boolean aceita_animais = false;
                             int bool = atual.getInt("aceita_animais");
                             if (bool == 1) aceita_animais = true;
@@ -139,11 +139,10 @@ public class MinhasVagasActivity extends Fragment {
                 } catch(JSONException e) {
                     e.printStackTrace();
                 }
-
-                adapter.notifyDataSetChanged();
             }
         };
-            /* ENTRA NA DATABASE ONLINE */
+
+        /* ENTRA NA DATABASE ONLINE */
         MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas

@@ -37,7 +37,7 @@ CREATE TABLE republica (
 
 public class MoradiaRequest extends StringRequest {
 
-    private static final String REGISTER_REQUEST_URL = "https://dionen.000webhostapp.com/RegisterMoradia.php";
+    private static final String REGISTER_REQUEST_URL = "https://dionen.000webhostapp.com/Moradia/Register.php";
     private Map<String, String> params;
 
     public MoradiaRequest(String username, String nome, String descricao, String rua, String numero, String complemento,

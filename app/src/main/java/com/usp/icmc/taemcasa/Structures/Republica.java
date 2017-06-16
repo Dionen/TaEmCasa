@@ -25,8 +25,8 @@ public class Republica {
     int qtd_moradores;
     boolean aceita_animais;
 
-    public Republica(int id, String username, String nome, String descricao, String rua, String numero, String complemento, String bairro, String cidade, String estado, double latitude, double longitude, String telefone, String link, int tipo, int perfil, int qtd_moradores, boolean aceita_animais) {
-        this.id_rep = id_rep;
+    public Republica(int id, String username, String nome, String descricao, String rua, String numero, String complemento, String bairro, String cidade, String estado, float latitude, float longitude, String telefone, String link, int tipo, int perfil, int qtd_moradores, boolean aceita_animais) {
+        this.id_rep = id;
         this.username = username;
         this.nome = nome;
         this.descricao = descricao;
@@ -36,8 +36,8 @@ public class Republica {
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
-        this.latitude = (float) latitude;
-        this.longitude = (float) longitude;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.telefone = telefone;
         this.link = link;
         this.tipo = tipo;
