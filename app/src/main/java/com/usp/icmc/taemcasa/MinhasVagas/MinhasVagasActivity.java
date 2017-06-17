@@ -168,7 +168,7 @@ public class MinhasVagasActivity extends Fragment {
         }
 
         @Override
-        public View getChildView(int groupPosition, final int childPosition,
+        public View getChildView(final int groupPosition, final int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
 
             View view = convertView;
@@ -192,6 +192,18 @@ public class MinhasVagasActivity extends Fragment {
                 holder.individualTexto.setVisibility(View.GONE);
                 holder.removerVaga.setVisibility(View.GONE);
                 holder.adicionarVaga.setVisibility(View.VISIBLE);
+                holder.adicionarVaga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), AdicionarVaga.class);
+
+                        Moradia moradia = (Moradia) getGroup(groupPosition);
+
+                        intent.putExtra("nome", moradia.getNome());
+                        startActivity(intent);
+                    }
+                });
+
             } else {
                 /*Inserindo as informacoes das vagas */
                 holder.tipoMorador.setText(conteudoVaga.gettipoMorador());
@@ -205,6 +217,8 @@ public class MinhasVagasActivity extends Fragment {
 
                 /* REMOVER VAGA VEM AQUI */
             }
+
+
 
             view.setTag(holder);
             return view;

@@ -1,5 +1,6 @@
 package com.usp.icmc.taemcasa.MinhasVagas;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.usp.icmc.taemcasa.Estruturas.Endereco;
+import com.usp.icmc.taemcasa.Maps.LatLng_Utils;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_INSERT;
 import com.usp.icmc.taemcasa.R;
 
@@ -36,6 +39,8 @@ public class AdicionarMoradia extends AppCompatActivity {
     private AlertDialog alerta;
     private Bitmap newProfilePic;
     private int porcentagemProgresso;
+    private Endereco endereco;
+    LatLng_Utils coordenadas;
 
     private ImageButton adicionarFoto;
     private ImageButton removerFoto;
@@ -91,6 +96,12 @@ public class AdicionarMoradia extends AppCompatActivity {
                 toast.show();
                 estado.requestFocus();
             } else {
+                endereco = new Endereco(logradouro.getText().toString(), numero.getText().toString(), null, bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString());
+
+                ProgressDialog dialog = ProgressDialog.show(AdicionarMoradia.this, "", "Loading. Please wait...", true);
+                coordenadas = new LatLng_Utils(context, endereco.enderecoLongo());
+                dialog.cancel();
+
                 findViewById(R.id.perfilTitulo).setVisibility(View.VISIBLE);
                 findViewById(R.id.perfil).setVisibility(View.VISIBLE);
                 findViewById(R.id.perfil).requestFocus();
@@ -173,7 +184,7 @@ public class AdicionarMoradia extends AppCompatActivity {
                 porcentagemProgresso++;
             }
         } else {
-            cadastrarMoradia(view);
+            //cadastrarMoradia(view);
         }
     }
 
