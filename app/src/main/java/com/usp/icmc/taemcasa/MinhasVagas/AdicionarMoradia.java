@@ -5,201 +5,52 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.Estruturas.Endereco;
-import com.usp.icmc.taemcasa.Maps.LatLng_Utils;
-import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_INSERT;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_ADD;
 import com.usp.icmc.taemcasa.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 public class AdicionarMoradia extends AppCompatActivity {
 
-    private String user_id;
-    private String user_nome;
-    private String user_sobrenome;
+    private static final int RC_PHOTO_PICKER = 1;
     private String user_email;
     private AlertDialog alerta;
-    private Bitmap newProfilePic;
-    private int porcentagemProgresso;
-    private Endereco endereco;
-    LatLng_Utils coordenadas;
+    private Bitmap imagem;
 
     private ImageButton adicionarFoto;
     private ImageButton removerFoto;
-
-    public void atualizarLayout(View view){
-        Context context = getApplicationContext();
-        TextView title = (TextView) findViewById(R.id.statusProgresso);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        Button adicionarMoradia = (Button)  findViewById(R.id.adicionarMoradia);
-        Toast toast;
-
-        if (porcentagemProgresso == 0){
-            EditText titulo = (EditText) findViewById(R.id.nomeMoradia);
-            if (titulo.getText().toString().isEmpty()){
-                titulo.requestFocus();
-                toast = Toast.makeText(context, "Insira um título para a moradia!", Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                findViewById(R.id.endereco).setVisibility(View.VISIBLE);
-                findViewById(R.id.endereco).requestFocus();
-                findViewById(R.id.enderecoTitulo).setVisibility(View.VISIBLE);
-
-                title.setText("10% COMPLETO");
-                progressBar.setProgress(10);
-
-                porcentagemProgresso++;
-            }
-        } else if (porcentagemProgresso == 1){
-            EditText logradouro = (EditText) findViewById(R.id.logradouro);
-            EditText numero = (EditText) findViewById(R.id.numero);
-            EditText bairro = (EditText) findViewById(R.id.bairro);
-            EditText cidade = (EditText) findViewById(R.id.cidade);
-            EditText estado = (EditText) findViewById(R.id.estado);
-
-            if (logradouro.getText().toString().isEmpty()){
-                toast = Toast.makeText(context, "Insira o logradouro da residência", Toast.LENGTH_SHORT);
-                toast.show();
-                logradouro.requestFocus();
-            } else if (numero.getText().toString().isEmpty()){
-                toast = Toast.makeText(context, "Insira o número da residência", Toast.LENGTH_SHORT);
-                toast.show();
-                numero.requestFocus();
-            } else if (bairro.getText().toString().isEmpty()){
-                toast = Toast.makeText(context, "Insira o bairro da residência", Toast.LENGTH_SHORT);
-                toast.show();
-                bairro.requestFocus();
-            } else if (cidade.getText().toString().isEmpty()){
-                toast = Toast.makeText(context, "Insira a cidade da residência", Toast.LENGTH_SHORT);
-                toast.show();
-                cidade.requestFocus();
-            } else if (estado.getText().toString().isEmpty()){
-                toast = Toast.makeText(context, "Insira a sigla do estado da residência", Toast.LENGTH_SHORT);
-                toast.show();
-                estado.requestFocus();
-            } else {
-                endereco = new Endereco(logradouro.getText().toString(), numero.getText().toString(), null, bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString());
-
-                ProgressDialog dialog = ProgressDialog.show(AdicionarMoradia.this, "", "Loading. Please wait...", true);
-                coordenadas = new LatLng_Utils(context, endereco.enderecoLongo());
-                dialog.cancel();
-
-                findViewById(R.id.perfilTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.perfil).setVisibility(View.VISIBLE);
-                findViewById(R.id.perfil).requestFocus();
-
-                title.setText("40% COMPLETO");
-                progressBar.setProgress(40);
-
-                porcentagemProgresso++;
-            }
-        } else if (porcentagemProgresso == 2){
-            RadioButton apartamento = (RadioButton) findViewById(R.id.apartamento);
-            RadioButton republica = (RadioButton) findViewById(R.id.republica);
-
-            if (apartamento.isChecked() == republica.isChecked()){
-                toast = Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT);
-                toast.show();
-                apartamento.requestFocus();
-            } else {
-                findViewById(R.id.tipoTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.tipo).setVisibility(View.VISIBLE);
-                findViewById(R.id.tipo).requestFocus();
-
-                title.setText("60% COMPLETO");
-                progressBar.setProgress(60);
-
-                porcentagemProgresso++;
-            }
-        } else if (porcentagemProgresso == 3) {
-            RadioButton masculina = (RadioButton) findViewById(R.id.masculina);
-            RadioButton feminina = (RadioButton) findViewById(R.id.feminina);
-            RadioButton mista = (RadioButton) findViewById(R.id.mista);
-
-            if (!masculina.isChecked() && !feminina.isChecked() && !mista.isChecked()) {
-                toast = Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT);
-                toast.show();
-                masculina.requestFocus();
-            } else {
-                findViewById(R.id.dadosMoradores).setVisibility(View.VISIBLE);
-                findViewById(R.id.dadosMoradoresTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.dadosMoradores).requestFocus();
-
-                title.setText("75% COMPLETO");
-                progressBar.setProgress(75);
-
-                porcentagemProgresso++;
-            }
-        } else if (porcentagemProgresso == 4) {
-            EditText nMoradores = (EditText) findViewById(R.id.nMoradores);
-
-            if (nMoradores.getText().toString().isEmpty()) {
-                toast = Toast.makeText(context, "Insira o número de moradores", Toast.LENGTH_SHORT);
-                toast.show();
-                nMoradores.requestFocus();
-            } else {
-                findViewById(R.id.telefoneTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.telefoneLayout).setVisibility(View.VISIBLE);
-                findViewById(R.id.telefoneLayout).requestFocus();
-
-                title.setText("90% COMPLETO");
-                progressBar.setProgress(90);
-
-                porcentagemProgresso++;
-            }
-        } else if (porcentagemProgresso == 5) {
-            EditText telefone = (EditText) findViewById(R.id.telefone);
-
-            if (telefone.getText().toString().isEmpty()) {
-                telefone.requestFocus();
-                toast = Toast.makeText(context, "Insira um telefone para contato", Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                findViewById(R.id.descricaoLayout).setVisibility(View.VISIBLE);
-                findViewById(R.id.descricaoTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.descricaoLayout).requestFocus();
-
-                title.setText("100% COMPLETO");
-                progressBar.setProgress(100);
-
-                adicionarMoradia.setText("ADICIONAR MORADIA");
-                porcentagemProgresso++;
-            }
-        } else {
-            //cadastrarMoradia(view);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_moradia);
 
-        porcentagemProgresso = 0;
-
         // Dados do usuário ativo
         Intent intent = getIntent();
-        user_id = intent.getStringExtra("user_id");
-        user_nome = intent.getStringExtra("nome");
-        user_sobrenome = intent.getStringExtra("sobrenome");
         user_email = intent.getStringExtra("email");
 
         /* Botão de cadastrar moradia */
@@ -207,7 +58,9 @@ public class AdicionarMoradia extends AppCompatActivity {
         adicionarMoradia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                atualizarLayout(v);
+                if(checarDados(v)){
+                    cadastrarMoradia(v);
+                }
             }
         });
 
@@ -232,13 +85,15 @@ public class AdicionarMoradia extends AppCompatActivity {
                     public void onClick(DialogInterface arg0, int arg1){
                         adicionarFoto.setAdjustViewBounds(false);
                         adicionarFoto.setImageResource(R.drawable.ic_menu_camera);
-                        newProfilePic = null;
+                        imagem = null;
                         removerFoto.setVisibility(View.GONE);
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //long length = BitMapToString(imagem).length();
+                        //Toast.makeText(getApplicationContext(), length+"", Toast.LENGTH_LONG).show();
                     }
                 });
                 alerta = builder.create();
@@ -251,42 +106,59 @@ public class AdicionarMoradia extends AppCompatActivity {
      * Escolhe uma imagem da galeria
      */
     public void pickImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("scale", true);
-        intent.putExtra("outputX", 256);
-        intent.putExtra("outputY", 256);
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, 1);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        photoPickerIntent.setType("image/*");
+        photoPickerIntent.putExtra("crop", "true");
+        photoPickerIntent.putExtra("aspectX", 0);
+        photoPickerIntent.putExtra("aspectY", 0);
+        photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, false);
+        startActivityForResult(Intent.createChooser(photoPickerIntent,"Complete Action Using"), RC_PHOTO_PICKER);
     }
 
-    /**
-     * Recebe a imagem da galeria
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
+    public String BitMapToString(Bitmap bitmap){
+        // Redimensiona a imagem
+        int maxHeight = 800;
+        int maxWidth = 800;
+        float scale = Math.min(((float)maxHeight / bitmap.getWidth()), ((float)maxWidth / bitmap.getHeight()));
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+        // Converte a imagem para string
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,80, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        if (requestCode == 1) {
-            final Bundle extras = data.getExtras();
-            if (extras != null) {
-                //Get image
-                newProfilePic = extras.getParcelable("data");
-                if (newProfilePic != null) {
-                    adicionarFoto.setImageBitmap(newProfilePic);
-                    adicionarFoto.setAdjustViewBounds(true);
+        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data != null) {
+            Uri pickedImage = data.getData();
+            //set the selected image to ImageView
+            //mImageView.setImageURI(pickedImage);
+            try {
+                imagem = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                adicionarFoto.setImageBitmap(imagem);
+                adicionarFoto.setAdjustViewBounds(true);
 
-                    /* O botão de remover foto aparece quando uma foto é escolhida */
-                    removerFoto.setVisibility(View.VISIBLE);
-                }
+                /* O botão de remover foto aparece quando uma foto é escolhida */
+                removerFoto.setVisibility(View.VISIBLE);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -299,8 +171,8 @@ public class AdicionarMoradia extends AppCompatActivity {
     private void cadastrarMoradia(View view){
         final Context context = getApplicationContext();
         String animais = "0";     // 0 = Não aceita animais, 1 = aceita animais
-        String perfil = "-1";      // 0 = Apartamento, 1 = República
-        String tipo = "-1";        // 0 = Masculina, 1 = Feminina, 2 = Unissex
+        String perfil;            // 0 = Apartamento, 1 = República
+        String tipo;              // 0 = Calma, 1 = Agitada
 
         EditText titulo = (EditText) findViewById(R.id.nomeMoradia);
         EditText logradouro = (EditText) findViewById(R.id.logradouro);
@@ -311,24 +183,26 @@ public class AdicionarMoradia extends AppCompatActivity {
         EditText estado = (EditText) findViewById(R.id.estado);
         RadioButton apartamento = (RadioButton) findViewById(R.id.apartamento);
         RadioButton republica = (RadioButton) findViewById(R.id.republica);
-        RadioButton masculina = (RadioButton) findViewById(R.id.masculina);
-        RadioButton feminina = (RadioButton) findViewById(R.id.feminina);
-        RadioButton mista = (RadioButton) findViewById(R.id.mista);
+        RadioButton calma = (RadioButton) findViewById(R.id.calma);
+        RadioButton agitada = (RadioButton) findViewById(R.id.agitada);
         EditText nMoradores = (EditText) findViewById(R.id.nMoradores);
         CheckBox aceitamAnimais = (CheckBox) findViewById(R.id.aceitamAnimais);
         EditText telefone = (EditText) findViewById(R.id.telefone);
         EditText descricao = (EditText) findViewById(R.id.descricao);
 
-        if (masculina.isChecked()){
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Adicionando nova moradia...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
+
+        if (calma.isChecked()){
             tipo = "0";
-        } else if (feminina.isChecked()){
+        } else {
             tipo = "1";
-        } else if (mista.isChecked()){
-            tipo = "2";
         }
         if (apartamento.isChecked()){
             perfil = "0";
-        } else if (republica.isChecked()){
+        } else {
             perfil = "1";
         }
         if (aceitamAnimais.isChecked()) animais = "1";
@@ -340,6 +214,7 @@ public class AdicionarMoradia extends AppCompatActivity {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
+                    progress.dismiss();
 
                     if (success){
                                 // MORADIA CRIADA
@@ -358,11 +233,90 @@ public class AdicionarMoradia extends AppCompatActivity {
                 }
             }
         };
-        MoradiaRequest_INSERT moradiaRequest = new MoradiaRequest_INSERT(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
+        MoradiaRequest_ADD moradiaRequest = new MoradiaRequest_ADD(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
-                tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
+                BitMapToString(imagem), tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
         RequestQueue queue = Volley.newRequestQueue(AdicionarMoradia.this);
         queue.add(moradiaRequest);
+    }
 
+    /**
+     * Checa se os campos necessários para o cadastro de moradia foram devidamente preenchidos.
+     * @param view
+     * @return
+     */
+    public boolean checarDados(View view){
+        Context context = getApplicationContext();
+
+        EditText titulo = (EditText) findViewById(R.id.nomeMoradia);
+
+        if (titulo.getText().toString().isEmpty()){
+            titulo.requestFocus();
+            Toast.makeText(context, "Insira um título para a moradia!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        EditText logradouro = (EditText) findViewById(R.id.logradouro);
+        EditText numero = (EditText) findViewById(R.id.numero);
+        EditText bairro = (EditText) findViewById(R.id.bairro);
+        EditText cidade = (EditText) findViewById(R.id.cidade);
+        EditText estado = (EditText) findViewById(R.id.estado);
+
+        if (logradouro.getText().toString().isEmpty()){
+            Toast.makeText(context, "Insira o logradouro da residência", Toast.LENGTH_SHORT).show();
+            logradouro.requestFocus();
+            return false;
+        } else if (numero.getText().toString().isEmpty()){
+            Toast.makeText(context, "Insira o número da residência", Toast.LENGTH_SHORT).show();
+            numero.requestFocus();
+            return false;
+        } else if (bairro.getText().toString().isEmpty()){
+            Toast.makeText(context, "Insira o bairro da residência", Toast.LENGTH_SHORT).show();
+            bairro.requestFocus();
+            return false;
+        } else if (cidade.getText().toString().isEmpty()){
+            Toast.makeText(context, "Insira a cidade da residência", Toast.LENGTH_SHORT).show();
+            cidade.requestFocus();
+            return false;
+        } else if (estado.getText().toString().isEmpty()){
+            Toast.makeText(context, "Insira a sigla do estado da residência", Toast.LENGTH_SHORT).show();
+            estado.requestFocus();
+            return false;
+        }
+
+        RadioButton apartamento = (RadioButton) findViewById(R.id.apartamento);
+        RadioButton republica = (RadioButton) findViewById(R.id.republica);
+
+        if (apartamento.isChecked() == republica.isChecked()){
+            Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT).show();
+            apartamento.requestFocus();
+            return false;
+        }
+
+        RadioGroup perfil = (RadioGroup) findViewById(R.id.tipo);
+
+        if (perfil.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT).show();
+            perfil.requestFocus();
+            return false;
+        }
+
+        EditText nMoradores = (EditText) findViewById(R.id.nMoradores);
+
+        if (nMoradores.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Insira o número de moradores", Toast.LENGTH_SHORT).show();
+            nMoradores.requestFocus();
+            return false;
+        }
+
+        EditText telefone = (EditText) findViewById(R.id.telefone);
+
+        if (telefone.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Insira um telefone para contato", Toast.LENGTH_SHORT).show();
+            telefone.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 }

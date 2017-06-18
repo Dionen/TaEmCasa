@@ -60,6 +60,8 @@ public class Moradia {
         return endereco;
     }
 
+    public int getTipo() { return tipo; }
+
     public int getQtd_moradores() {
         return qtd_moradores;
     }

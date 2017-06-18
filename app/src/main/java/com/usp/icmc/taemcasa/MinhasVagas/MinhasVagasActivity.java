@@ -200,6 +200,8 @@ public class MinhasVagasActivity extends Fragment {
                         Moradia moradia = (Moradia) getGroup(groupPosition);
 
                         intent.putExtra("nome", moradia.getNome());
+                        intent.putExtra("id_rep", moradia.getId());
+                        intent.putExtra("tipo", moradia.getTipo());
                         startActivity(intent);
                     }
                 });
