@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.usp.icmc.taemcasa.R;
+import com.usp.icmc.taemcasa.Structures.Endereco;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class MinhasVagasActivity extends Fragment {
         for (int i = 0; i < 3; ++i) {
             list.add(new Vaga("Republica do Bozó nº" + (i+1),
                     "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
-                    "Cidade Jardim, São Carlos - SP",
+                    new Endereco("Alameda das Orquideas","102-1","Cidade Jardim", "", "São Carlos", "SP"),
                     "$$$",
                     "Vaga unissex"));
         }
@@ -227,7 +228,7 @@ public class MinhasVagasActivity extends Fragment {
             //Inserindo as informacoes
             title.setText(header.getTitle());
             description.setText(header.getDescription());
-            address.setText(header.getAddress());
+            //address.setText(header.getAddress());
 
             return convertView;
         }

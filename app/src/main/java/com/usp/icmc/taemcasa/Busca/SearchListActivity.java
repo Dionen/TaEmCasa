@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.usp.icmc.taemcasa.R;
+import com.usp.icmc.taemcasa.Structures.Endereco;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
 import java.util.ArrayList;
@@ -26,42 +27,30 @@ public class SearchListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_list);
 
-        List<Vaga> cursos = todasAsVagas();     // GERA VAGAS TESTE
-                                                // DEVE-SE OBTER TODAS AS VAGAS
-        ListView listaDeCursos = (ListView) findViewById(R.id.search_result_list);
+        ArrayList<Vaga> vagas = (ArrayList<Vaga>) getIntent().getSerializableExtra("vagas");
 
-        listaDeCursos.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        ListView listaVagas = (ListView) findViewById(R.id.search_result_list);
+
+        listaVagas.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "POSIÇÃO: " + position, Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_perfil_vaga);
+               setContentView(R.layout.activity_perfil_vaga);
             }
 
         });
 
         /* Liga os valores ao layout */
-        AdapterCursosPersonalizado adapter = new AdapterCursosPersonalizado(cursos, this);
-        listaDeCursos.setAdapter(adapter);
+        AdapterVaga adapter = new AdapterVaga(vagas, this);
+        listaVagas.setAdapter(adapter);
     }
 
-    // GERA VAGAS TESTE
-    public List<Vaga> todasAsVagas(){
-        final List<Vaga> list = new ArrayList<Vaga>();
+    private class AdapterVaga extends BaseAdapter {
 
-        for (int i = 0; i < 20; ++i) {
-            list.add(new Vaga("Republica do Bozó", "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).", "Cidade Jardim, São Carlos - SP", "$$$", "Vaga unissex"));
-        }
-
-        return list;
-    }
-
-    private class AdapterCursosPersonalizado extends BaseAdapter {
-
-        private final List<Vaga> search_data;
+        private final ArrayList<Vaga> search_data;
         private Activity activity;
 
-        public AdapterCursosPersonalizado(List<Vaga> search_data, Activity activity) {
+        public AdapterVaga(ArrayList<Vaga> search_data, Activity activity) {
             this.search_data = search_data;
             this.activity = activity;
         }
@@ -105,7 +94,7 @@ public class SearchListActivity extends AppCompatActivity {
             //Inserindo as informacoes
             title.setText(search.getTitle());
             description.setText(search.getDescription());
-            address.setText(search.getAddress());
+            address.setText(search.getAddress().enderecoCurto());
             price.setText(search.getPrice());
             type.setText(search.getTipoMoradia());
             imagem.setImageResource(R.drawable.ic_menu_gallery);

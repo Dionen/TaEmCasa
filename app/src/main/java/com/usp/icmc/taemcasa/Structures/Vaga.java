@@ -4,20 +4,23 @@ package com.usp.icmc.taemcasa.Structures;
  * Created by Joao on 24/05/2017.
  */
 
+import java.io.Serializable;
+
 /**
  * Classe dummy que representa algumas informações de uma vaga/moradia.
  * Deve no futuro conter todas as informações necessárias.
  */
-public class Vaga {
+public class Vaga implements Serializable{
     private String title;
     private String description;
-    private String address;
+    private Endereco address;
     private String price;
     private String tipoMoradia;
     private boolean individual;
     private String tipoMorador;
+    private int id_rep;
 
-    public Vaga(String title, String description, String address, String price, String type){
+    public Vaga(String title, String description, Endereco address, String price, String type){
         this.title = title;
         this.description = description;
         this.address = address;
@@ -35,6 +38,9 @@ public class Vaga {
         this.price = price;
     }
 
+    public Vaga(){
+    }
+
     public String getTitle(){
         return title;
     }
@@ -43,7 +49,7 @@ public class Vaga {
         return description;
     }
 
-    public String getAddress(){
+    public Endereco getAddress(){
         return address;
     }
 
@@ -61,5 +67,37 @@ public class Vaga {
 
     public String gettipoMorador(){
         return tipoMorador;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setAddress(Endereco address) {
+        this.address = address;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setTipoMoradia(String tipoMoradia) {
+        this.tipoMoradia = tipoMoradia;
+    }
+
+    public void setIndividual(boolean individual) {
+        this.individual = individual;
+    }
+
+    public void setTipoMorador(String tipoMorador) {
+        this.tipoMorador = tipoMorador;
+    }
+
+    public void setId_rep(int id_rep) {
+        this.id_rep = id_rep;
     }
 }

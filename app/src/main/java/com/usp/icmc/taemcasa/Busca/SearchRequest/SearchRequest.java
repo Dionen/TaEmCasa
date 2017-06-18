@@ -18,17 +18,19 @@ public class SearchRequest extends StringRequest {
     $individual = $_POST["individual"];
     $aceita_animais = $_POST["aceita_animais"];*/
 
-    private static final String LOGIN_REQUEST_URL = "https://dionen.000webhostapp.com/BuscaVaga.php";
+    private static final String LOGIN_REQUEST_URL = "https://dionen.000webhostapp.com/Busca/BuscaVaga.php";
     private Map<String, String> params;
 
-    public SearchRequest(String min_preco, String max_preco, String tipo, String individual, String aceita_animais, Response.Listener<String> listener){
+    public SearchRequest(String min_preco, String max_preco, String tipo_M_F, String individual, String aceita_animais, String tipo_A_R, String perfil, Response.Listener<String> listener){
         super(Method.POST, LOGIN_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("min_preco", min_preco);
         params.put("max_preco", max_preco);
-        params.put("tipo", tipo);
+        params.put("tipo_M_F", tipo_M_F);
         params.put("individual", individual);
         params.put("aceita_animais", aceita_animais);
+        params.put("tipo_A_R", tipo_A_R);
+        params.put("perfil", perfil);
     }
 
     @Override
