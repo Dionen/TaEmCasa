@@ -23,7 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest;
 import com.usp.icmc.taemcasa.R;
-//import com.usp.icmc.taemcasa.Utils.ImagePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
