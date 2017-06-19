@@ -101,31 +101,32 @@ public class PerfilVaga extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             JSONObject jsonResponse = null;
                 try {
-                jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
+                    jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
 
-                if (success) {
-                    nomeVaga = jsonResponse.getString("nome");
-                    qtdVaga = jsonResponse.getInt("qtd_vagas");
-                    tipoVaga = jsonResponse.getString("tipo");
-                    qtdMoradores = jsonResponse.getInt("qtd_moradores");
-                    precoVaga = jsonResponse.getDouble("preco");
-                    descVaga = jsonResponse.getString("descricao");
-                    telefone = jsonResponse.getString("telefone");
+                    if (success) {
+                        nomeVaga = jsonResponse.getString("nome");
+                        qtdVaga = jsonResponse.getInt("qtd_vagas");
+                        tipoVaga = jsonResponse.getString("tipo");
+                        qtdMoradores = jsonResponse.getInt("qtd_moradores");
+                        precoVaga = jsonResponse.getDouble("preco");
+                        descVaga = jsonResponse.getString("descricao");
+                        telefone = jsonResponse.getString("telefone");
 
-                    ruaEndereco = jsonResponse.getString("rua");
-                    numEndereco = jsonResponse.getInt("numero");
-                    complEndereco = jsonResponse.getString("complemento");
-                    bairroEndereco = jsonResponse.getString("bairro");
-                    cidadeEndereco = jsonResponse.getString("cidade");
+                        ruaEndereco = jsonResponse.getString("rua");
+                        numEndereco = jsonResponse.getInt("numero");
+                        complEndereco = jsonResponse.getString("complemento");
+                        bairroEndereco = jsonResponse.getString("bairro");
+                        cidadeEndereco = jsonResponse.getString("cidade");
 
-                    //latitudeEndereco = jsonResponse.getString("latitude");
-                    //longitudeEndereco = jsonResponse.getString("longitude");
-                } else {
-                    ToastMessage("Vaga não encontrada");
-                }
-            } catch(JSONException e) {
+                        //latitudeEndereco = jsonResponse.getString("latitude");
+                        //longitudeEndereco = jsonResponse.getString("longitude");
+                    } else {
+                        ToastMessage("Vaga não encontrada");
+                    }
+                } catch(JSONException e) {
                 e.printStackTrace();
+
             }
         };
 
