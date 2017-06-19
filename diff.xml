@@ -7,9 +7,6 @@
       <entry key="CommitDialog">
         <PlaceSettings />
       </entry>
-      <entry key="Default">
-        <PlaceSettings />
-      </entry>
     </option>
   </component>
   <component name="TextDiffSettings">
@@ -28,9 +25,7 @@
         <PlaceSettings />
       </entry>
       <entry key="Merge">
-        <PlaceSettings>
-          <option name="ENABLE_SYNC_SCROLL" value="false" />
-        </PlaceSettings>
+        <PlaceSettings />
       </entry>
     </option>
   </component>
