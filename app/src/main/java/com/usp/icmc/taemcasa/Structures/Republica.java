@@ -19,13 +19,13 @@ public class Republica {
     float latitude;
     float longitude;
     String telefone;
-    String link;
+    String imagem;
     int tipo;
     int perfil;
     int qtd_moradores;
     boolean aceita_animais;
 
-    public Republica(int id, String username, String nome, String descricao, String rua, String numero, String complemento, String bairro, String cidade, String estado, float latitude, float longitude, String telefone, String link, int tipo, int perfil, int qtd_moradores, boolean aceita_animais) {
+    public Republica(int id, String username, String nome, String descricao, String rua, String numero, String complemento, String bairro, String cidade, String estado, float latitude, float longitude, String telefone, String imagem, int tipo, int perfil, int qtd_moradores, boolean aceita_animais) {
         this.id_rep = id;
         this.username = username;
         this.nome = nome;
@@ -39,7 +39,7 @@ public class Republica {
         this.latitude = latitude;
         this.longitude = longitude;
         this.telefone = telefone;
-        this.link = link;
+        this.imagem = imagem;
         this.tipo = tipo;
         this.perfil = perfil;
         this.qtd_moradores = qtd_moradores;

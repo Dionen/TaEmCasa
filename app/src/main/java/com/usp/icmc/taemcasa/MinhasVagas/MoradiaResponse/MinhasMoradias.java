@@ -11,7 +11,7 @@ import java.util.Map;
  */
 
 public class MinhasMoradias extends StringRequest {
-    private static final String GET_REQUEST_URL = "https://dionen.000webhostapp.com/Moradia/GetByUsername.php";
+    private static final String GET_REQUEST_URL = "https://dionen.000webhostapp.com/Moradia/getMinhasVagas.php";
 
     private Map<String, String> params;
 
