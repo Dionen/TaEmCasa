@@ -251,7 +251,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/perfilTitulo"
+                android:id="@+id/tipoTitulo"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,10 +261,10 @@
                 android:visibility="gone" />
 
             <RadioGroup
-                android:id="@+id/perfil"
+                android:id="@+id/tipo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nextFocusDown="@+id/tipo"
+                android:nextFocusDown="@+id/perfil"
                 android:orientation="horizontal"
                 android:padding="8dp"
                 android:visibility="gone">
@@ -286,7 +286,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/tipoTitulo"
+                android:id="@+id/perfilTitulo"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -294,7 +294,7 @@
                 android:visibility="gone" />
 
             <RadioGroup
-                android:id="@+id/tipo"
+                android:id="@+id/perfil"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nextFocusDown="@+id/nMoradores"
@@ -303,26 +303,19 @@
                 android:visibility="gone">
 
                 <RadioButton
-                    android:id="@+id/masculina"
+                    android:id="@+id/calma"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="@string/masculina" />
+                    android:text="@string/calma" />
 
                 <RadioButton
-                    android:id="@+id/feminina"
+                    android:id="@+id/agitada"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="@string/feminina" />
+                    android:text="@string/agitada" />
 
-                <RadioButton
-                    android:id="@+id/mista"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:checked="false"
-                    android:text="@string/unissex" />
             </RadioGroup>
 
             <TextView

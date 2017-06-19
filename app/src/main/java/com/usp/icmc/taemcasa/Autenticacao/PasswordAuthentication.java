@@ -18,7 +18,7 @@ public class PasswordAuthentication {
     /* Verifica se o Hash gerado pela senha inserida é igual ao Hash obtido pela database */
     public static boolean check_password_hash(String Password, String salt, String OriginalHash){
         try {
-            return OriginalHash.equals(generateStorngPasswordHash(Password, salt));
+            return OriginalHash.equals(generateStrongPasswordHash(Password, salt));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
@@ -31,12 +31,12 @@ public class PasswordAuthentication {
 
         String[] result = new String[2];
         result[0] = new BigInteger(128, random).toString(32);
-        result[1] = generateStorngPasswordHash(originalPassword, result[0]);
+        result[1] = generateStrongPasswordHash(originalPassword, result[0]);
         return result;
     }
 
     /* Cria um Hash a partir de uma senha e um Salt. Retorna o Hash */
-    private static String generateStorngPasswordHash(String password, String Stringsalt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private static String generateStrongPasswordHash(String password, String Stringsalt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         int iterations = 2000;
         char[] chars = password.toCharArray();
         byte[] salt = Stringsalt.getBytes();

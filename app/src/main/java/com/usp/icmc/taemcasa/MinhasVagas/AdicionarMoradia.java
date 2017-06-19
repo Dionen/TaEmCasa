@@ -3,7 +3,6 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -16,21 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.Autenticacao.RegisterActivity;
-import com.usp.icmc.taemcasa.Autenticacao.loginRequest.RegisterRequest;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest;
 import com.usp.icmc.taemcasa.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class AdicionarMoradia extends AppCompatActivity {
 
@@ -96,9 +91,9 @@ public class AdicionarMoradia extends AppCompatActivity {
                 toast.show();
                 estado.requestFocus();
             } else {
-                findViewById(R.id.perfilTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.perfil).setVisibility(View.VISIBLE);
-                findViewById(R.id.perfil).requestFocus();
+                findViewById(R.id.tipoTitulo).setVisibility(View.VISIBLE);
+                findViewById(R.id.tipo).setVisibility(View.VISIBLE);
+                findViewById(R.id.tipo).requestFocus();
 
                 title.setText("40% COMPLETO");
                 progressBar.setProgress(40);
@@ -114,9 +109,9 @@ public class AdicionarMoradia extends AppCompatActivity {
                 toast.show();
                 apartamento.requestFocus();
             } else {
-                findViewById(R.id.tipoTitulo).setVisibility(View.VISIBLE);
-                findViewById(R.id.tipo).setVisibility(View.VISIBLE);
-                findViewById(R.id.tipo).requestFocus();
+                findViewById(R.id.perfilTitulo).setVisibility(View.VISIBLE);
+                findViewById(R.id.perfil).setVisibility(View.VISIBLE);
+                findViewById(R.id.perfil).requestFocus();
 
                 title.setText("60% COMPLETO");
                 progressBar.setProgress(60);
@@ -124,14 +119,13 @@ public class AdicionarMoradia extends AppCompatActivity {
                 porcentagemProgresso++;
             }
         } else if (porcentagemProgresso == 3) {
-            RadioButton masculina = (RadioButton) findViewById(R.id.masculina);
-            RadioButton feminina = (RadioButton) findViewById(R.id.feminina);
-            RadioButton mista = (RadioButton) findViewById(R.id.mista);
+            RadioButton calma = (RadioButton) findViewById(R.id.calma);
+            RadioButton agitada = (RadioButton) findViewById(R.id.agitada);
 
-            if (!masculina.isChecked() && !feminina.isChecked() && !mista.isChecked()) {
+            if ( !(calma.isChecked() || agitada.isChecked()) ) {
                 toast = Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT);
                 toast.show();
-                masculina.requestFocus();
+                calma.requestFocus();
             } else {
                 findViewById(R.id.dadosMoradores).setVisibility(View.VISIBLE);
                 findViewById(R.id.dadosMoradoresTitulo).setVisibility(View.VISIBLE);
@@ -305,26 +299,25 @@ public class AdicionarMoradia extends AppCompatActivity {
         EditText estado = (EditText) findViewById(R.id.estado);
         RadioButton apartamento = (RadioButton) findViewById(R.id.apartamento);
         RadioButton republica = (RadioButton) findViewById(R.id.republica);
-        RadioButton masculina = (RadioButton) findViewById(R.id.masculina);
-        RadioButton feminina = (RadioButton) findViewById(R.id.feminina);
-        RadioButton mista = (RadioButton) findViewById(R.id.mista);
+        RadioButton calma = (RadioButton) findViewById(R.id.calma);
+        RadioButton agitada = (RadioButton) findViewById(R.id.agitada);
         EditText nMoradores = (EditText) findViewById(R.id.nMoradores);
         CheckBox aceitamAnimais = (CheckBox) findViewById(R.id.aceitamAnimais);
         EditText telefone = (EditText) findViewById(R.id.telefone);
         EditText descricao = (EditText) findViewById(R.id.descricao);
 
-        if (masculina.isChecked()){
-            tipo = "0";
-        } else if (feminina.isChecked()){
-            tipo = "1";
-        } else if (mista.isChecked()){
-            tipo = "2";
-        }
         if (apartamento.isChecked()){
-            perfil = "0";
+            tipo = "0";
         } else if (republica.isChecked()){
+            tipo = "1";
+        }
+
+        if(calma.isChecked()) {
+            perfil = "0";
+        } else if(agitada.isChecked()) {
             perfil = "1";
         }
+
         if (aceitamAnimais.isChecked()) animais = "1";
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
