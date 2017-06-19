@@ -10,12 +10,7 @@ public class Republica {
     String username;
     String nome;
     String descricao;
-    String rua;
-    String numero;
-    String complemento;
-    String bairro;
-    String cidade;
-    String estado;
+    Endereco endereco;
     float latitude;
     float longitude;
     String telefone;
@@ -30,12 +25,7 @@ public class Republica {
         this.username = username;
         this.nome = nome;
         this.descricao = descricao;
-        this.rua = rua;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
+        this.endereco = new Endereco(rua, numero, complemento, bairro, cidade, estado);
         this.latitude = latitude;
         this.longitude = longitude;
         this.telefone = telefone;
@@ -54,7 +44,11 @@ public class Republica {
         return descricao;
     }
 
+    public Endereco getEndereco() { return endereco; }
+
     public int getQtd_moradores() {
         return qtd_moradores;
     }
+
+    public String getImagem() {return imagem; }
 }

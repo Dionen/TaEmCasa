@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="30sp"
-                        android:textColor="#17af00"
+                        android:textColor="?attr/colorPrimary"
                         android:layout_gravity="start"
                         android:text="@string/qtdvagas"/>
 
@@ -120,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="30sp"
-                        android:textColor="#17af00"
+                        android:textColor="?attr/colorPrimary"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
                         android:gravity="end"
@@ -223,7 +223,7 @@
                     android:textColor="@android:color/darker_gray"
                     android:maxLength="30"
                     android:text="Nunc blandit vehicula posuere."/>
-
+<!--
                 <TextView
                     android:id="@+id/coordenadas"
                     android:layout_width="match_parent"
@@ -247,7 +247,7 @@
                     android:textColor="@android:color/darker_gray"
                     android:maxLength="30"
                     android:text="Nunc blandit vehicula posuere."/>
-
+-->
             </LinearLayout>
     </RelativeLayout>
 </ScrollView>

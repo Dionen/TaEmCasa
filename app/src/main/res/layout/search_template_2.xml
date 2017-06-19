@@ -3,57 +3,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="80dp"
-    android:background="?android:attr/colorBackground"
-    android:padding="6dip">
+    android:background="?android:attr/colorBackground">
 
-    <ImageView
-        android:id="@+id/imageView5"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ic_menu_manage" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:layout_marginStart="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:orientation="vertical"
-        android:layout_toLeftOf="@+id/imageView5"
-        android:paddingRight="6dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/fotoMoradia"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/opcoesMoradia"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Example application"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_menu_manage" />
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Description"
-            android:textSize="14sp" />
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/fotoMoradia"
+            android:layout_toLeftOf="@+id/opcoesMoradia"
+            android:layout_toRightOf="@+id/fotoMoradia"
+            android:layout_toStartOf="@+id/opcoesMoradia"
+            android:orientation="vertical"
+            android:layout_margin="8dp">
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:maxLines="1"
-            android:text="Endereco"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Example application"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Description"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:text="Endereco"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

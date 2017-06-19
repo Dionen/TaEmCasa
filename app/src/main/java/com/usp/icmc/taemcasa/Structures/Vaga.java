@@ -20,6 +20,7 @@ public class Vaga implements Serializable{
     private String tipoMorador;
     private int id_rep;
     private int id;
+    private String imagem;
 
     public Vaga(String title, String description, Endereco address, String price, String type){
         this.title = title;
@@ -110,4 +111,10 @@ public class Vaga implements Serializable{
     public void setId_rep(int id_rep) {
         this.id_rep = id_rep;
     }
+
+    public void setImagem(String link) {
+        this.imagem = link;
+    }
+
+    public String getImagem() { return imagem; }
 }

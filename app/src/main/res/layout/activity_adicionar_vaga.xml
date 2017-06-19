@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.usp.icmc.taemcasa.MinhasVagas.AdicionarVaga">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorControlHighlight">
+
+        <LinearLayout
+            android:id="@+id/dados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#fff"
+            android:elevation="10dp"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tipoTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A VAGA É..."
+                android:visibility="visible" />
+
+            <RadioGroup
+                android:id="@+id/tipo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nextFocusDown="@+id/nMoradores"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="visible">
+
+                <RadioButton
+                    android:id="@+id/masculina"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/masculina" />
+
+                <RadioButton
+                    android:id="@+id/feminina"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/feminina" />
+
+                <RadioButton
+                    android:id="@+id/mista"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:checked="false"
+                    android:text="@string/unissex" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/dadosMoradoresTitulo"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Qual o preço?"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/dadosMoradores"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/precoVaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:nextFocusDown="@+id/aceitamAnimais" />
+
+                <CheckBox
+                    android:id="@+id/compartilhado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/telefone"
+                    android:text="O quarto é individual?" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/adicionarVaga"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="adicionar vaga"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
