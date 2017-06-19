@@ -1,4 +1,4 @@
-package com.usp.icmc.taemcasa.Perfil;
+package com.usp.icmc.taemcasa.Perfil.VagaResponse;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;

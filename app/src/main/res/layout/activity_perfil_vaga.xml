@@ -223,7 +223,7 @@
                     android:textColor="@android:color/darker_gray"
                     android:maxLength="30"
                     android:text="Nunc blandit vehicula posuere."/>
-
+<!--
                 <TextView
                     android:id="@+id/coordenadas"
                     android:layout_width="match_parent"
@@ -247,7 +247,7 @@
                     android:textColor="@android:color/darker_gray"
                     android:maxLength="30"
                     android:text="Nunc blandit vehicula posuere."/>
-
+-->
             </LinearLayout>
     </RelativeLayout>
 </ScrollView>

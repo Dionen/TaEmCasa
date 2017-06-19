@@ -10,13 +10,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Perfil.VagaRequest;
+import com.usp.icmc.taemcasa.Perfil.VagaResponse.VagaRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PerfilVaga extends AppCompatActivity {
-    private int autoriaVaga; // 1 = do usuário, 2 = do sistema
+ //   private int autoriaVaga; // 1 = do usuário, 2 = do sistema
 
     // vaga
     private int idVaga;
@@ -29,14 +29,13 @@ public class PerfilVaga extends AppCompatActivity {
     private String telefone;
 
     // endereço
-    private int idEndereco;
     private String ruaEndereco;
     private int numEndereco;
     private String complEndereco;
     private String bairroEndereco;
     private String cidadeEndereco;
-    private String latitudeEndereco;
-    private String longitudeEndereco;
+    //private String latitudeEndereco;
+    //private String longitudeEndereco;
 
     public TextView nomeVagaTV;
     public TextView tipoVagaTV;
@@ -47,7 +46,7 @@ public class PerfilVaga extends AppCompatActivity {
     public TextView enderecoTV;
     public TextView bairroTV;
     public TextView cidadeTV;
-    public TextView coordenadasTV;
+    //public TextView coordenadasTV;
     public TextView qtdMoradoresTV;
 
     @Override
@@ -91,15 +90,15 @@ public class PerfilVaga extends AppCompatActivity {
         cidadeTV = (TextView) findViewById(R.id.cidadeText);
         cidadeTV.setText(cidadeEndereco);
 
-        coordenadasTV = (TextView) findViewById(R.id.coordenadasText);
-        coordenadasTV.setText(getString(R.string.coordtext, latitudeEndereco, longitudeEndereco));
+        /*coordenadasTV = (TextView) findViewById(R.id.coordenadasText);
+        coordenadasTV.setText(getString(R.string.coordtext, latitudeEndereco, longitudeEndereco));*/
     }
 
-    public void getVaga(int id, String response) throws JSONException {
-
-
+    public void getVaga(final String response) throws JSONException {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
-            JSONObject jsonResponse = null;
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonResponse = null;
                 try {
                     jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
@@ -124,9 +123,10 @@ public class PerfilVaga extends AppCompatActivity {
                     } else {
                         ToastMessage("Vaga não encontrada");
                     }
-                } catch(JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
 
+                }
             }
         };
 
