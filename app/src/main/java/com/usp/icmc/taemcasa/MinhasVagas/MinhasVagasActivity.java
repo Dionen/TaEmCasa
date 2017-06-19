@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.usp.icmc.taemcasa.Autenticacao.LoginActivity;
+import com.usp.icmc.taemcasa.Menu.MenuActivity;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MinhasMoradias;
 import com.usp.icmc.taemcasa.R;
 
@@ -96,11 +98,11 @@ public class MinhasVagasActivity extends Fragment {
                 JSONObject jsonResponse = null;
 
                 try {
-                    System.out.println(response);
                     jsonResponse = new JSONObject(response);
 
                     boolean success = jsonResponse.getBoolean("success");
                     if(success) {
+                        System.out.println(response);
                         HashMap<Integer, Republica> aux = new HashMap<Integer, Republica>();
 
                         JSONArray moradiasResponse = jsonResponse.getJSONArray("moradias");
@@ -171,21 +173,15 @@ public class MinhasVagasActivity extends Fragment {
                             Vaga dados = new Vaga(id, id_rep, preco, tipo, individual);
 
                             Republica auxiliar = aux.get(id_rep);
-
+                            System.out.println(id_rep + " é o id_rep da vaga " + id);
                             listaVagas.get(auxiliar).add(dados);
                         }
 
-                        java.util.Iterator iter = listaVagas.values().iterator();
+                        java.util.Iterator iter = listaVagas.keySet().iterator();
                         while(iter.hasNext()) {
-                            ArrayList<Vaga> l = (ArrayList<Vaga>) iter.next();
-
-                            if(l.size() == 0) l.add(new Vaga("-1"));
-                        }
-
-                        java.util.Iterator iter2 = listaVagas.keySet().iterator();
-                        while(iter2.hasNext()) {
-                            Republica aux3 = (Republica) iter2.next();
-                            System.out.println(aux3 +  "  " + listaVagas.get(aux3).get(0).getPrice());
+                            Republica auxR = (Republica) iter.next();
+                            List<Vaga> l = listaVagas.get(auxR);
+                            l.add(new Vaga("-1", auxR.getId()));
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -278,6 +274,17 @@ public class MinhasVagasActivity extends Fragment {
                 holder.individualTexto.setVisibility(View.GONE);
                 holder.removerVaga.setVisibility(View.GONE);
                 holder.adicionarVaga.setVisibility(View.VISIBLE);
+
+                holder.adicionarVaga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), AdicionarVaga.class);
+                        intent.putExtra("nome", getActivity().getIntent().getExtras().getString("nome"));
+                        intent.putExtra("id_rep", conteudoVaga.getId_rep());
+                        startActivity(intent);
+                    }
+                });
+
             } else {
                 /*Inserindo as informacoes das vagas */
                 holder.tipoMorador.setText(conteudoVaga.gettipoMorador());

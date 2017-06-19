@@ -17,8 +17,8 @@ public class Vaga implements Serializable{
     private String price;
     private String tipoMoradia;
     private boolean individual;
-    private String tipoMorador;
     private int id_rep;
+    private String tipoMorador;
     private int id;
     private String imagem;
 
@@ -36,6 +36,11 @@ public class Vaga implements Serializable{
         this.tipoMorador = tipoMorador;
     }
 
+    public Vaga(String preco, int id_rep) {
+        this.price = preco;
+        this.id_rep = id_rep;
+    }
+
 
     public Vaga(int id, int id_rep, String price, String tipoMorador, boolean individual) {
         this.id = id;
@@ -45,11 +50,10 @@ public class Vaga implements Serializable{
         this.tipoMorador = tipoMorador;
     }
 
+    public Vaga() { super(); }
+
     public Vaga(String price){
         this.price = price;
-    }
-
-    public Vaga(){
     }
 
     public String getTitle(){
@@ -117,4 +121,12 @@ public class Vaga implements Serializable{
     }
 
     public String getImagem() { return imagem; }
+
+    public int getId_rep() {
+        return id_rep;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

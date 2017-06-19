@@ -67,6 +67,11 @@
             android:label="Nova Moradia"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".MinhasVagas.AdicionarVaga"
+            android:label="Nova Vaga"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

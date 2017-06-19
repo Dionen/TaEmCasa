@@ -51,4 +51,8 @@ public class Republica {
     }
 
     public String getImagem() {return imagem; }
+
+    public int getId() {
+        return id_rep;
+    }
 }
