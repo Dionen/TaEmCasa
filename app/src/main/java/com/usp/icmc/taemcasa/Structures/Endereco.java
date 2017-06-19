@@ -25,9 +25,7 @@ public class Endereco implements Serializable{
 
     public Endereco(){}
 
-    public String enderecoLongo(){
-        return rua + ", " + numero + ", " + bairro + ". " + cidade + " - " + estado;
-    }
+    public String enderecoLongo(){ return rua + ", " + numero + ", " + bairro + ". " + cidade + " - " + estado; }
 
     public String enderecoCurto(){
         return bairro + ", " + cidade + " - " + estado;
@@ -74,4 +72,6 @@ public class Endereco implements Serializable{
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
+    public void setBairro(String bairro) { this.bairro = bairro; }
 }

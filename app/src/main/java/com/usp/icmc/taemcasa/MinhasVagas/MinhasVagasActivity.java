@@ -2,8 +2,11 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +81,7 @@ public class MinhasVagasActivity extends Fragment {
     public void onResume() {
         super.onResume();
         listaMoradiasRefresh();
-        listaVagasRefresh();
+        //listaVagasRefresh();
         adapter.notifyDataSetChanged();
     }
 
@@ -139,6 +142,7 @@ public class MinhasVagasActivity extends Fragment {
                                     bairro, cidade, estado, latitude, longitude, telefone, link, tipo, perfil, qtd_moradores, aceita_animais);
                             listaMoradias.add(dados);
                         }
+                        adapter.notifyDataSetChanged();
                     }
 
                 } catch(JSONException e) {
@@ -174,8 +178,21 @@ public class MinhasVagasActivity extends Fragment {
 
         _listDataChild.put(listaMoradias.get(0), header1);
         _listDataChild.put(listaMoradias.get(1), header2);
+        _listDataChild.put(listaMoradias.get(2), header3);
+        _listDataChild.put(listaMoradias.get(3), header2);
 
         listaVagas =  _listDataChild;
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     /**
@@ -286,7 +303,7 @@ public class MinhasVagasActivity extends Fragment {
         public View getGroupView(int groupPosition, boolean isExpanded,
                                  View convertView, ViewGroup parent) {
 
-            Vaga header = (Vaga) getGroup(groupPosition);
+            Republica header = (Republica) getGroup(groupPosition);
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) this._context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -296,11 +313,16 @@ public class MinhasVagasActivity extends Fragment {
             TextView title = (TextView) convertView.findViewById(R.id.title);
             TextView description = (TextView) convertView.findViewById(R.id.description);
             TextView address = (TextView) convertView.findViewById(R.id.address);
+            ImageView fotoMoradia = (ImageView) convertView.findViewById(R.id.fotoMoradia);
 
             //Inserindo as informacoes
-            title.setText(header.getTitle());
-            description.setText(header.getDescription());
-            //address.setText(header.getAddress());
+            title.setText(header.getNome());
+            description.setText(header.getDescricao());
+            address.setText(header.getEndereco().enderecoCurto());
+
+            Bitmap thumbnail = StringToBitMap(header.getImagem());
+            if (thumbnail != null) fotoMoradia.setImageBitmap(thumbnail);
+            else fotoMoradia.setVisibility(View.GONE);
 
             return convertView;
         }
