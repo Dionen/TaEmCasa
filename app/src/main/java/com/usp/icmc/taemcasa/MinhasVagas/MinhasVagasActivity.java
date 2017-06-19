@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -80,13 +82,13 @@ public class MinhasVagasActivity extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        listaMoradiasRefresh();
-        //listaVagasRefresh();
+        minhasVagasRefresh();
         adapter.notifyDataSetChanged();
     }
 
-    private void listaMoradiasRefresh() {
+    private void minhasVagasRefresh() {
         listaMoradias.clear();
+        listaVagas.clear();
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -94,13 +96,16 @@ public class MinhasVagasActivity extends Fragment {
                 JSONObject jsonResponse = null;
 
                 try {
+                    System.out.println(response);
                     jsonResponse = new JSONObject(response);
 
                     boolean success = jsonResponse.getBoolean("success");
                     if(success) {
-                        JSONArray moradiasResponse = jsonResponse.getJSONArray("data");
+                        HashMap<Integer, Republica> aux = new HashMap<Integer, Republica>();
 
-                        for(int i = 0; i < moradiasResponse.length(); i++) {
+                        JSONArray moradiasResponse = jsonResponse.getJSONArray("moradias");
+
+                        for (int i = 0; i < moradiasResponse.length(); i++) {
                             JSONObject atual = moradiasResponse.getJSONObject(i);
 
                             int id = atual.getInt("id");
@@ -127,8 +132,12 @@ public class MinhasVagasActivity extends Fragment {
                                 longitude = Float.parseFloat(s);
 
                             String telefone = atual.getString("telefone");
-                            String link = atual.getString("link");
-                            int tipo = atual.getInt("tipo");
+                            String imagem = atual.getString("imagem");
+
+                            String sTipo = atual.getString("tipo");
+                            int tipo = 0;
+                            if(!sTipo.equals("null")) tipo = Integer.parseInt(sTipo);
+
                             int perfil = atual.getInt("perfil");
                             int qtd_moradores = atual.getInt("qtd_moradores");
 
@@ -139,8 +148,44 @@ public class MinhasVagasActivity extends Fragment {
                             if (bool == 1) aceita_animais = true;
 
                             Republica dados = new Republica(id, username, nome, descricao, rua, numero, complemento,
-                                    bairro, cidade, estado, latitude, longitude, telefone, link, tipo, perfil, qtd_moradores, aceita_animais);
+                                    bairro, cidade, estado, latitude, longitude, telefone, imagem, tipo, perfil, qtd_moradores, aceita_animais);
                             listaMoradias.add(dados);
+                            listaVagas.put(dados, new ArrayList<Vaga>());
+                            aux.put(id, dados);
+                        }
+
+                        JSONArray vagasResponse = jsonResponse.getJSONArray("vagas");
+
+                        for (int i = 0; i < vagasResponse.length(); i++) {
+                            JSONObject atual = vagasResponse.getJSONObject(i);
+
+                            int id = atual.getInt("id");
+                            int id_rep = atual.getInt("id_rep");
+                            String preco = atual.getString("preco");
+                            String tipo = Integer.toString(atual.getInt("tipo"));
+
+                            boolean individual = false;
+                            int bool = atual.getInt("individual");
+                            if (bool == 1) individual = true;
+
+                            Vaga dados = new Vaga(id, id_rep, preco, tipo, individual);
+
+                            Republica auxiliar = aux.get(id_rep);
+
+                            listaVagas.get(auxiliar).add(dados);
+                        }
+
+                        java.util.Iterator iter = listaVagas.values().iterator();
+                        while(iter.hasNext()) {
+                            ArrayList<Vaga> l = (ArrayList<Vaga>) iter.next();
+
+                            if(l.size() == 0) l.add(new Vaga("-1"));
+                        }
+
+                        java.util.Iterator iter2 = listaVagas.keySet().iterator();
+                        while(iter2.hasNext()) {
+                            Republica aux3 = (Republica) iter2.next();
+                            System.out.println(aux3 +  "  " + listaVagas.get(aux3).get(0).getPrice());
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -155,33 +200,6 @@ public class MinhasVagasActivity extends Fragment {
         MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas
-    }
-
-    /* Gera valores teste de vagas */
-    public void listaVagasRefresh(){
-        HashMap<Republica, List<Vaga>> _listDataChild = new HashMap<>();
-
-        List<Vaga> header1 = new ArrayList<Vaga>();
-        header1.add(new Vaga("-1"));    // Inicializar uma vaga com -1 coloca o botão de "adicionar vaga" no fim da lista filha.
-                                        // Não tem jeito muito bonito de fazer isso.
-
-        List<Vaga> header2 = new ArrayList<Vaga>();
-        header2.add(new Vaga("$$", true, "Vaga Masculina"));
-        header2.add(new Vaga("$$$$", false, "Vaga Feminina"));
-        header2.add(new Vaga("-1"));
-
-        List<Vaga> header3 = new ArrayList<Vaga>();
-        header3.add(new Vaga("$$$", true, "Vaga Feminina"));
-        header3.add(new Vaga("$$", false, "Vaga Feminina"));
-        header3.add(new Vaga("$$", false, "Vaga Feminina"));
-        header3.add(new Vaga("-1"));
-
-        _listDataChild.put(listaMoradias.get(0), header1);
-        _listDataChild.put(listaMoradias.get(1), header2);
-        _listDataChild.put(listaMoradias.get(2), header3);
-        _listDataChild.put(listaMoradias.get(3), header2);
-
-        listaVagas =  _listDataChild;
     }
 
     public Bitmap StringToBitMap(String encodedString){
