@@ -80,7 +80,7 @@ public class MinhasVagasActivity extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        listaMoradiasRefresh();
+        //listaMoradiasRefresh();
         //listaVagasRefresh();
         adapter.notifyDataSetChanged();
     }
@@ -253,7 +253,7 @@ public class MinhasVagasActivity extends Fragment {
             holder.removerVaga = (ImageView) view.findViewById(R.id.removerVaga);
             holder.adicionarVaga = (Button) view.findViewById(R.id.adicionarVaga);
 
-            if (conteudoVaga.getPrice().equals("-1")){
+            if (conteudoVaga.getPreco() == -1){
                 /* Caso seja o botão de adicionar vaga */
                 holder.tipoMorador.setVisibility(View.GONE);
                 holder.preco.setVisibility(View.GONE);
@@ -262,10 +262,10 @@ public class MinhasVagasActivity extends Fragment {
                 holder.adicionarVaga.setVisibility(View.VISIBLE);
             } else {
                 /*Inserindo as informacoes das vagas */
-                holder.tipoMorador.setText(conteudoVaga.gettipoMorador());
-                holder.preco.setText(conteudoVaga.getPrice());
+                holder.tipoMorador.setText(conteudoVaga.getTipo());
+                holder.preco.setText("R$" + conteudoVaga.getPreco());
 
-                if (conteudoVaga.getIndividual()) {
+                if (conteudoVaga.isIndividual()) {
                     holder.individualTexto.setText("Quarto Individual");
                 } else {
                     holder.individualTexto.setText("Quarto Compartilhado");
@@ -312,7 +312,7 @@ public class MinhasVagasActivity extends Fragment {
 
             TextView title = (TextView) convertView.findViewById(R.id.title);
             TextView description = (TextView) convertView.findViewById(R.id.description);
-            TextView address = (TextView) convertView.findViewById(R.id.address);
+            TextView address = (TextView) convertView.findViewById(R.id.endereco);
             ImageView fotoMoradia = (ImageView) convertView.findViewById(R.id.fotoMoradia);
 
             //Inserindo as informacoes

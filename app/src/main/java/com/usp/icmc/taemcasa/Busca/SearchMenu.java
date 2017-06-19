@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,15 +106,18 @@ public class SearchMenu extends Fragment {
                             JSONObject atual = searchResponse.getJSONObject(i);
                             Vaga vaga = new Vaga();
                             Endereco end = new Endereco();
-                            vaga.setPrice(atual.getString("vaga.preco"));
+
+                            /*
+                            vaga.setPreco(atual.getString("vaga.preco"));
                             vaga.setTitle(atual.getString("republica.nome"));
                             end.setRua(atual.getString("republica.rua"));
                             end.setNumero(atual.getString("republica.numero"));
                             end.setComplemento(atual.getString("republica.complemento"));
                             end.setCidade(atual.getString("republica.cidade"));
                             end.setEstado(atual.getString("republica.estado"));
-                            vaga.setAddress(end);
+                            vaga.setEndereco(end);
                             vagas.add(vaga);
+                            */
                         }
                         intent.putExtra("vagas",vagas);
                         startActivity(intent);

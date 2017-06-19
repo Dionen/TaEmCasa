@@ -10,14 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Structures.Endereco;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchListActivity extends AppCompatActivity {
 
@@ -83,7 +80,7 @@ public class SearchListActivity extends AppCompatActivity {
             TextView description = (TextView)
                     view.findViewById(R.id.description);
             TextView address = (TextView)
-                    view.findViewById(R.id.address);
+                    view.findViewById(R.id.endereco);
             TextView price = (TextView)
                     view.findViewById(R.id.price);
             TextView type = (TextView)
@@ -92,11 +89,11 @@ public class SearchListActivity extends AppCompatActivity {
                     view.findViewById(R.id.icon);
 
             //Inserindo as informacoes
-            title.setText(search.getTitle());
-            description.setText(search.getDescription());
-            address.setText(search.getAddress().enderecoCurto());
-            price.setText(search.getPrice());
-            type.setText(search.getTipoMoradia());
+            title.setText(search.getRepublica().getNome());
+            description.setText(search.getRepublica().getDescricao());
+            address.setText(search.getRepublica().getEndereco().enderecoCurto());
+            price.setText("R$" + search.getPreco());
+            type.setText(search.getTipo());
             imagem.setImageResource(R.drawable.ic_menu_gallery);
             return view;
         }

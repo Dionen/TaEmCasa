@@ -17,7 +17,7 @@
         android:src="@android:drawable/star_big_on" />
 
     <TextView
-        android:id="@+id/address"
+        android:id="@+id/endereco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_above="@+id/address"
+        android:layout_above="@+id/endereco"
         android:layout_below="@+id/title"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/price"

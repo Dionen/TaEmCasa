@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Endereco;
+import com.usp.icmc.taemcasa.Structures.Republica;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 import com.usp.icmc.taemcasa.Wishlist.WishlistResponse.WishlistRequest_GETALL;
 
@@ -63,6 +63,7 @@ public class WishlistActivity extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    // Funções modificadoras de layout
     public void carregandoWishlist(View view){
         final View carregandoWishlist = view.findViewById(R.id.carregandoWishlist);
         final View listaWishlist = view.findViewById(R.id.listaWishlist);
@@ -116,11 +117,10 @@ public class WishlistActivity extends Fragment {
                         for (int i = 0; i < wishlistResponse.length(); i++) {
                             JSONObject atual = wishlistResponse.getJSONObject(i);
 
-                            Vaga vaga = new Vaga();
                             Endereco end = new Endereco();
-                            vaga.setPrice(atual.getString("vaga.preco"));
-                            vaga.setTitle(atual.getString("republica.nome"));
-                            vaga.setImagem(atual.getString("republica.imagem"));
+                            Republica rep = new Republica();
+                            Vaga vaga = new Vaga();
+
                             end.setRua(atual.getString("republica.rua"));
                             end.setNumero(atual.getString("republica.numero"));
                             end.setComplemento(atual.getString("republica.complemento"));
@@ -128,11 +128,26 @@ public class WishlistActivity extends Fragment {
                             end.setCidade(atual.getString("republica.cidade"));
                             end.setEstado(atual.getString("republica.estado"));
 
-                            vaga.setAddress(end);
+                            rep.setEndereco(end);
+                            rep.setNome(atual.getString("republica.nome"));
+                            rep.setDescricao(atual.getString("republica.descricao"));
+                            rep.setTelefone(atual.getString("republica.telefone"));
+                            rep.setImagem(atual.getString("republica.imagem"));
+                            rep.setTipo(atual.getString("republica.tipo_r"));
+                            rep.setPerfil(atual.getString("republica.perfil"));
+                            rep.setQtd_moradores(atual.getString("republica.qtd_moradores"));
+                            rep.setAceita_animais(atual.getString("republica.aceita_animais"));
+
+                            vaga.setRepublica(rep);
+                            vaga.setPreco(atual.getString("vaga.preco"));
+                            vaga.setTipo(atual.getString("vaga.tipo_v"));
+                            vaga.setIndividual(atual.getString("vaga.individual"));
+
                             vagas.add(vaga);
                         }
                         adapter.notifyDataSetChanged();
                     } else {
+                        vaziaWishlist(getView());
                     }
 
                 } catch (JSONException e) {
@@ -190,20 +205,18 @@ public class WishlistActivity extends Fragment {
 
             Vaga search = search_data.get(position);
 
-
             //pegando as referências das Views
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView address = (TextView) view.findViewById(R.id.address_3);
-            TextView preenchida = (TextView) view.findViewById(R.id.vaga_preenchida);
             TextView preco = (TextView) view.findViewById(R.id.precoWishlist);
             ImageView imagem = (ImageView) view.findViewById(R.id.icon);
 
             //Inserindo as informacoes
-            title.setText(search.getTitle());
-            address.setText(search.getAddress().enderecoCurto());
-            preco.setText("R$" + search.getPrice());
+            title.setText(search.getRepublica().getNome());
+            address.setText(search.getRepublica().getEndereco().enderecoCurto());
+            preco.setText("R$" + search.getPreco());
 
-            Bitmap foto = StringToBitMap(search.getImagem());
+            Bitmap foto = StringToBitMap(search.getRepublica().getImagem());
 
             if (foto == null) imagem.setImageResource(R.drawable.ic_menu_gallery);
             else imagem.setImageBitmap(foto);
