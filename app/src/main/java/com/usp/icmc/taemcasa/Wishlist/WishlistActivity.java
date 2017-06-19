@@ -2,10 +2,12 @@ package com.usp.icmc.taemcasa.Wishlist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +21,14 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.usp.icmc.taemcasa.MinhasVagas.AdicionarMoradia;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Endereco;
 import com.usp.icmc.taemcasa.Structures.Republica;
 import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Utils.ConvertorBitmap;
 import com.usp.icmc.taemcasa.Wishlist.WishlistResponse.WishlistRequest_GETALL;
+import com.usp.icmc.taemcasa.Wishlist.WishlistResponse.WishlistRequest_REMOVE;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -142,6 +147,7 @@ public class WishlistActivity extends Fragment {
                             vaga.setPreco(atual.getString("vaga.preco"));
                             vaga.setTipo(atual.getString("vaga.tipo_v"));
                             vaga.setIndividual(atual.getString("vaga.individual"));
+                            vaga.setId_vaga(atual.getString("vaga.id_vaga"));
 
                             vagas.add(vaga);
                         }
@@ -162,15 +168,39 @@ public class WishlistActivity extends Fragment {
         queue.add(wishlistRequest); // Executa as tarefas requisitadas
     }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
+
+    public void removeWishlist(int id_vaga){
+        final Context context = getContext();
+        String user_id = getActivity().getIntent().getExtras().getString("user_id");
+        carregandoWishlist(getView());
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonResponse = null;
+                layoutWishlist(getView());
+
+                try {
+                    jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success) {
+                        Toast.makeText(context, "Vaga removida com sucesso", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Erro ao remover vaga", Toast.LENGTH_SHORT).show();
+                    }
+                    onResume();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        /* ENTRA NA DATABASE ONLINE */
+        WishlistRequest_REMOVE wishlistRequest = new WishlistRequest_REMOVE(user_id, id_vaga + "",  responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(wishlistRequest); // Executa as tarefas requisitadas
     }
 
     private class AdapterWishList extends BaseAdapter {
@@ -199,27 +229,51 @@ public class WishlistActivity extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = activity.getLayoutInflater()
+        public View getView(int position, final View convertView, final ViewGroup parent) {
+            final View view = activity.getLayoutInflater()
                     .inflate(R.layout.search_template_3, parent, false);
 
-            Vaga search = search_data.get(position);
+            final Vaga search = search_data.get(position);
 
             //pegando as referências das Views
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView address = (TextView) view.findViewById(R.id.address_3);
             TextView preco = (TextView) view.findViewById(R.id.precoWishlist);
             ImageView imagem = (ImageView) view.findViewById(R.id.icon);
+            ImageView removeWishlist = (ImageView) view.findViewById(R.id.removeWishlist);
 
             //Inserindo as informacoes
             title.setText(search.getRepublica().getNome());
             address.setText(search.getRepublica().getEndereco().enderecoCurto());
             preco.setText("R$" + search.getPreco());
 
-            Bitmap foto = StringToBitMap(search.getRepublica().getImagem());
+            Bitmap foto = ConvertorBitmap.StringToBitMap(search.getRepublica().getImagem());
 
             if (foto == null) imagem.setImageResource(R.drawable.ic_menu_gallery);
             else imagem.setImageBitmap(foto);
+
+            removeWishlist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    AlertDialog alerta;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Deseja remover esta vaga de sua Wishlist?");
+                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1){
+                            removeWishlist(search.getId_vaga());
+                        }
+                    });
+                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //long length = BitMapToString(imagem).length();
+                            //Toast.makeText(getApplicationContext(), length+"", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    alerta = builder.create();
+                    alerta.show();
+                }
+            });
 
             /*if (position == 2 || position == 4){
                 description.setVisibility(View.GONE);

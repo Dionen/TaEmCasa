@@ -27,11 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_ADD;
 import com.usp.icmc.taemcasa.R;
+import com.usp.icmc.taemcasa.Utils.ConvertorBitmap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class AdicionarMoradia extends AppCompatActivity {
@@ -115,23 +114,6 @@ public class AdicionarMoradia extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(photoPickerIntent,"Complete Action Using"), RC_PHOTO_PICKER);
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        // Redimensiona a imagem
-        int maxHeight = 800;
-        int maxWidth = 800;
-        float scale = Math.min(((float)maxHeight / bitmap.getWidth()), ((float)maxWidth / bitmap.getHeight()));
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(scale, scale);
-        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-        // Converte a imagem para string
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,80, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -224,7 +206,7 @@ public class AdicionarMoradia extends AppCompatActivity {
         };
         MoradiaRequest_ADD moradiaRequest = new MoradiaRequest_ADD(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
-                BitMapToString(imagem), tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
+                ConvertorBitmap.BitMapToString(imagem), tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
         RequestQueue queue = Volley.newRequestQueue(AdicionarMoradia.this);
         queue.add(moradiaRequest);
     }
