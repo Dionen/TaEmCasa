@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.MinhasVagas.MinhasVagasActivity;
 import com.usp.icmc.taemcasa.Busca.SearchMenu;
+
 import com.usp.icmc.taemcasa.Wishlist.WishlistActivity;
 
 public class MenuActivity extends AppCompatActivity {

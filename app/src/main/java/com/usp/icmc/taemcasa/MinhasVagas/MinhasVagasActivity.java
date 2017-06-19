@@ -1,7 +1,5 @@
 package com.usp.icmc.taemcasa.MinhasVagas;
 
-import android.app.Activity;
-import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,23 +7,34 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MinhasMoradias;
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Structures.Endereco;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Structures.Republica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class MinhasVagasActivity extends Fragment {
+
+    List<Republica> listaMoradias;
+    HashMap<Republica, List<Vaga>> listaVagas;
+    ExpandableListAdapter adapter;
 
     @Override
     public void onAttach (Context context){
@@ -36,15 +45,15 @@ public class MinhasVagasActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_my_list, container, false);
-
-        List<Vaga> pais = todasAsVagas();                           // GERA MORADIAS TESTE
-        HashMap<Vaga, List<Vaga>> filhos = todosOsFilhos(pais);     // DEVE-SE OBTER AS MORADIAS E VAGAS DO USUARIO
+//      Incializa lista de moradias do usuário
+        listaMoradias = new ArrayList<Republica>();
+        listaVagas = new HashMap<Republica, List<Vaga>>();     // DEVE-SE OBTER AS MORADIAS E VAGAS DO USUARIO
 
         ExpandableListView minhasMoradias = (ExpandableListView) rootView.findViewById(R.id.expandable_list);
         Button adicionarVaga = (Button) rootView.findViewById(R.id.adicionarVaga);
 
         /* Liga os valores ao layout */
-        ExpandableListAdapter adapter = new ExpandableListAdapter(getActivity(), pais, filhos);
+        adapter = new ExpandableListAdapter(getActivity(), listaMoradias, listaVagas);
         minhasMoradias.setAdapter(adapter);
 
         /* Botão de iniciar cadastro de moradia */
@@ -65,24 +74,88 @@ public class MinhasVagasActivity extends Fragment {
         return rootView;
     }
 
-     /* Gera valores teste de moradias */
-    public List<Vaga> todasAsVagas(){
-        final List<Vaga> list = new ArrayList<Vaga>();
+    @Override
+    public void onResume() {
+        super.onResume();
+        listaMoradiasRefresh();
+        listaVagasRefresh();
+        adapter.notifyDataSetChanged();
+    }
 
-        for (int i = 0; i < 3; ++i) {
-            list.add(new Vaga("Republica do Bozó nº" + (i+1),
-                    "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
-                    new Endereco("Alameda das Orquideas","102-1","Cidade Jardim", "", "São Carlos", "SP"),
-                    "$$$",
-                    "Vaga unissex"));
-        }
+    private void listaMoradiasRefresh() {
+        listaMoradias.clear();
 
-        return list;
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonResponse = null;
+
+                try {
+                    jsonResponse = new JSONObject(response);
+
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success) {
+                        JSONArray moradiasResponse = jsonResponse.getJSONArray("data");
+
+                        for(int i = 0; i < moradiasResponse.length(); i++) {
+                            JSONObject atual = moradiasResponse.getJSONObject(i);
+
+                            int id = atual.getInt("id");
+                            String username = atual.getString("username");
+                            String nome = atual.getString("nome");
+                            String descricao = atual.getString("descricao");
+                            String rua = atual.getString("rua");
+                            String numero = atual.getString("numero");
+                            String complemento = atual.getString("complemento");
+                            String bairro = atual.getString("bairro");
+                            String cidade = atual.getString("cidade");
+                            String estado = atual.getString("estado");
+
+//                          O JSON vem com floats em formato de string, então é preciso
+//                          fazer essa validação antes do parse para float
+                            String s = atual.getString("latitude");
+                            float latitude = 0;
+                            if (s != "null")
+                                latitude = Float.parseFloat(s);
+
+                            float longitude = 0;
+                            s = atual.getString("longitude");
+                            if (s != "null")
+                                longitude = Float.parseFloat(s);
+
+                            String telefone = atual.getString("telefone");
+                            String link = atual.getString("link");
+                            int tipo = atual.getInt("tipo");
+                            int perfil = atual.getInt("perfil");
+                            int qtd_moradores = atual.getInt("qtd_moradores");
+
+//                          O bd armazena true como 1, então é preciso fazer essa
+//                          validação para conseguir utilizar o boolean do java
+                            boolean aceita_animais = false;
+                            int bool = atual.getInt("aceita_animais");
+                            if (bool == 1) aceita_animais = true;
+
+                            Republica dados = new Republica(id, username, nome, descricao, rua, numero, complemento,
+                                    bairro, cidade, estado, latitude, longitude, telefone, link, tipo, perfil, qtd_moradores, aceita_animais);
+                            listaMoradias.add(dados);
+                        }
+                    }
+
+                } catch(JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        /* ENTRA NA DATABASE ONLINE */
+        MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas
     }
 
     /* Gera valores teste de vagas */
-    public HashMap<Vaga, List<Vaga>> todosOsFilhos(List<Vaga> lista){
-        HashMap<Vaga, List<Vaga>> _listDataChild = new HashMap<Vaga, List<Vaga>>();
+    public void listaVagasRefresh(){
+        HashMap<Republica, List<Vaga>> _listDataChild = new HashMap<>();
 
         List<Vaga> header1 = new ArrayList<Vaga>();
         header1.add(new Vaga("-1"));    // Inicializar uma vaga com -1 coloca o botão de "adicionar vaga" no fim da lista filha.
@@ -99,11 +172,10 @@ public class MinhasVagasActivity extends Fragment {
         header3.add(new Vaga("$$", false, "Vaga Feminina"));
         header3.add(new Vaga("-1"));
 
-        _listDataChild.put(lista.get(0), header1);
-        _listDataChild.put(lista.get(1), header2);
-        _listDataChild.put(lista.get(2), header3);
+        _listDataChild.put(listaMoradias.get(0), header1);
+        _listDataChild.put(listaMoradias.get(1), header2);
 
-        return _listDataChild;
+        listaVagas =  _listDataChild;
     }
 
     /**
@@ -116,11 +188,11 @@ public class MinhasVagasActivity extends Fragment {
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Context _context;
-        private List<Vaga> _listDataHeader;
-        private HashMap<Vaga, List<Vaga>> _listDataChild;
+        private List<Republica> _listDataHeader;
+        private HashMap<Republica, List<Vaga>> _listDataChild;
 
-        public ExpandableListAdapter(Context context, List<Vaga> listDataHeader,
-                                     HashMap<Vaga, List<Vaga>> listChildData) {
+        public ExpandableListAdapter(Context context, List<Republica> listDataHeader,
+                                     HashMap<Republica, List<Vaga>> listChildData) {
             this._context = context;
             this._listDataHeader = listDataHeader;
             this._listDataChild = listChildData;
