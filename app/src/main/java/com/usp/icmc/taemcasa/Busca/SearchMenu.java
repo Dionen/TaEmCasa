@@ -100,7 +100,7 @@ public class SearchMenu extends Fragment {
 
                         if(searchResponse.length() <= 0){
                             message.ToastMessage("Não há vagas com esses critérios", context);
-                            return;
+                            //return;
                         }
 
                         for(int i = 0; i < searchResponse.length(); i++) {

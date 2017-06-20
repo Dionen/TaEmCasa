@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="volley-master-unspecified">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/volley-master/build/intermediates/bundles/default/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/volley-master/build/intermediates/bundles/default/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

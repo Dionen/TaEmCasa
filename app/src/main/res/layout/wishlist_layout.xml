@@ -5,7 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/carregandoWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="24dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:text="Carregando sua Wishlist..." />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nadaWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="24dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Nada adicionado na sua wishlist ainda... \nÉ só clicar na estrelinha! \nFica mais fácil de achar aquela vaga legal depois ;) \n\n(Por enquanto da pra adicionar só pela database)"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/listaWishlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

@@ -2,24 +2,40 @@ package com.usp.icmc.taemcasa.Wishlist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Endereco;
 import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Wishlist.WishlistResponse.WishlistRequest_GETALL;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WishlistActivity extends Fragment {
+
+    List<Vaga> vagas;
+    WishlistActivity.AdapterWishList adapter;
 
     @Override
     public void onAttach (Context context){
@@ -31,26 +47,115 @@ public class WishlistActivity extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.wishlist_layout, container, false);
 
-        List<Vaga> cursos = todasAsVagas();
-        ListView listaDeCursos = (ListView) rootView.findViewById(R.id.search_result_list);
+        vagas = new ArrayList<Vaga>();
+        ListView wishlistView = (ListView) rootView.findViewById(R.id.search_result_list);
 
+        adapter = new WishlistActivity.AdapterWishList(vagas, (Activity) getActivity());
+        wishlistView.setAdapter(adapter);
 
-        WishlistActivity.AdapterWishList adapter = new WishlistActivity.AdapterWishList(cursos, (Activity) getActivity());
-        listaDeCursos.setAdapter(adapter);
         return rootView;
     }
 
-    public List<Vaga> todasAsVagas(){
-        final List<Vaga> list = new ArrayList<Vaga>();
+    @Override
+    public void onResume() {
+        super.onResume();
+        downloadWishlist();
+        adapter.notifyDataSetChanged();
+    }
 
-        for (int i = 0; i < 10; ++i) {
-            list.add(new Vaga("Republica do Bozó nº" + (i+1),
-                    "Casa grande com 4 quartos (dois na casa e dois nos fundos), sala de estudos, sala de visitas, sala de jantar, 2 banheiros. Temos acesso à Internet (Speedy), rede de computadores, TV à Cabo(NET), telefone, empregada todos os dias (lava, passa e cozinha).",
-                    new Endereco("Alameda das Orquideas","102-1","Cidade Jardim", "", "São Carlos", "SP"),
-                    "$$$",
-                    "Vaga unissex"));
+    public void carregandoWishlist(View view){
+        final View carregandoWishlist = view.findViewById(R.id.carregandoWishlist);
+        final View listaWishlist = view.findViewById(R.id.listaWishlist);
+        final View nadaWishlist = view.findViewById(R.id.nadaWishlist);
+
+        carregandoWishlist.setVisibility(View.VISIBLE);
+        listaWishlist.setVisibility(View.GONE);
+        nadaWishlist.setVisibility(View.GONE);
+    }
+
+    public void vaziaWishlist(View view){
+        final View carregandoWishlist = view.findViewById(R.id.carregandoWishlist);
+        final View listaWishlist = view.findViewById(R.id.listaWishlist);
+        final View nadaWishlist = view.findViewById(R.id.nadaWishlist);
+
+        carregandoWishlist.setVisibility(View.GONE);
+        listaWishlist.setVisibility(View.GONE);
+        nadaWishlist.setVisibility(View.VISIBLE);
+    }
+
+    public void layoutWishlist(View view){
+        final View carregandoWishlist = view.findViewById(R.id.carregandoWishlist);
+        final View listaWishlist = view.findViewById(R.id.listaWishlist);
+        final View nadaWishlist = view.findViewById(R.id.nadaWishlist);
+
+        carregandoWishlist.setVisibility(View.GONE);
+        listaWishlist.setVisibility(View.VISIBLE);
+        nadaWishlist.setVisibility(View.GONE);
+    }
+
+    private void downloadWishlist() {
+        final Context context = getContext();
+        carregandoWishlist(getView());
+        vagas.clear();
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonResponse = null;
+                layoutWishlist(getView());
+
+                try {
+                    jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success) {
+                        JSONArray wishlistResponse = jsonResponse.getJSONArray("data");
+
+                        if (wishlistResponse.length() == 0) vaziaWishlist(getView());
+
+                        for (int i = 0; i < wishlistResponse.length(); i++) {
+                            JSONObject atual = wishlistResponse.getJSONObject(i);
+
+                            Vaga vaga = new Vaga();
+                            Endereco end = new Endereco();
+                            vaga.setPrice(atual.getString("vaga.preco"));
+                            vaga.setTitle(atual.getString("republica.nome"));
+                            vaga.setImagem(atual.getString("republica.imagem"));
+                            end.setRua(atual.getString("republica.rua"));
+                            end.setNumero(atual.getString("republica.numero"));
+                            end.setComplemento(atual.getString("republica.complemento"));
+                            end.setBairro(atual.getString("republica.bairro"));
+                            end.setCidade(atual.getString("republica.cidade"));
+                            end.setEstado(atual.getString("republica.estado"));
+
+                            vaga.setAddress(end);
+                            vagas.add(vaga);
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        /* ENTRA NA DATABASE ONLINE */
+        WishlistRequest_GETALL wishlistRequest = new WishlistRequest_GETALL(getActivity().getIntent().getExtras().getString("user_id"),  responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(wishlistRequest); // Executa as tarefas requisitadas
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
         }
-        return list;
     }
 
     private class AdapterWishList extends BaseAdapter {
@@ -85,30 +190,30 @@ public class WishlistActivity extends Fragment {
 
             Vaga search = search_data.get(position);
 
+
             //pegando as referências das Views
-            TextView title = (TextView)
-                    view.findViewById(R.id.title);
-            TextView description = (TextView)
-                    view.findViewById(R.id.description);
-            TextView address = (TextView)
-                    view.findViewById(R.id.address_3);
-            TextView preenchida = (TextView)
-                    view.findViewById(R.id.vaga_preenchida);
-            ImageView imagem = (ImageView)
-                    view.findViewById(R.id.icon);
+            TextView title = (TextView) view.findViewById(R.id.title);
+            TextView address = (TextView) view.findViewById(R.id.address_3);
+            TextView preenchida = (TextView) view.findViewById(R.id.vaga_preenchida);
+            TextView preco = (TextView) view.findViewById(R.id.precoWishlist);
+            ImageView imagem = (ImageView) view.findViewById(R.id.icon);
 
             //Inserindo as informacoes
             title.setText(search.getTitle());
-            description.setText(search.getDescription());
-            //address.setText(search.getAddress());
-            imagem.setImageResource(R.drawable.ic_menu_gallery);
+            address.setText(search.getAddress().enderecoCurto());
+            preco.setText("R$" + search.getPrice());
 
-            if (position == 2 || position == 4){
+            Bitmap foto = StringToBitMap(search.getImagem());
+
+            if (foto == null) imagem.setImageResource(R.drawable.ic_menu_gallery);
+            else imagem.setImageBitmap(foto);
+
+            /*if (position == 2 || position == 4){
                 description.setVisibility(View.GONE);
                 address.setVisibility(View.GONE);
                 preenchida.setVisibility(View.VISIBLE);
                 imagem.setImageResource(R.drawable.ic_menu_share);
-            }
+            }*/
             return view;
         }
 
