@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -89,6 +88,7 @@ public class AdicionarMoradia extends AppCompatActivity {
                         removerFoto.setVisibility(View.GONE);
                     }
                 });
+
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -222,9 +222,14 @@ public class AdicionarMoradia extends AppCompatActivity {
                 }
             }
         };
+
+        String imagemS = new String();
+        if(imagem != null) imagemS = BitMapToString(imagem);
+
         MoradiaRequest_ADD moradiaRequest = new MoradiaRequest_ADD(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
-                BitMapToString(imagem), tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
+                imagemS, tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
+        System.out.println("Chego!");
         RequestQueue queue = Volley.newRequestQueue(AdicionarMoradia.this);
         queue.add(moradiaRequest);
     }
@@ -282,7 +287,7 @@ public class AdicionarMoradia extends AppCompatActivity {
             return false;
         }
 
-        RadioGroup perfil = (RadioGroup) findViewById(R.id.tipo);
+        RadioGroup perfil = (RadioGroup) findViewById(R.id.tipoEdicao);
 
         if (perfil.getCheckedRadioButtonId() == -1) {
             Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT).show();

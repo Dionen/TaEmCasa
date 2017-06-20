@@ -21,13 +21,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/removerVaga"
-        android:layout_toStartOf="@+id/removerVaga"
         android:text="$$$"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/removerVaga"
+        android:layout_toStartOf="@+id/removerVaga"
+        android:layout_marginRight="51dp"
+        android:layout_marginEnd="51dp" />
+
+
+    <ImageView
+        android:id="@+id/editarVaga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/colorPessoaInteressada"
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/removerVaga" />
 
     <ImageView
         android:id="@+id/removerVaga"

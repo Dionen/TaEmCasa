@@ -21,7 +21,6 @@ public class VagaRequest_DELETE extends StringRequest {
     public VagaRequest_DELETE(int id, Response.Listener<String> listener){
         super(Method.POST, DELETE_REQUEST_URL, listener, null);
         params = new HashMap<>();
-//        GAMBIAAAAAAAAAAAAAARRRA
         params.put("id", new Integer(id).toString());
     }
 

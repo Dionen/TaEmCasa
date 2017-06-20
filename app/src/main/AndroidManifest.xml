@@ -72,6 +72,11 @@
             android:label="Nova Vaga"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".MinhasVagas.EditarVaga"
+            android:label="Editar Vaga"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
