@@ -1,6 +1,7 @@
 package com.usp.icmc.taemcasa.Busca;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.usp.icmc.taemcasa.Perfil.PerfilVaga;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 
 import java.util.ArrayList;
+
+import static java.security.AccessController.getContext;
 
 public class SearchListActivity extends AppCompatActivity {
     @Override
@@ -30,7 +34,11 @@ public class SearchListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               setContentView(R.layout.activity_perfil_vaga);
+               //setContentView(R.layout.activity_perfil_vaga);
+                Intent intent = new Intent(getApplicationContext(), PerfilVaga.class);
+
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
 
         });

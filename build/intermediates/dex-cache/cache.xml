@@ -2,157 +2,148 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\2c93cd5a6002cec400875681b8d1926d3d6b13ed\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_001eb7ee40d0fefa2ce3ca1ce5486c52897182c6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\f3cf7a7bc10cb75baf8fbffb6a91f84edf531247\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0e76bbdf5bc3a129671b529588a0519121c312d0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_9a641ec24278cb80640a55c8b5fef04740969fa1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\a228689b7da3cfe01b5a2cfe72ee2a051dc3cfe3\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b2c91d0f949be34e6bb5025c1064b00612eb265a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3c24488eed52e3fcfea80a26839f65f9ff4c3c5e">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_de8a518bfce8a15b8912c288fff01d916f2d87b3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\ebfbd1f4d4a9a55552794d300ec25f121a91c321\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ec7fa14de4a00f08a35e289fa72821222eb9e5a8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\f61668253e0f6fbd513538dfada2653ba399f93d\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e3e6e03e3f98812dad140ebba0652026cc3688f5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Gabriel Pupo\.android\build-cache\2d6f9a01051ce986fdfaa5d0742b2389c3aeefa1\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4a04598d40abc61855a2d6cf726a3c5e5681e884\classes.dex" />
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_4a04598d40abc61855a2d6cf726a3c5e5681e884.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\f3cf7a7bc10cb75baf8fbffb6a91f84edf531247\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_e3d609ae1bf94aa274a1218ecb29d57bf665b1cc\classes.dex" />
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_0e76bbdf5bc3a129671b529588a0519121c312d0.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Gabriel Pupo\AppData\Local\Android\Sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_5bdbda1fcf66f25716af7018cecbe1e4923b1dbb\classes.dex" />
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_5bdbda1fcf66f25716af7018cecbe1e4923b1dbb.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\5f036958190e75bf25daf4710a402bf8b859bdf7\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8d331cb8231cf8a7545b57cada83a2b530a7ff7c\classes.dex" />
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_e3d609ae1bf94aa274a1218ecb29d57bf665b1cc.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Gabriel Pupo\.android\build-cache\2495dc08bd56d0b358079cda9c070e3d310ab0d2\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b1e7babf9a3f05f021d81d92525956156b73dffc\classes.dex" />
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_b1e7babf9a3f05f021d81d92525956156b73dffc.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\df26646de00daca4b5749337047a95e782172abb\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\5f036958190e75bf25daf4710a402bf8b859bdf7\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2b120ef3f5cff02249044c41751a64213cfc60e0\classes.dex" />
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_8d331cb8231cf8a7545b57cada83a2b530a7ff7c.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\e04a18f8c7a09e57c710f9e2f8a6fc2a0ba05763\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2f6cf50dd1519ced679eb672fb663fe0fa677bcf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Gabriel Pupo\.android\build-cache\e5265f36a9f982b384799ef589f42f922968d314\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d9ee01dceab035dad8b3f62bf046544fcda0abba\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Gabriel Pupo\.android\build-cache\84b157d127871e4b45a43ef67bb72e263e240d84\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3cae47d5bda8b26e3a0373aa8233200a85f603ed\classes.dex" />
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_3cae47d5bda8b26e3a0373aa8233200a85f603ed.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\e5265f36a9f982b384799ef589f42f922968d314\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_d9ee01dceab035dad8b3f62bf046544fcda0abba.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Gabriel Pupo\.android\build-cache\61b754b67a228b8adad64787b43c622c84567c18\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_af46a5420a7e9351df7b12e47515afce123c264a\classes.dex" />
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_af46a5420a7e9351df7b12e47515afce123c264a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\a228689b7da3cfe01b5a2cfe72ee2a051dc3cfe3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_b2c91d0f949be34e6bb5025c1064b00612eb265a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\2c93cd5a6002cec400875681b8d1926d3d6b13ed\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_001eb7ee40d0fefa2ce3ca1ce5486c52897182c6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\f61668253e0f6fbd513538dfada2653ba399f93d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_e3e6e03e3f98812dad140ebba0652026cc3688f5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\ebfbd1f4d4a9a55552794d300ec25f121a91c321\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_ec7fa14de4a00f08a35e289fa72821222eb9e5a8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\volley-master\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bbbbdccd7723fa4a164021f31805693053092661">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_fe5c2d7ac69cfdde91407ae1c96b8f1804c05239.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\df26646de00daca4b5749337047a95e782172abb\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_2b120ef3f5cff02249044c41751a64213cfc60e0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Gabriel Pupo\.android\build-cache\e04a18f8c7a09e57c710f9e2f8a6fc2a0ba05763\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\Gabriel Pupo\Documents\TaEmCasa\TaEmCasa\app\build\intermediates\pre-dexed\debug\classes_2f6cf50dd1519ced679eb672fb663fe0fa677bcf.jar" />
     </item>
 
 </items>

@@ -1,6 +1,7 @@
 package com.usp.icmc.taemcasa.Perfil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -76,12 +77,22 @@ public class PerfilVaga extends AppCompatActivity {
             String star_off = String.valueOf(btn_star_big_off);
             String star_on = String.valueOf(btn_star_big_on);
 
-            if (context.getResources().getIdentifier(star_off, "drawable", context.getPackageName()) != 0)
+            if (context.getResources().getIdentifier(star_off, "drawable", context.getPackageName()) != 0) {
                 wishlist.setBackgroundResource(btn_star_big_on);
+                Intent intent = getIntent();
+                int id_vaga = intent.getIntExtra("id", -1);
+
+                if (id_vaga == -1) {
+                    ToastMessage("Não pode adicionar à wishlist.");
+                } else {
+
+                }
+
                 // adicionar à wishlist
-            else if (context.getResources().getIdentifier(star_on, "drawable", context.getPackageName()) != 0)
+            } else if (context.getResources().getIdentifier(star_on, "drawable", context.getPackageName()) != 0) {
                 wishlist.setBackgroundResource(btn_star_big_off);
                 // remover da wishlist
+            }
         }
     };
 
@@ -115,9 +126,6 @@ public class PerfilVaga extends AppCompatActivity {
 
         cidadeTV = (TextView) findViewById(R.id.cidadeText);
         cidadeTV.setText(cidadeEndereco);
-
-        /*coordenadasTV = (TextView) findViewById(R.id.coordenadasText);
-        coordenadasTV.setText(getString(R.string.coordtext, latitudeEndereco, longitudeEndereco));*/
     }
 
     public void getVaga(final String response) throws JSONException {
@@ -144,8 +152,6 @@ public class PerfilVaga extends AppCompatActivity {
                         bairroEndereco = jsonResponse.getString("bairro");
                         cidadeEndereco = jsonResponse.getString("cidade");
 
-                        //latitudeEndereco = jsonResponse.getString("latitude");
-                        //longitudeEndereco = jsonResponse.getString("longitude");
                     } else {
                         ToastMessage("Vaga não encontrada");
                     }

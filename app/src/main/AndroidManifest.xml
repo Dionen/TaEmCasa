@@ -67,6 +67,11 @@
             android:label="Nova Moradia"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".Perfil.PerfilVaga"
+            android:label="Perfil"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
