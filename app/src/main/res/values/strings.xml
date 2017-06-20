@@ -37,6 +37,8 @@
     <string name="enderecotext">%1$s, %2$d - %3$s</string>
     <string name="bairro">Bairro</string>
     <string name="cidade">Cidade</string>
+    <string name="coord">Coordenadas</string>
+    <string name="coordtext">%1$s; %2$s</string>
 
     <!-- Opcoes do menu principal -->
     <string name="sobre">Sobre</string>
@@ -70,5 +72,9 @@
     <string name="adicionar_moradia">Adicionar Moradia</string>
     <string name="pick_image_intent_text">Pick Image Text</string>
     <string name="nova_vaga">Nova vaga em %1$s</string>
+
+
+    <!--Edição de Moradia-->
+    <string name="editar_vaga">Editando vaga em %1$s</string>
 
 </resources>

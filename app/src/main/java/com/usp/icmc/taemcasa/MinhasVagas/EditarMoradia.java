@@ -1,5 +1,9 @@
 package com.usp.icmc.taemcasa.MinhasVagas;
 
+/**
+ * Created by Juliana on 19/06/2017.
+ */
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,10 +11,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +28,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_ADD;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_EDIT;
 import com.usp.icmc.taemcasa.R;
 
 import org.json.JSONException;
@@ -33,7 +37,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class AdicionarMoradia extends AppCompatActivity {
+
+public class EditarMoradia extends AppCompatActivity {
 
     private static final int RC_PHOTO_PICKER = 1;
     private String user_email;
@@ -54,6 +59,7 @@ public class AdicionarMoradia extends AppCompatActivity {
 
         /* Botão de cadastrar moradia */
         Button adicionarMoradia = (Button) findViewById(R.id.adicionarMoradia);
+        adicionarMoradia.setText("Editar moradia");
         adicionarMoradia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +83,7 @@ public class AdicionarMoradia extends AppCompatActivity {
         removerFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdicionarMoradia.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditarMoradia.this);
                 builder.setTitle("Remover foto da Moradia");
                 builder.setMessage("Deseja não usar esta foto?");
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -88,7 +94,6 @@ public class AdicionarMoradia extends AppCompatActivity {
                         removerFoto.setVisibility(View.GONE);
                     }
                 });
-
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -100,6 +105,44 @@ public class AdicionarMoradia extends AppCompatActivity {
                 alerta.show();
             }
         });
+
+        /*Carregando informações*/
+        EditText titulo = (EditText) findViewById(R.id.nomeMoradia);
+        EditText logradouro = (EditText) findViewById(R.id.logradouro);
+        EditText numero = (EditText) findViewById(R.id.numero);
+        EditText bairro = (EditText) findViewById(R.id.bairro);
+        EditText complemento = (EditText) findViewById(R.id.complemento);
+        EditText cidade = (EditText) findViewById(R.id.cidade);
+        EditText estado = (EditText) findViewById(R.id.estado);
+        RadioButton apartamento = (RadioButton) findViewById(R.id.apartamento);
+        RadioButton republica = (RadioButton) findViewById(R.id.republica);
+        RadioButton calma = (RadioButton) findViewById(R.id.calma);
+        RadioButton agitada = (RadioButton) findViewById(R.id.agitada);
+        EditText nMoradores = (EditText) findViewById(R.id.nMoradores);
+        CheckBox aceitamAnimais = (CheckBox) findViewById(R.id.aceitamAnimais);
+        EditText telefone = (EditText) findViewById(R.id.telefone);
+        EditText descricao = (EditText) findViewById(R.id.descricao);
+
+        titulo.setText(intent.getStringExtra("titulo"));
+        logradouro.setText(intent.getStringExtra("logradouro"));
+        numero.setText(intent.getStringExtra("numero"));
+        bairro.setText(intent.getStringExtra("bairro"));
+        complemento.setText(intent.getStringExtra("complemento"));
+        cidade.setText(intent.getStringExtra("cidade"));
+        estado.setText(intent.getStringExtra("estado"));
+        if(intent.getStringExtra("tipo") == "0")
+            apartamento.setChecked(true);
+        else
+            republica.setChecked(true);
+        if(intent.getStringExtra("perfil") == "0")
+                calma.setChecked(true);
+        else
+            agitada.setChecked(true);
+        nMoradores.setText(intent.getStringExtra("nmoradores"));
+        if(intent.getStringExtra("animais") == "1")
+            aceitamAnimais.setChecked(true);
+        telefone.setText(intent.getStringExtra("telefone"));
+        descricao.setText(intent.getStringExtra("descricao"));
     }
 
     /**
@@ -180,7 +223,7 @@ public class AdicionarMoradia extends AppCompatActivity {
         EditText descricao = (EditText) findViewById(R.id.descricao);
 
         final ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage("Adicionando nova moradia...");
+        progress.setMessage("Atualizando moradia...");
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         progress.show();
 
@@ -222,15 +265,14 @@ public class AdicionarMoradia extends AppCompatActivity {
                 }
             }
         };
+        String strImagem = "";
+        if(imagem != null)
+            strImagem = BitMapToString(imagem);
 
-        String imagemS = new String();
-        if(imagem != null) imagemS = BitMapToString(imagem);
-
-        MoradiaRequest_ADD moradiaRequest = new MoradiaRequest_ADD(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
+        MoradiaRequest_EDIT moradiaRequest = new MoradiaRequest_EDIT(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
-                imagemS, tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
-        System.out.println("Chego!");
-        RequestQueue queue = Volley.newRequestQueue(AdicionarMoradia.this);
+                strImagem , tipo, perfil, nMoradores.getText().toString(), animais, getIntent().getStringExtra("id_rep"), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(EditarMoradia.this);
         queue.add(moradiaRequest);
     }
 
@@ -287,7 +329,7 @@ public class AdicionarMoradia extends AppCompatActivity {
             return false;
         }
 
-        RadioGroup perfil = (RadioGroup) findViewById(R.id.tipoEdicao);
+        RadioGroup perfil = (RadioGroup) findViewById(R.id.tipo);
 
         if (perfil.getCheckedRadioButtonId() == -1) {
             Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT).show();

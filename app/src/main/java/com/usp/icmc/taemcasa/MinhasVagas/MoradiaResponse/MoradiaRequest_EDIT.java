@@ -12,14 +12,14 @@ import java.util.Map;
  */
 
 
-public class MoradiaRequest_ADD extends StringRequest {
+public class MoradiaRequest_EDIT extends StringRequest {
 
-    private static final String REGISTER_REQUEST_URL = "https://dionen.000webhostapp.com/Moradia/addMoradia.php";
+    private static final String REGISTER_REQUEST_URL = "https://dionen.000webhostapp.com/Moradia/editMoradia.php";
     private Map<String, String> params;
 
-    public MoradiaRequest_ADD(String username, String nome, String descricao, String rua, String numero, String complemento,
-                              String bairro, String cidade, String estado, String telefone, String imagem, String tipo, String perfil,
-                              String qtd_moradores, String aceita_animais, Response.Listener<String> listener){
+    public MoradiaRequest_EDIT(String username, String nome, String descricao, String rua, String numero, String complemento,
+                               String bairro, String cidade, String estado, String telefone, String imagem, String tipo, String perfil,
+                               String qtd_moradores, String aceita_animais, String id_rep, Response.Listener<String> listener){
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
 
@@ -38,6 +38,7 @@ public class MoradiaRequest_ADD extends StringRequest {
         params.put("perfil", perfil);
         params.put("qtd_moradores", qtd_moradores);
         params.put("aceita_animais", aceita_animais);
+        params.put("id_rep", id_rep);
     }
 
     @Override

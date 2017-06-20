@@ -68,8 +68,17 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Perfil.PerfilVaga"
-            android:label="Perfil"
+            android:name=".MinhasVagas.AdicionarVaga"
+            android:label="Nova Vaga"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MinhasVagas.EditarMoradia"
+            android:label="Editar Moradia"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".MinhasVagas.EditarVaga"
+            android:label="Editar Vaga"
             android:screenOrientation="portrait" />
 
     </application>

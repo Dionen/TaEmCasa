@@ -210,7 +210,7 @@
                 android:id="@+id/perfil"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nextFocusDown="@+id/tipo"
+                android:nextFocusDown="@+id/tipoEdicao"
                 android:orientation="horizontal"
                 android:padding="8dp"
                 android:visibility="visible">
@@ -240,7 +240,7 @@
                 android:visibility="visible" />
 
             <RadioGroup
-                android:id="@+id/tipo"
+                android:id="@+id/tipoEdicao"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nextFocusDown="@+id/nMoradores"

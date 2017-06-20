@@ -67,7 +67,7 @@ public class AdicionarVaga extends AppCompatActivity {
         progress.setCancelable(false);
         progress.show();
 
-        // Tipo da vag
+        // Tipo da vaga
         if (masculina.isChecked()){
             tipoString = "0";
         } else if (feminina.isChecked()){
@@ -111,7 +111,7 @@ public class AdicionarVaga extends AppCompatActivity {
     private boolean checa_dados(View v){
         EditText preco;
 
-        RadioGroup tipoGroup = (RadioGroup) findViewById(R.id.tipo);
+        RadioGroup tipoGroup = (RadioGroup) findViewById(R.id.tipoEdicao);
         preco = (EditText) findViewById(R.id.precoVaga);
         Context context = v.getContext();
 

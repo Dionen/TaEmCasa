@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -21,7 +20,9 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MinhasMoradias;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_DELETE;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_GET;
+import com.usp.icmc.taemcasa.Perfil.VagaResponse.VagaRequest_DELETE;
 import com.usp.icmc.taemcasa.R;
 
 import org.json.JSONArray;
@@ -96,7 +97,6 @@ public class MinhasVagasActivity extends Fragment {
                 JSONObject jsonResponse = null;
 
                 try {
-                    System.out.println(response);
                     jsonResponse = new JSONObject(response);
 
                     boolean success = jsonResponse.getBoolean("success");
@@ -171,21 +171,15 @@ public class MinhasVagasActivity extends Fragment {
                             Vaga dados = new Vaga(id, id_rep, preco, tipo, individual);
 
                             Republica auxiliar = aux.get(id_rep);
-
+                            System.out.println(id_rep + " é o id_rep da vaga " + id);
                             listaVagas.get(auxiliar).add(dados);
                         }
 
-                        java.util.Iterator iter = listaVagas.values().iterator();
+                        java.util.Iterator iter = listaVagas.keySet().iterator();
                         while(iter.hasNext()) {
-                            ArrayList<Vaga> l = (ArrayList<Vaga>) iter.next();
-
-                            if(l.size() == 0) l.add(new Vaga("-1"));
-                        }
-
-                        java.util.Iterator iter2 = listaVagas.keySet().iterator();
-                        while(iter2.hasNext()) {
-                            Republica aux3 = (Republica) iter2.next();
-                            System.out.println(aux3 +  "  " + listaVagas.get(aux3).get(0).getPrice());
+                            Republica auxR = (Republica) iter.next();
+                            List<Vaga> l = listaVagas.get(auxR);
+                            l.add(new Vaga("-1", auxR.getId()));
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -197,7 +191,7 @@ public class MinhasVagasActivity extends Fragment {
         };
 
         /* ENTRA NA DATABASE ONLINE */
-        MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
+        MoradiaRequest_GET minhasMoradiasRequest = new MoradiaRequest_GET(getActivity().getIntent().getExtras().getString("email"),  responseListener);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas
     }
@@ -250,6 +244,7 @@ public class MinhasVagasActivity extends Fragment {
             TextView preco;
             TextView individualTexto;
             ImageView removerVaga;
+            ImageView editarVaga;
             Button adicionarVaga;
         }
 
@@ -270,6 +265,7 @@ public class MinhasVagasActivity extends Fragment {
             holder.individualTexto = (TextView) view.findViewById(R.id.individualTexto);
             holder.removerVaga = (ImageView) view.findViewById(R.id.removerVaga);
             holder.adicionarVaga = (Button) view.findViewById(R.id.adicionarVaga);
+            holder.editarVaga = (ImageView) view.findViewById(R.id.editarVaga);
 
             if (conteudoVaga.getPrice().equals("-1")){
                 /* Caso seja o botão de adicionar vaga */
@@ -278,6 +274,17 @@ public class MinhasVagasActivity extends Fragment {
                 holder.individualTexto.setVisibility(View.GONE);
                 holder.removerVaga.setVisibility(View.GONE);
                 holder.adicionarVaga.setVisibility(View.VISIBLE);
+
+                holder.adicionarVaga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), AdicionarVaga.class);
+                        intent.putExtra("nome", getActivity().getIntent().getExtras().getString("nome"));
+                        intent.putExtra("id_rep", conteudoVaga.getId_rep());
+                        startActivity(intent);
+                    }
+                });
+
             } else {
                 /*Inserindo as informacoes das vagas */
                 holder.tipoMorador.setText(conteudoVaga.gettipoMorador());
@@ -289,7 +296,50 @@ public class MinhasVagasActivity extends Fragment {
                     holder.individualTexto.setText("Quarto Compartilhado");
                 }
 
-                /* REMOVER VAGA VEM AQUI */
+                holder.removerVaga.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                JSONObject jsonResponse = null;
+
+                                try {
+                                    jsonResponse = new JSONObject(response);
+
+                                    if(!jsonResponse.getBoolean("success"))
+                                        Toast.makeText(getActivity(), "A vaga não pode ser removida. Por favor, tente novamente!", Toast.LENGTH_LONG).show();
+
+                                } catch(JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                minhasVagasRefresh();
+                                adapter.notifyDataSetChanged();
+                            }
+                        };
+
+                        /* ENTRA NA DATABASE ONLINE */
+                        VagaRequest_DELETE apagarRequest = new VagaRequest_DELETE(conteudoVaga.getId(),  responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(getContext());
+                        queue.add(apagarRequest); // Executa as tarefas requisitadas
+                    }
+                });
+
+                holder.editarVaga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), EditarVaga.class);
+                        intent.putExtra("nome", getActivity().getIntent().getExtras().getString("nome"));
+                        intent.putExtra("id_vaga", conteudoVaga.getId());
+                        intent.putExtra("tipo", conteudoVaga.gettipoMorador());
+                        intent.putExtra("preco", conteudoVaga.getPrice());
+                        intent.putExtra("compartilhado", conteudoVaga.getIndividual() );
+                        startActivity(intent);
+                    }
+                });
+
             }
 
             view.setTag(holder);
@@ -318,10 +368,10 @@ public class MinhasVagasActivity extends Fragment {
         }
 
         @Override
-        public View getGroupView(int groupPosition, boolean isExpanded,
+        public View getGroupView(final int groupPosition, boolean isExpanded,
                                  View convertView, ViewGroup parent) {
 
-            Republica header = (Republica) getGroup(groupPosition);
+            final Republica header = (Republica) getGroup(groupPosition);
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) this._context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -332,15 +382,73 @@ public class MinhasVagasActivity extends Fragment {
             TextView description = (TextView) convertView.findViewById(R.id.description);
             TextView address = (TextView) convertView.findViewById(R.id.address);
             ImageView fotoMoradia = (ImageView) convertView.findViewById(R.id.fotoMoradia);
+            ImageView editar = (ImageView) convertView.findViewById(R.id.opcoesMoradia);
+            ImageView remover = (ImageView) convertView.findViewById(R.id.deleteMoradia);
 
             //Inserindo as informacoes
             title.setText(header.getNome());
             description.setText(header.getDescricao());
             address.setText(header.getEndereco().enderecoCurto());
 
+            remover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            JSONObject jsonResponse = null;
+                            try {
+                                jsonResponse = new JSONObject(response);
+
+                                if (jsonResponse.getBoolean("success") == false)
+                                    Toast.makeText(getActivity(), "A moradia não pode ser removida. Por favor, tente novamente!", Toast.LENGTH_LONG).show();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            minhasVagasRefresh();
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    };
+
+                    /* ENTRA NA DATABASE ONLINE */
+                    MoradiaRequest_DELETE apagarRequest = new MoradiaRequest_DELETE(header.getId(),  responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(getContext());
+                    queue.add(apagarRequest); // Executa as tarefas requisitadas
+                }
+
+            });
+
             Bitmap thumbnail = StringToBitMap(header.getImagem());
             if (thumbnail != null) fotoMoradia.setImageBitmap(thumbnail);
             else fotoMoradia.setVisibility(View.GONE);
+
+            ImageView config = (ImageView) convertView.findViewById(R.id.opcoesMoradia);
+            config.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(),  EditarMoradia.class);
+                    intent.putExtra("user_id",   getActivity().getIntent().getExtras().getString("user_id"));
+                    intent.putExtra("email",     getActivity().getIntent().getExtras().getString("email"));
+                    intent.putExtra("titulo", listaMoradias.get(groupPosition).getNome());
+                    intent.putExtra("logradouro", listaMoradias.get(groupPosition).getEndereco().getRua());
+                    intent.putExtra("numero", listaMoradias.get(groupPosition).getEndereco().getNumero());
+                    intent.putExtra("bairro", listaMoradias.get(groupPosition).getEndereco().getBairro());
+                    intent.putExtra("complemento", listaMoradias.get(groupPosition).getEndereco().getComplemento());
+                    intent.putExtra("cidade", listaMoradias.get(groupPosition).getEndereco().getCidade());
+                    intent.putExtra("estado", listaMoradias.get(groupPosition).getEndereco().getEstado());
+                    intent.putExtra("tipo", listaMoradias.get(groupPosition).getTipo());
+                    intent.putExtra("perfil", listaMoradias.get(groupPosition).getPerfil());
+                    intent.putExtra("nmoradores", listaMoradias.get(groupPosition).getQtd_moradores());
+                    intent.putExtra("animais", listaMoradias.get(groupPosition).isAceita_animais());
+                    intent.putExtra("telefone", listaMoradias.get(groupPosition).getTelefone());
+                    intent.putExtra("descricao", listaMoradias.get(groupPosition).getDescricao());
+                    intent.putExtra("id_rep", listaMoradias.get(groupPosition).getId_rep());
+                    startActivity(intent);
+                }
+            });
 
             return convertView;
         }
