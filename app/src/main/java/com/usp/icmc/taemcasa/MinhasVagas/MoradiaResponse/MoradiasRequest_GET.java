@@ -10,12 +10,12 @@ import java.util.Map;
  * Created by fabio on 12/06/17.
  */
 
-public class MinhasMoradias extends StringRequest {
+public class MoradiasRequest_GET extends StringRequest {
     private static final String GET_REQUEST_URL = "https://dionen.000webhostapp.com/Moradia/getMinhasVagas.php";
 
     private Map<String, String> params;
 
-    public MinhasMoradias(String username, Response.Listener<String> listener){
+    public MoradiasRequest_GET(String username, Response.Listener<String> listener){
             super(Method.POST, GET_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("username", username);

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -21,9 +20,9 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.Autenticacao.LoginActivity;
-import com.usp.icmc.taemcasa.Menu.MenuActivity;
-import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MinhasMoradias;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiasRequest_DELETE;
+import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiasRequest_GET;
+import com.usp.icmc.taemcasa.Perfil.VagaResponse.VagaRequest_DELETE;
 import com.usp.icmc.taemcasa.R;
 
 import org.json.JSONArray;
@@ -102,7 +101,6 @@ public class MinhasVagasActivity extends Fragment {
 
                     boolean success = jsonResponse.getBoolean("success");
                     if(success) {
-                        System.out.println(response);
                         HashMap<Integer, Republica> aux = new HashMap<Integer, Republica>();
 
                         JSONArray moradiasResponse = jsonResponse.getJSONArray("moradias");
@@ -193,7 +191,7 @@ public class MinhasVagasActivity extends Fragment {
         };
 
         /* ENTRA NA DATABASE ONLINE */
-        MinhasMoradias minhasMoradiasRequest = new MinhasMoradias(getActivity().getIntent().getExtras().getString("email"),  responseListener);
+        MoradiasRequest_GET minhasMoradiasRequest = new MoradiasRequest_GET(getActivity().getIntent().getExtras().getString("email"),  responseListener);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(minhasMoradiasRequest); // Executa as tarefas requisitadas
     }
@@ -296,7 +294,37 @@ public class MinhasVagasActivity extends Fragment {
                     holder.individualTexto.setText("Quarto Compartilhado");
                 }
 
-                /* REMOVER VAGA VEM AQUI */
+                holder.removerVaga.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                JSONObject jsonResponse = null;
+
+                                try {
+                                    jsonResponse = new JSONObject(response);
+
+                                    if(!jsonResponse.getBoolean("success"))
+                                        Toast.makeText(getActivity(), "A vaga não pode ser removida. Por favor, tente novamente!", Toast.LENGTH_LONG).show();
+
+                                } catch(JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                minhasVagasRefresh();
+                                adapter.notifyDataSetChanged();
+                            }
+                        };
+
+                        /* ENTRA NA DATABASE ONLINE */
+                        VagaRequest_DELETE apagarRequest = new VagaRequest_DELETE(conteudoVaga.getId(),  responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(getContext());
+                        queue.add(apagarRequest); // Executa as tarefas requisitadas
+                    }
+                });
+
             }
 
             view.setTag(holder);
