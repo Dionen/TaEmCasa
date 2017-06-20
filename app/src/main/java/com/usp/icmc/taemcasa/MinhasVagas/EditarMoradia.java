@@ -130,16 +130,16 @@ public class EditarMoradia extends AppCompatActivity {
         complemento.setText(intent.getStringExtra("complemento"));
         cidade.setText(intent.getStringExtra("cidade"));
         estado.setText(intent.getStringExtra("estado"));
-        if(intent.getStringExtra("tipo") == "0")
+        if(intent.getIntExtra("tipo", -1) == 0)
             apartamento.setChecked(true);
         else
             republica.setChecked(true);
-        if(intent.getStringExtra("perfil") == "0")
+        if(intent.getIntExtra("perfil", -1) == 0)
                 calma.setChecked(true);
         else
             agitada.setChecked(true);
-        nMoradores.setText(intent.getStringExtra("nmoradores"));
-        if(intent.getStringExtra("animais") == "1")
+        nMoradores.setText(String.valueOf(intent.getIntExtra("nmoradores", 0)));
+        if(intent.getBooleanExtra("animais", false) == true)
             aceitamAnimais.setChecked(true);
         telefone.setText(intent.getStringExtra("telefone"));
         descricao.setText(intent.getStringExtra("descricao"));
@@ -244,6 +244,7 @@ public class EditarMoradia extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    System.out.println(response);
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     progress.dismiss();
@@ -271,7 +272,7 @@ public class EditarMoradia extends AppCompatActivity {
 
         MoradiaRequest_EDIT moradiaRequest = new MoradiaRequest_EDIT(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
-                strImagem , tipo, perfil, nMoradores.getText().toString(), animais, getIntent().getStringExtra("id_rep"), responseListener);
+                strImagem , tipo, perfil, nMoradores.getText().toString(), animais, String.valueOf(getIntent().getIntExtra("id_rep", -1)), responseListener);
         RequestQueue queue = Volley.newRequestQueue(EditarMoradia.this);
         queue.add(moradiaRequest);
     }
@@ -329,7 +330,7 @@ public class EditarMoradia extends AppCompatActivity {
             return false;
         }
 
-        RadioGroup perfil = (RadioGroup) findViewById(R.id.tipo);
+        RadioGroup perfil = (RadioGroup) findViewById(R.id.perfil);
 
         if (perfil.getCheckedRadioButtonId() == -1) {
             Toast.makeText(context, "Escolha uma das opções", Toast.LENGTH_SHORT).show();
