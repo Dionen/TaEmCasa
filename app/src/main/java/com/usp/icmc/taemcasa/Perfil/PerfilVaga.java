@@ -3,6 +3,8 @@ package com.usp.icmc.taemcasa.Perfil;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,13 @@ import com.usp.icmc.taemcasa.Perfil.VagaResponse.VagaRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static android.R.drawable.btn_star_big_off;
+import static android.R.drawable.btn_star_big_on;
+
+/**
+ * Created by pupo on 08/06/2017.
+ */
 
 public class PerfilVaga extends AppCompatActivity {
  //   private int autoriaVaga; // 1 = do usuário, 2 = do sistema
@@ -34,30 +43,47 @@ public class PerfilVaga extends AppCompatActivity {
     private String complEndereco;
     private String bairroEndereco;
     private String cidadeEndereco;
-    //private String latitudeEndereco;
-    //private String longitudeEndereco;
 
-    public TextView nomeVagaTV;
-    public TextView tipoVagaTV;
-    public TextView telefoneTV;
-    public TextView qtdVagaTV;
-    public TextView precoVagaTV;
-    public TextView descTV;
-    public TextView enderecoTV;
-    public TextView bairroTV;
-    public TextView cidadeTV;
-    //public TextView coordenadasTV;
-    public TextView qtdMoradoresTV;
+    private TextView nomeVagaTV;
+    private TextView tipoVagaTV;
+    private TextView telefoneTV;
+    private TextView qtdVagaTV;
+    private TextView precoVagaTV;
+    private TextView descTV;
+    private TextView enderecoTV;
+    private TextView bairroTV;
+    private TextView cidadeTV;
+    private TextView qtdMoradoresTV;
+
+    private ImageButton wishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_vaga);
+
+        wishlist = (ImageButton) findViewById(R.id.adicionarWishlist);
+        wishlist.setOnClickListener(wishlistHandler);
     }
 
     public PerfilVaga(int id) {
         idVaga = id;
     }
+
+    View.OnClickListener wishlistHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            Context context = getApplicationContext();
+            String star_off = String.valueOf(btn_star_big_off);
+            String star_on = String.valueOf(btn_star_big_on);
+
+            if (context.getResources().getIdentifier(star_off, "drawable", context.getPackageName()) != 0)
+                wishlist.setBackgroundResource(btn_star_big_on);
+                // adicionar à wishlist
+            else if (context.getResources().getIdentifier(star_on, "drawable", context.getPackageName()) != 0)
+                wishlist.setBackgroundResource(btn_star_big_off);
+                // remover da wishlist
+        }
+    };
 
     public void exibirVaga() {
         nomeVagaTV = (TextView) findViewById(R.id.nomeVaga);
