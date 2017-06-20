@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream;
  * Created by Joao on 19/06/2017.
  */
 
-public class ConvertorBitmap {
+public class ConversorBitmap {
 
     static public Bitmap StringToBitMap(String encodedString){
         try {

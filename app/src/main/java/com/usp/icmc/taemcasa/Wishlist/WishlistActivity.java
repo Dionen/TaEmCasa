@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +19,11 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.usp.icmc.taemcasa.MinhasVagas.AdicionarMoradia;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Endereco;
 import com.usp.icmc.taemcasa.Structures.Republica;
 import com.usp.icmc.taemcasa.Structures.Vaga;
-import com.usp.icmc.taemcasa.Utils.ConvertorBitmap;
+import com.usp.icmc.taemcasa.Utils.ConversorBitmap;
 import com.usp.icmc.taemcasa.Wishlist.WishlistResponse.WishlistRequest_GETALL;
 import com.usp.icmc.taemcasa.Wishlist.WishlistResponse.WishlistRequest_REMOVE;
 
@@ -247,7 +244,7 @@ public class WishlistActivity extends Fragment {
             address.setText(search.getRepublica().getEndereco().enderecoCurto());
             preco.setText("R$" + search.getPreco());
 
-            Bitmap foto = ConvertorBitmap.StringToBitMap(search.getRepublica().getImagem());
+            Bitmap foto = ConversorBitmap.StringToBitMap(search.getRepublica().getImagem());
 
             if (foto == null) imagem.setImageResource(R.drawable.ic_menu_gallery);
             else imagem.setImageBitmap(foto);

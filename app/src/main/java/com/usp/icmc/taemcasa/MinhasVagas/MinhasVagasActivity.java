@@ -3,11 +3,8 @@ package com.usp.icmc.taemcasa.MinhasVagas;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,6 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,7 +26,7 @@ import org.json.JSONObject;
 
 import com.usp.icmc.taemcasa.Structures.Vaga;
 import com.usp.icmc.taemcasa.Structures.Republica;
-import com.usp.icmc.taemcasa.Utils.ConvertorBitmap;
+import com.usp.icmc.taemcasa.Utils.ConversorBitmap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,7 +176,7 @@ public class MinhasVagasActivity extends Fragment {
                         while(iter.hasNext()) {
                             ArrayList<Vaga> l = (ArrayList<Vaga>) iter.next();
 
-                            if(l.size() == 0) l.add(new Vaga("-1"));
+                            l.add(new Vaga("-1"));
                         }
 
                         java.util.Iterator iter2 = listaVagas.keySet().iterator();
@@ -268,6 +264,13 @@ public class MinhasVagasActivity extends Fragment {
                 holder.individualTexto.setVisibility(View.GONE);
                 holder.removerVaga.setVisibility(View.GONE);
                 holder.adicionarVaga.setVisibility(View.VISIBLE);
+                holder.adicionarVaga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), AdicionarVaga.class);
+                    }
+                });
+
             } else {
                 /*Inserindo as informacoes das vagas */
                 if (conteudoVaga.getTipo() == 0){
@@ -333,7 +336,7 @@ public class MinhasVagasActivity extends Fragment {
             description.setText(header.getDescricao());
             address.setText(header.getEndereco().enderecoCurto());
 
-            Bitmap thumbnail = ConvertorBitmap.StringToBitMap(header.getImagem());
+            Bitmap thumbnail = ConversorBitmap.StringToBitMap(header.getImagem());
             if (thumbnail != null) fotoMoradia.setImageBitmap(thumbnail);
             else fotoMoradia.setVisibility(View.GONE);
 

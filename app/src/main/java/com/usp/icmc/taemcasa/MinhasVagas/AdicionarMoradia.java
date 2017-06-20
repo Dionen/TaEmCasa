@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.MinhasVagas.MoradiaResponse.MoradiaRequest_ADD;
 import com.usp.icmc.taemcasa.R;
-import com.usp.icmc.taemcasa.Utils.ConvertorBitmap;
+import com.usp.icmc.taemcasa.Utils.ConversorBitmap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,8 +88,6 @@ public class AdicionarMoradia extends AppCompatActivity {
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //long length = BitMapToString(imagem).length();
-                        //Toast.makeText(getApplicationContext(), length+"", Toast.LENGTH_LONG).show();
                     }
                 });
                 alerta = builder.create();
@@ -189,24 +184,21 @@ public class AdicionarMoradia extends AppCompatActivity {
 
                     if (success){
                         // MORADIA CRIADA
-                        Toast toast = Toast.makeText(context, "Moradia cadastrada com sucesso", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "Moradia cadastrada com sucesso", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast toast = Toast.makeText(context, "Cadastro não autorizado", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "Cadastro não autorizado", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     // PROBLEMAS
                     e.printStackTrace();
-                    Toast toast = Toast.makeText(context, "Erro ao acessar database", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(context, "Erro ao acessar database", Toast.LENGTH_SHORT).show();
                 }
             }
         };
         MoradiaRequest_ADD moradiaRequest = new MoradiaRequest_ADD(user_email, titulo.getText().toString(), descricao.getText().toString(), logradouro.getText().toString(), numero.getText().toString(),
                 complemento.getText().toString(), bairro.getText().toString(), cidade.getText().toString(), estado.getText().toString(), telefone.getText().toString(),
-                ConvertorBitmap.BitMapToString(imagem), tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
+                ConversorBitmap.BitMapToString(imagem), tipo, perfil, nMoradores.getText().toString(), animais, responseListener);
         RequestQueue queue = Volley.newRequestQueue(AdicionarMoradia.this);
         queue.add(moradiaRequest);
     }

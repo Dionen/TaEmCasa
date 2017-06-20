@@ -1,10 +1,12 @@
 package com.usp.icmc.taemcasa.Structures;
 
+import java.io.Serializable;
+
 /**
  * Created by fabio on 11/06/17.
  */
 
-public class Republica {
+public class Republica implements Serializable {
 
     private int id_rep;
     private String username;

@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.usp.icmc.taemcasa.Busca.SearchRequest.SearchRequest;
 import com.usp.icmc.taemcasa.Structures.Endereco;
+import com.usp.icmc.taemcasa.Structures.Republica;
 import com.usp.icmc.taemcasa.Structures.Vaga;
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Utils.MessagesToUser;
@@ -34,7 +35,7 @@ public class SearchMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.search_menu, container, false);
+        final View rootView = inflater.inflate(R.layout.search_menu2, container, false);
         final Button search = (Button) rootView.findViewById(R.id.buscar_button);
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -47,12 +48,36 @@ public class SearchMenu extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        terminaBusca(getView());
+    }
+
+    public void carregandoBusca(View view){
+        final View carregandoBusca = view.findViewById(R.id.carregandoBusca);
+        final View scrollMenuBusca = view.findViewById(R.id.scrollMenuBusca);
+
+        carregandoBusca.setVisibility(View.VISIBLE);
+        scrollMenuBusca.setVisibility(View.GONE);
+    }
+
+    public void terminaBusca(View view){
+        final View carregandoBusca = view.findViewById(R.id.carregandoBusca);
+        final View scrollMenuBusca = view.findViewById(R.id.scrollMenuBusca);
+
+        carregandoBusca.setVisibility(View.GONE);
+        scrollMenuBusca.setVisibility(View.VISIBLE);
+    }
+
     public void search(final View view) {
         String animais = "0";
         String tipo_M_F = "2";
         String tipo_R_A = "2";
         String individual = "0";
         String perfil = "2";
+
+        carregandoBusca(getView());
 
         final Context context = view.getContext();
         EditText maxValue_camp = (EditText) getView().findViewById(R.id.edtMaxPreco);
@@ -85,7 +110,7 @@ public class SearchMenu extends Fragment {
             @Override
             public void onResponse(String response) {
                 JSONObject jsonResponse = null;
-                //message.ToastMessage(response, context);
+
                 try {
                     jsonResponse = new JSONObject(response);
 
@@ -98,35 +123,53 @@ public class SearchMenu extends Fragment {
                         ArrayList<Vaga> vagas = new ArrayList<>();
 
                         if(searchResponse.length() <= 0){
-                            message.ToastMessage("Não há vagas com esses critérios", context);
-                            //return;
+                            message.ToastMessage("Não há vagas com estes critérios", context);
+                            terminaBusca(view);
+                            return;
                         }
 
                         for(int i = 0; i < searchResponse.length(); i++) {
                             JSONObject atual = searchResponse.getJSONObject(i);
-                            Vaga vaga = new Vaga();
-                            Endereco end = new Endereco();
 
-                            /*
-                            vaga.setPreco(atual.getString("vaga.preco"));
-                            vaga.setTitle(atual.getString("republica.nome"));
+                            Endereco end = new Endereco();
+                            Republica rep = new Republica();
+                            Vaga vaga = new Vaga();
+
                             end.setRua(atual.getString("republica.rua"));
                             end.setNumero(atual.getString("republica.numero"));
                             end.setComplemento(atual.getString("republica.complemento"));
+                            end.setBairro(atual.getString("republica.bairro"));
                             end.setCidade(atual.getString("republica.cidade"));
                             end.setEstado(atual.getString("republica.estado"));
-                            vaga.setEndereco(end);
+
+                            rep.setEndereco(end);
+                            rep.setNome(atual.getString("republica.nome"));
+                            rep.setDescricao(atual.getString("republica.descricao"));
+                            rep.setTelefone(atual.getString("republica.telefone"));
+                            rep.setImagem(atual.getString("republica.imagem"));
+                            rep.setTipo(atual.getString("republica.tipo_r"));
+                            rep.setPerfil(atual.getString("republica.perfil"));
+                            rep.setQtd_moradores(atual.getString("republica.qtd_moradores"));
+                            rep.setAceita_animais(atual.getString("republica.aceita_animais"));
+
+                            vaga.setRepublica(rep);
+                            vaga.setPreco(atual.getString("vaga.preco"));
+                            vaga.setTipo(atual.getString("vaga.tipo_v"));
+                            vaga.setIndividual(atual.getString("vaga.individual"));
+                            vaga.setId_vaga(atual.getString("vaga.id_vaga"));
+
                             vagas.add(vaga);
-                            */
                         }
                         intent.putExtra("vagas",vagas);
                         startActivity(intent);
                     } else {
                         message.ToastMessage("Falha no request", context);
+                        terminaBusca(getView());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     message.ToastMessage("Falha na conexão", context);
+                    terminaBusca(getView());
                 }
             }
         };

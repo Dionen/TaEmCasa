@@ -18,7 +18,7 @@ public class SearchRequest extends StringRequest {
     $individual = $_POST["individual"];
     $aceita_animais = $_POST["aceita_animais"];*/
 
-    private static final String LOGIN_REQUEST_URL = "https://dionen.000webhostapp.com/Busca/BuscaVaga.php";
+    private static final String LOGIN_REQUEST_URL = "https://dionen.000webhostapp.com/Busca/getVagas.php";
     private Map<String, String> params;
 
     public SearchRequest(String min_preco, String max_preco, String tipo_M_F, String individual, String aceita_animais, String tipo_A_R, String perfil, Response.Listener<String> listener){

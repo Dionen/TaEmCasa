@@ -1,6 +1,7 @@
 package com.usp.icmc.taemcasa.Busca;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,11 +14,11 @@ import android.widget.TextView;
 
 import com.usp.icmc.taemcasa.R;
 import com.usp.icmc.taemcasa.Structures.Vaga;
+import com.usp.icmc.taemcasa.Utils.ConversorBitmap;
 
 import java.util.ArrayList;
 
 public class SearchListActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,26 +76,27 @@ public class SearchListActivity extends AppCompatActivity {
             Vaga search = search_data.get(position);
 
             //pegando as referências das Views
-            TextView title = (TextView)
-                    view.findViewById(R.id.title);
-            TextView description = (TextView)
-                    view.findViewById(R.id.description);
-            TextView address = (TextView)
-                    view.findViewById(R.id.endereco);
-            TextView price = (TextView)
-                    view.findViewById(R.id.price);
-            TextView type = (TextView)
-                    view.findViewById(R.id.type);
-            ImageView imagem = (ImageView)
-                    view.findViewById(R.id.icon);
+            TextView title = (TextView) view.findViewById(R.id.title);
+            TextView description = (TextView) view.findViewById(R.id.description);
+            TextView address = (TextView) view.findViewById(R.id.endereco);
+            TextView price = (TextView) view.findViewById(R.id.price);
+            TextView type = (TextView) view.findViewById(R.id.type);
+            ImageView imagem = (ImageView) view.findViewById(R.id.icon);
 
             //Inserindo as informacoes
             title.setText(search.getRepublica().getNome());
             description.setText(search.getRepublica().getDescricao());
             address.setText(search.getRepublica().getEndereco().enderecoCurto());
             price.setText("R$" + search.getPreco());
-            type.setText(search.getTipo());
-            imagem.setImageResource(R.drawable.ic_menu_gallery);
+
+            if (search.getTipo() == 0) type.setText("Vaga Masculina");
+            if (search.getTipo() == 1) type.setText("Vaga Feminina");
+            if (search.getTipo() == 2) type.setText("Vaga Unissex");
+
+            Bitmap foto = ConversorBitmap.StringToBitMap(search.getRepublica().getImagem());
+            if (foto == null) imagem.setImageResource(R.drawable.ic_menu_gallery);
+            else imagem.setImageBitmap(foto);
+
             return view;
         }
 

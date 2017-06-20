@@ -1,8 +1,6 @@
 package com.usp.icmc.taemcasa.Menu;
 
-import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,51 +80,12 @@ public class MenuActivity extends AppCompatActivity {
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(0);  // clear all scroll flags
 
-        /* BOTAO DE NOTIFICAÇÃO */
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Snackbar.make(view, "Tem pessoas interessadas em algumas de suas vagas!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                animator.setRepeatCount(1);
-
-                Animation fadeout = new AlphaAnimation(1.f, 0.f);
-                fadeout.setDuration(500);
-                view.startAnimation(fadeout);
-                view.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.setVisibility(View.GONE);
-                    }
-                }, 500);
-            }
-        });
-
-        /* ANIMAÇÃO DO BOTÃO */
-        animator = ObjectAnimator.ofInt(fab, "backgroundTint", Color.rgb(255, 0, 0), Color.rgb(255, 255, 255), Color.rgb(255, 0, 0));
-        animator.setDuration(1000);
-        animator.setEvaluator(new ArgbEvaluator());
-        animator.setInterpolator(new DecelerateInterpolator(2));
-        animator.setRepeatCount(Animation.INFINITE);
-        animator.addUpdateListener(new ObjectAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int animatedValue = (int) animation.getAnimatedValue();
-                fab.setBackgroundTintList(ColorStateList.valueOf(animatedValue));
-            }
-        });
-        animator.start();
-
         /* RECEBE OS DADOS DO USUÁRIO */
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
         user_nome = intent.getStringExtra("nome");
         user_sobrenome = intent.getStringExtra("sobrenome");
         user_email = intent.getStringExtra("email");
-
-        Toast toast = Toast.makeText(MenuActivity.this, "Olá, " + user_nome + " " + user_sobrenome + "!\nSeu ID: " + user_id + "\nSeu email: " + user_email, Toast.LENGTH_LONG);
-        toast.show();
     }
 
 
